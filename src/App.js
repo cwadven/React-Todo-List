@@ -3,6 +3,17 @@ import Add from "./Components/Add";
 import ToDo from "./Components/ToDo";
 import List from "./Components/List";
 import {useCompleted, useToDos} from "./context";
+import styled from "@emotion/styled";
+
+const Title = styled.header`
+    color: #1E212D;
+    font-size: 40px;
+    font-style: italic;
+    font-family: fantasy;
+    font-weight: 900;
+    text-align: center;
+    margin: 10px 0;
+`;
 
 function App() {
     const toDos = useToDos();
@@ -10,7 +21,7 @@ function App() {
 
     return (
         <>
-            <h1>Add To Do</h1>
+            <Title>My To Do List</Title>
             <Add/>
             <List name="To Dos">
                 {toDos.map((toDo) => (
