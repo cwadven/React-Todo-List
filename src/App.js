@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Add from "./Components/Add";
+import ToDo from "./Components/ToDo";
+import List from "./Components/List";
+import {useCompleted, useToDos} from "./context";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const toDos = useToDos();
+    const completed = useCompleted();
+
+    return (
+        <>
+            <h1>Add To Do</h1>
+            <Add/>
+            <List name="To Dos">
+                {toDos.map((toDo) => (
+                    <ToDo key={toDo.id} id={toDo.id} text={toDo.text}/>
+                ))}
+            </List>
+
+            <List name={completed.length > 0 ? "Completed" : ""}>
+                {completed.map((toDo) => (
+                    <ToDo key={toDo.id} id={toDo.id} text={toDo.text} isCompleted/>
+                ))}
+            </List>
+        </>
+    );
 }
 
 export default App;
