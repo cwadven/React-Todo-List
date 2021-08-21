@@ -1,6 +1,54 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {COMPLETE, DELETE, EDIT, UNCOMPLETE} from "../reducer";
 import {useDispatch} from "../context";
+import styled from "@emotion/styled";
+import {
+    AiFillDelete,
+    AiOutlineCheckCircle,
+    AiOutlineEdit,
+    AiOutlineFileDone,
+    AiOutlineFileSync,
+    AiOutlineRollback
+} from "react-icons/ai";
+
+const Container = styled.article`
+    background: #EABF9F;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid #1E212D;
+`;
+
+const Text = styled.div`
+    color: #1E212D;
+    font-weight: bold;
+    font-size: 15px;
+    height: 21px;
+`;
+
+const Input = styled.input`
+    display: block;
+    font-size: 15px;
+    margin: 0px;
+    width: 100%;
+`;
+
+const ButtonContainer = styled.div`
+    text-align: center;
+    margin-top: 10px;
+`;
+
+const Button = styled.button`
+    margin: 0 3px;
+    display: inline-flex;
+    background: transparent;
+    border: transparent;
+    transition: 0.1s linear;
+    
+    &:hover {
+        color: #FAF3E0;
+    }
+`;
 
 export default ({text, id, isCompleted}) => {
     const dispatch = useDispatch();
@@ -25,37 +73,38 @@ export default ({text, id, isCompleted}) => {
     }, [isEditable])
 
     return (
-        <li>
+        <Container>
             {isEditable ? (
-                    <input type="text" ref={inputRef} value={edit} placeholder="Write to do" onChange={onEditChange}/>
+                    <Input type="text" ref={inputRef} value={edit} placeholder="To Memo Your Jobs" onChange={onEditChange}/>
                 ) :
-                <span>{text}</span>
+                <Text>{text}</Text>
             }
 
-            {!isCompleted &&
-            <button onClick={editExit}>
-                {isEditable ? "EXIT" : "EDIT"}
-            </button>
-            }
-
-            {isEditable ? (
-                    <button onClick={() => {
-                        setIsEditable(false);
-                        dispatch({type: EDIT, payload: {id, edit}});
-                    }}>
-                        CHANGE
-                    </button>) :
-                <>
-                    <button onClick={() => {
-                        dispatch({type: DELETE, payload: id})
-                    }}>DELETE
-                    </button>
-                    <button onClick={() => {
-                        dispatch({type: isCompleted ? UNCOMPLETE : COMPLETE, payload: id})
-                    }}>{isCompleted ? "UNCOMPLETE" : "COMPELTE"}
-                    </button>
-                </>
-            }
-        </li>
+            <ButtonContainer>
+                {!isCompleted &&
+                <Button onClick={editExit}>
+                    {isEditable ? <AiOutlineRollback /> : <AiOutlineEdit/>}
+                </Button>
+                }
+                {isEditable ? (
+                        <Button onClick={() => {
+                            setIsEditable(false);
+                            dispatch({type: EDIT, payload: {id, edit}});
+                        }}>
+                            <AiOutlineCheckCircle/>
+                        </Button>) :
+                    <>
+                        <Button onClick={() => {
+                            dispatch({type: isCompleted ? UNCOMPLETE : COMPLETE, payload: id})
+                        }}>{isCompleted ? <AiOutlineFileSync/> : <AiOutlineFileDone/>}
+                        </Button>
+                        <Button onClick={() => {
+                            dispatch({type: DELETE, payload: id})
+                        }}><AiFillDelete/>
+                        </Button>
+                    </>
+                }
+            </ButtonContainer>
+        </Container>
     )
 }
