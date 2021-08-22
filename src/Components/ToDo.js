@@ -11,6 +11,7 @@ import {
     AiOutlineRollback
 } from "react-icons/ai";
 import DatePicker from "react-datepicker";
+import LeftTimeCounter from "./LeftTimeCounter";
 
 const Container = styled.article`
     background: #EABF9F;
@@ -60,11 +61,11 @@ const DatePickerContainer = styled.div`
     margin-bottom: 5px;
 `;
 
-export default ({text, deadLine, id, isCompleted}) => {
+export default ({text, deadLine, startDate, id, isCompleted}) => {
     const dispatch = useDispatch();
     const [isEditable, setIsEditable] = useState(false);
     const [edit, setEdit] = useState(text);
-    const [editDeadLine, setEditDeadLine] = useState(deadLine)
+    const [editDeadLine, setEditDeadLine] = useState(deadLine);
 
     const inputRef = useRef(null);
 
@@ -109,8 +110,13 @@ export default ({text, deadLine, id, isCompleted}) => {
                     </>
                 ) :
                 <>
-                    {deadLine ? <DeadLine>{deadLine.toLocaleString()} 까지</DeadLine> : <DeadLine>기간설정안함</DeadLine>}
+                    {deadLine ? <>
+                        <DeadLine>{deadLine.toLocaleString()} 까지</DeadLine>
+                    </> : <DeadLine>기간설정안함</DeadLine>}
                     <Text>{text}</Text>
+                    {deadLine && !isCompleted ? <>
+                        <LeftTimeCounter deadLine={deadLine} startDate={startDate} id={id}/>
+                    </> : ""}
                 </>
             }
 
