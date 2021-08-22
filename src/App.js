@@ -32,17 +32,19 @@ function App() {
             <Title>My To Do List</Title>
             <Add/>
             {toDos.length > 0 ? <LeftCounter toDosCount={toDos.length} completedCount={completed.length}/> : ""}
-            {toDos.length === 0 && completed.length > 0 ? <Congratulate /> : ""}
+            {toDos.length === 0 && completed.length > 0 ? <Congratulate/> : ""}
             <Container>
                 <List name="To Dos">
                     {toDos.map((toDo) => (
-                        <ToDo key={toDo.id} id={toDo.id} text={toDo.text} deadLine={toDo.deadLine}/>
+                        <ToDo key={toDo.id} id={toDo.id} text={toDo.text} deadLine={toDo.deadLine}
+                              startDate={toDo.startDate}/>
                     ))}
                 </List>
 
                 <List name={completed.length > 0 ? "Completed" : ""}>
                     {completed.map((toDo) => (
-                        <ToDo key={toDo.id} id={toDo.id} text={toDo.text} deadLine={toDo.deadLine} isCompleted/>
+                        <ToDo key={toDo.id} id={toDo.id} text={toDo.text} deadLine={toDo.deadLine}
+                              startDate={toDo.startDate} isCompleted/>
                     ))}
                 </List>
             </Container>
