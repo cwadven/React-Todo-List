@@ -4,6 +4,8 @@ import ToDo from "./Components/ToDo";
 import List from "./Components/List";
 import {useCompleted, useToDos} from "./context";
 import styled from "@emotion/styled";
+import LeftCounter from "./Components/LeftCounter";
+import Congratulate from "./Components/Congratulate";
 
 const Title = styled.header`
     color: #B68973;
@@ -29,6 +31,8 @@ function App() {
         <>
             <Title>My To Do List</Title>
             <Add/>
+            {toDos.length > 0 ? <LeftCounter toDosCount={toDos.length} completedCount={completed.length}/> : ""}
+            {toDos.length === 0 && completed.length > 0 ? <Congratulate /> : ""}
             <Container>
                 <List name="To Dos">
                     {toDos.map((toDo) => (
