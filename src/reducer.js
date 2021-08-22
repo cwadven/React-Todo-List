@@ -16,7 +16,14 @@ const reducer = (state, action) => {
         case ADD:
             return {
                 ...state,
-                toDos: [...state.toDos, {id: uuid(), text: action.payload}]
+                toDos: [
+                    ...state.toDos,
+                    {
+                        id: uuid(),
+                        text: action.payload.toDoText,
+                        deadLine: action.payload.toDoDeadLine
+                    }
+                ]
             };
         case DELETE:
             return {
@@ -39,7 +46,11 @@ const reducer = (state, action) => {
         case EDIT:
             // 위치 찾기
             const targetIndex = state.toDos.findIndex(toDo => toDo.id === action.payload.id);
-            state.toDos[targetIndex] = {...state.toDos[targetIndex], text: action.payload.edit};
+            state.toDos[targetIndex] = {
+                ...state.toDos[targetIndex],
+                text: action.payload.edit,
+                deadLine: action.payload.editDeadLine
+            };
             return {
                 ...state,
                 toDos: [...state.toDos]
