@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {ADD} from "../reducer";
 import {useDispatch} from "../context";
 import styled from "@emotion/styled";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Input = styled.input`
     font-size: 15px;
@@ -29,26 +31,47 @@ const Button = styled.button`
     }
 `;
 
+const Bold = styled.b`
+`;
+
+const DatePickerContainer = styled.div`
+    margin-top: 5px;
+`;
+
 const Add = () => {
-    const [newToDo, setNewToDo] = useState("");
+    const [newToDo, setNewToDo] = useState({toDoText: "", toDoDeadLine: ""});
     const dispatch = useDispatch();
 
     const onSubmit = e => {
         e.preventDefault();
-        if (newToDo) {
+        if (newToDo.toDoText) {
             dispatch({type: ADD, payload: newToDo});
-            setNewToDo('');
+            setNewToDo({toDoText: "", toDoDeadLine: ""});
         }
     }
 
     const onChange = e => {
-        const {target: {value}} = e;
-        setNewToDo(value);
+        setNewToDo({
+            ...newToDo, [e.target.name]: e.target.value
+        });
     }
 
     return (
-        <Form onSubmit={onSubmit}>
-            <Input type="text" value={newToDo} placeholder="To Memo Your Jobs Add To Dos" onChange={onChange}/>
+        <Form>
+            <Input name="toDoText" type="text" value={newToDo.toDoText} placeholder="To Memo Your Jobs Add To Dos"
+                   onChange={onChange}/>
+            <DatePickerContainer>
+                <Bold>Until When?</Bold>
+                <DatePicker
+                    name="toDoDeadLine"
+                    selected={newToDo.toDoDeadLine}
+                    onChange={(date) => setNewToDo(prevState => ({...prevState, toDoDeadLine: date}))}
+                    timeInputLabel="Time:"
+                    dateFormat="yyyy/MM/dd h:mm aa"
+                    popperPlacement="auto"
+                    showTimeInput
+                />
+            </DatePickerContainer>
             <div>
                 <Button onClick={onSubmit}>ADD</Button>
             </div>
