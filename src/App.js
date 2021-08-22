@@ -36,13 +36,13 @@ function App() {
             <Container>
                 <List name="To Dos">
                     {toDos.map((toDo) => (
-                        <ToDo key={toDo.id} id={toDo.id} text={toDo.text}/>
+                        <ToDo key={toDo.id} id={toDo.id} text={toDo.text} deadLine={toDo.deadLine}/>
                     ))}
                 </List>
 
                 <List name={completed.length > 0 ? "Completed" : ""}>
                     {completed.map((toDo) => (
-                        <ToDo key={toDo.id} id={toDo.id} text={toDo.text} isCompleted/>
+                        <ToDo key={toDo.id} id={toDo.id} text={toDo.text} deadLine={toDo.deadLine} isCompleted/>
                     ))}
                 </List>
             </Container>
