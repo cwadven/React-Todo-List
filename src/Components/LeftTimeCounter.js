@@ -35,11 +35,11 @@ const Time = styled.div`
 `;
 
 const LeftTimeCounter = ({deadLine, startDate}) => {
-    const [timer, setTimer] = useState();
+    const [now, setNow] = useState(new Date());
     const interval = useRef();
 
     const totalTime = (deadLine.getTime() / 1000) - (startDate.getTime() / 1000);
-    const leftTime = (deadLine.getTime() / 1000) - (new Date().getTime() / 1000);
+    const leftTime = (deadLine.getTime() / 1000) - (now.getTime() / 1000);
 
     const percentage = Number(((totalTime - leftTime) / totalTime) * 100);
 
@@ -47,11 +47,11 @@ const LeftTimeCounter = ({deadLine, startDate}) => {
     const secondDisplay = (second) => {
         let display;
         if (second > 3600) {
-            display = `${Math.floor((second / 3600))}시간 ${((second % 3600) / 60).toFixed()}분 남음`;
+            display = `${Math.floor((second / 3600))}h ${((second % 3600) / 60).toFixed()}m Left`;
         } else if (second > 60) {
-            display = `${Math.floor((second / 60))}분 ${(second % 60).toFixed()}초 남음`;
+            display = `${Math.floor((second / 60))}m ${(second % 60).toFixed()}s Left`;
         } else if (second > 0) {
-            display = `${second.toFixed()}초 남음`;
+            display = `${second.toFixed()}s Left`;
         } else {
             display = `DeadLine`;
         }
@@ -59,7 +59,7 @@ const LeftTimeCounter = ({deadLine, startDate}) => {
     }
 
     useEffect(() => {
-        interval.current = setInterval(() => setTimer(Date.now()), 1000);
+        interval.current = setInterval(() => setNow(new Date()), 1000);
 
         return () => {
             clearInterval(interval.current);
@@ -70,7 +70,7 @@ const LeftTimeCounter = ({deadLine, startDate}) => {
         if (leftTime <= 0) {
             clearInterval(interval.current);
         }
-    }, [timer])
+    }, [leftTime])
 
     return (
         <Container>

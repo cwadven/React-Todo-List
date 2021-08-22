@@ -11,9 +11,11 @@ const SubTitle = styled.div`
     color: #1E212D;
 `
 
-export default ({name, children}) => (
+const List = ({name, children}) => (
     <Container>
         <SubTitle>{name}</SubTitle>
         <div>{children}</div>
     </Container>
 )
+
+export default List;

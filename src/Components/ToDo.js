@@ -61,7 +61,7 @@ const DatePickerContainer = styled.div`
     margin-bottom: 5px;
 `;
 
-export default ({text, deadLine, startDate, id, isCompleted}) => {
+const ToDo = ({text, deadLine, startDate, id, isCompleted}) => {
     const dispatch = useDispatch();
     const [isEditable, setIsEditable] = useState(false);
     const [edit, setEdit] = useState(text);
@@ -148,3 +148,5 @@ export default ({text, deadLine, startDate, id, isCompleted}) => {
         </Container>
     )
 }
+
+export default ToDo;
