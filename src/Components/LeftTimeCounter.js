@@ -19,7 +19,7 @@ const Progress = styled.div`
     width: ${props => props.value}%;
     height: 10px;
     border-radius: 5px;
-    background-color: ${props => props.value <= 45 ? "green" : props.value <= 50 ? "yellow" : props.value <= 70 ? "orange" : "red"};
+    background-color: ${props => props.value <= 45 ? "green" : props.value <= 50 ? "yellow" : props.value <= 85 ? "orange" : "red"};
 `;
 
 const Percentage = styled.b`
