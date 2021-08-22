@@ -23,7 +23,6 @@ const Text = styled.div`
     color: #1E212D;
     font-weight: bold;
     font-size: 15px;
-    height: 21px;
 `;
 
 const Input = styled.input`
