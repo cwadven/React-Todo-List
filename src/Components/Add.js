@@ -29,7 +29,7 @@ const Button = styled.button`
     }
 `;
 
-export default () => {
+const Add = () => {
     const [newToDo, setNewToDo] = useState("");
     const dispatch = useDispatch();
 
@@ -55,3 +55,4 @@ export default () => {
         </Form>
     )
 }
+export default Add;
