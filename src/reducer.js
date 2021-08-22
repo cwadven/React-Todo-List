@@ -21,7 +21,8 @@ const reducer = (state, action) => {
                     {
                         id: uuid(),
                         text: action.payload.toDoText,
-                        deadLine: action.payload.toDoDeadLine
+                        deadLine: action.payload.toDoDeadLine,
+                        startDate: action.payload.startDate,
                     }
                 ]
             };
