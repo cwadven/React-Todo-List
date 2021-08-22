@@ -83,6 +83,12 @@ const ToDo = ({text, deadLine, startDate, id, isCompleted}) => {
         setEditDeadLine(date)
     }
 
+    const onDeleteDoDo = () => {
+        if(window.confirm("Are u sure you want to delete?")){
+            dispatch({type: DELETE, payload: id})
+        };
+    }
+
     useEffect(() => {
         if (isEditable) {
             inputRef.current.focus()
@@ -139,7 +145,7 @@ const ToDo = ({text, deadLine, startDate, id, isCompleted}) => {
                         }}>{isCompleted ? <AiOutlineFileSync/> : <AiOutlineFileDone/>}
                         </Button>
                         <Button onClick={() => {
-                            dispatch({type: DELETE, payload: id})
+                            onDeleteDoDo();
                         }}><AiFillDelete/>
                         </Button>
                     </>
