@@ -39,14 +39,20 @@ const DatePickerContainer = styled.div`
 `;
 
 const Add = () => {
-    const [newToDo, setNewToDo] = useState({toDoText: "", toDoDeadLine: ""});
+    const [newToDo, setNewToDo] = useState({
+        toDoText: "",
+        toDoDeadLine: "",
+    });
     const dispatch = useDispatch();
 
     const onSubmit = e => {
         e.preventDefault();
         if (newToDo.toDoText) {
-            dispatch({type: ADD, payload: newToDo});
-            setNewToDo({toDoText: "", toDoDeadLine: ""});
+            dispatch({type: ADD, payload: {...newToDo, startDate: new Date()}});
+            setNewToDo({
+                toDoText: "",
+                toDoDeadLine: "",
+            });
         }
     }
 
@@ -65,7 +71,10 @@ const Add = () => {
                 <DatePicker
                     name="toDoDeadLine"
                     selected={newToDo.toDoDeadLine}
-                    onChange={(date) => setNewToDo(prevState => ({...prevState, toDoDeadLine: date}))}
+                    onChange={(date) => setNewToDo(prevState => ({
+                        ...prevState,
+                        toDoDeadLine: date
+                    }))}
                     timeInputLabel="Time:"
                     dateFormat="yyyy/MM/dd h:mm aa"
                     popperPlacement="auto"
