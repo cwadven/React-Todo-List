@@ -115,7 +115,7 @@ export default ({text, deadLine, startDate, id, isCompleted}) => {
                     </> : <DeadLine>기간설정안함</DeadLine>}
                     <Text>{text}</Text>
                     {deadLine && !isCompleted ? <>
-                        <LeftTimeCounter deadLine={deadLine} startDate={startDate} id={id}/>
+                        <LeftTimeCounter deadLine={deadLine} startDate={startDate} />
                     </> : ""}
                 </>
             }
