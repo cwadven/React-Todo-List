@@ -1,10 +1,30 @@
-import React, {createContext, useContext, useReducer} from "react";
-import reducer, {initialState} from "./reducer";
+import React, {createContext, useContext, useEffect, useReducer} from "react";
+import reducer, {SET_COMPLETED, SET_TODO, initialState} from "./reducer";
+import ToDoModel from "./models/ToDoModel";
 
 const ToDosContext = createContext();
 
 const ToDosProvider = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState);
+
+    const getToDoList = async () => {
+        const {data: {todo_set}} = await ToDoModel.getToDoList();
+        console.log(todo_set)
+        return todo_set;
+    }
+
+    const getCompletedList = async () => {
+        const {data: {completed_set}} = await ToDoModel.getCompletedList();
+        return completed_set;
+    }
+
+    // eslint-disable-next-line
+    useEffect(async ()=>{
+        const todoSet = await getToDoList();
+        const completedSet = await getCompletedList();
+        dispatch({type: SET_TODO, payload: todoSet});
+        dispatch({type: SET_COMPLETED, payload: completedSet});
+    }, []);
 
     return <ToDosContext.Provider value={{state, dispatch}}>{children}</ToDosContext.Provider>;
 }
