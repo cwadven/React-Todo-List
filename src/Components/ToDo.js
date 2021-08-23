@@ -86,11 +86,6 @@ const ToDo = ({text, deadLine, startDate, completedDate, id, isCompleted}) => {
 
     const onEditDeadLineChange = (date) => {
         setEditDeadLine(date)
-        // if (date > new Date()) {
-        //     setEditDeadLine(date)
-        // } else {
-        //     alert("Date Cannot Be Less Than Now!");
-        // }
     }
 
     const onDeleteDoDo = () => {
