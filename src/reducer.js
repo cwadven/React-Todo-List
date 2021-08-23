@@ -1,5 +1,7 @@
 import {v4 as uuid} from "uuid";
 
+export const SET_TODO = 'getTodo';
+export const SET_COMPLETED = 'getCompleted';
 export const ADD = 'add';
 export const DELETE = 'delete';
 export const COMPLETE = 'complete';
@@ -13,6 +15,10 @@ export const initialState = {
 
 const reducer = (state, action) => {
     switch (action.type) {
+        case SET_TODO:
+            return {...state, toDos: action.payload}
+        case SET_COMPLETED:
+            return {...state, completed: action.payload}
         case ADD:
             return {
                 ...state,
