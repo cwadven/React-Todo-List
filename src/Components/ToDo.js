@@ -94,14 +94,13 @@ const ToDo = ({text, deadLine, startDate, completedDate, id, isCompleted}) => {
 
     const onDeleteDoDo = () => {
         if (window.confirm("Are u sure you want to delete?")) {
-            dispatch({type: DELETE, payload: id})
+            dispatch({type: DELETE, payload: id});
         }
-        ;
     }
 
     useEffect(() => {
         if (isEditable) {
-            inputRef.current.focus()
+            inputRef.current.focus();
         }
     }, [isEditable])
 
