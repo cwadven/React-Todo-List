@@ -5,6 +5,13 @@ import {useCompleted, useToDos} from "./context";
 import styled from "@emotion/styled";
 import LeftCounter from "./Components/LeftCounter";
 import Congratulate from "./Components/Congratulate";
+import Footer from "./Components/Footer";
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+`;
 
 const Title = styled.header`
     color: #B68973;
@@ -36,7 +43,7 @@ function App() {
     const completed = useCompleted();
 
     return (
-        <>
+        <Container>
             <Title>My To Do List</Title>
             <Add/>
             {toDos.length > 0 ? <LeftCounter toDosCount={toDos.length} completedCount={completed.length}/> : ""}
@@ -45,7 +52,8 @@ function App() {
                 <List name="To Dos" itemSet={toDos} isCompleted={false} />
                 <List name={completed.length > 0 ? "Completed" : ""} itemSet={completed} isCompleted={true} />
             </Grid>
-        </>
+            <Footer />
+        </Container>
     );
 }
 
