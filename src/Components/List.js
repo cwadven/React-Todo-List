@@ -7,6 +7,7 @@ const Container = styled.section`
 `;
 
 const SubTitle = styled.div`
+    text-align: center;
     font-size: 27px;
     font-weight: bold;
     color: #1E212D;
