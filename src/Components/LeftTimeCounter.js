@@ -35,11 +35,12 @@ const Time = styled.div`
 `;
 
 const LeftTimeCounter = ({deadLine, startDate}) => {
-    const [now, setNow] = useState(new Date());
-    const interval = useRef();
+    // const [now, setNow] = useState(new Date());
+    // const interval = useRef();
 
     const totalTime = (deadLine.getTime() / 1000) - (startDate.getTime() / 1000);
-    const leftTime = (deadLine.getTime() / 1000) - (now.getTime() / 1000);
+    // const leftTime = (deadLine.getTime() / 1000) - (now.getTime() / 1000);
+    const leftTime = (deadLine.getTime() / 1000) - (new Date().getTime() / 1000);
 
     const percentage = Number(((totalTime - leftTime) / totalTime) * 100);
 
@@ -58,19 +59,19 @@ const LeftTimeCounter = ({deadLine, startDate}) => {
         return display;
     }
 
-    useEffect(() => {
-        interval.current = setInterval(() => setNow(new Date()), 1000);
-
-        return () => {
-            clearInterval(interval.current);
-        };
-    }, []);
-
-    useEffect(() => {
-        if (leftTime <= 0) {
-            clearInterval(interval.current);
-        }
-    }, [leftTime])
+    // useEffect(() => {
+    //     interval.current = setInterval(() => setNow(new Date()), 1000);
+    //
+    //     return () => {
+    //         clearInterval(interval.current);
+    //     };
+    // }, []);
+    //
+    // useEffect(() => {
+    //     if (leftTime <= 0) {
+    //         clearInterval(interval.current);
+    //     }
+    // }, [leftTime])
 
     return (
         <Container>
