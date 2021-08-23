@@ -16,10 +16,19 @@ const Title = styled.header`
     margin: 10px 0;
 `;
 
-const Container = styled.section`
-    display: flex;
-    justify-content: space-between;
-    margin: 30px 30px;
+const Grid = styled.div`
+  display: grid;
+  margin: 30px 30px;
+  justify-items: center;
+  grid-gap: 10px;
+
+  @media (min-width: 630px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 630px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 function App() {
@@ -32,11 +41,10 @@ function App() {
             <Add/>
             {toDos.length > 0 ? <LeftCounter toDosCount={toDos.length} completedCount={completed.length}/> : ""}
             {toDos.length === 0 && completed.length > 0 ? <Congratulate/> : ""}
-            <Container>
+            <Grid>
                 <List name="To Dos" itemSet={toDos} isCompleted={false} />
-
                 <List name={completed.length > 0 ? "Completed" : ""} itemSet={completed} isCompleted={true} />
-            </Container>
+            </Grid>
         </>
     );
 }

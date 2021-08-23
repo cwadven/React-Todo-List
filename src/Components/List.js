@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import ToDo from "../Components/ToDo";
 
 const Container = styled.section`
-    width: 48%;
+    width: 100%;
 `;
 
 const SubTitle = styled.div`
