@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import ToDosProvider from "./context";
-import { Global, css } from '@emotion/react';
+import {Global, css} from '@emotion/react';
+
 const globalStyle = css`
   * {
     margin: 0;
@@ -21,6 +22,16 @@ const globalStyle = css`
     height: 100%;
     background: #FAF3E0;
   }
+  
+  input[name="toDoDeadLine"] {
+    font-size: 15px;
+    text-align: center;
+  }
+  
+  .react-datepicker__day-name, .react-datepicker__day {
+  margin: 0 !important;
+  font-size: 15px !important;
+}
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -42,7 +53,7 @@ const globalStyle = css`
 
 ReactDOM.render(
     <React.StrictMode>
-        <Global styles={globalStyle} />
+        <Global styles={globalStyle}/>
         <ToDosProvider>
             <App/>
         </ToDosProvider>
