@@ -46,8 +46,11 @@ const List = ({name, itemSet, isCompleted}) => {
             <SubTitle>{name}</SubTitle>
             <div>
                 {itemSet.map((toDo) => (
-                    <ToDo key={toDo.id} id={toDo.id} text={toDo.text} deadLine={toDo.deadLine}
-                          startDate={toDo.startDate} completedDate={toDo.completedDate} isCompleted={isCompleted}/>
+                    <ToDo key={toDo.id} id={toDo.id} text={toDo.text}
+                          deadLine={toDo.deadLine ? new Date(toDo.deadLine) : null}
+                          startDate={toDo.startDate ? new Date(toDo.startDate) : null}
+                          completedDate={toDo.completedDate ? new Date(toDo.completedDate) : null}
+                          isCompleted={isCompleted}/>
                 ))}
             </div>
         </Container>
