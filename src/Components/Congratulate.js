@@ -9,6 +9,7 @@ const Container = styled.div`
 
 const Img = styled.img`
     border-radius: 10px;
+    margin-top: 10px;
 `;
 
 const Bold = styled.b`
