@@ -56,12 +56,17 @@ const DeadLine = styled.div`
     font-size: 15px;
 `;
 
+const CompletedDate = styled.div`
+    text-align: right;
+    font-size: 15px;
+`;
+
 const DatePickerContainer = styled.div`
     text-align: right;
     margin-bottom: 5px;
 `;
 
-const ToDo = ({text, deadLine, startDate, id, isCompleted}) => {
+const ToDo = ({text, deadLine, startDate, completedDate, id, isCompleted}) => {
     const dispatch = useDispatch();
     const [isEditable, setIsEditable] = useState(false);
     const [edit, setEdit] = useState(text);
@@ -80,13 +85,18 @@ const ToDo = ({text, deadLine, startDate, id, isCompleted}) => {
     }
 
     const onEditDeadLineChange = (date) => {
-        setEditDeadLine(date)
+        if (date > new Date()) {
+            setEditDeadLine(date)
+        } else {
+            alert("Date Cannot Be Less Than Now!");
+        }
     }
 
     const onDeleteDoDo = () => {
-        if(window.confirm("Are u sure you want to delete?")){
+        if (window.confirm("Are u sure you want to delete?")) {
             dispatch({type: DELETE, payload: id})
-        };
+        }
+        ;
     }
 
     useEffect(() => {
@@ -107,6 +117,7 @@ const ToDo = ({text, deadLine, startDate, id, isCompleted}) => {
                                 timeInputLabel="Time:"
                                 dateFormat="yyyy/MM/dd h:mm aa"
                                 popperPlacement="auto"
+                                minDate={new Date()}
                                 showTimeInput
                                 relativeSize
                             />
@@ -116,12 +127,13 @@ const ToDo = ({text, deadLine, startDate, id, isCompleted}) => {
                     </>
                 ) :
                 <>
-                    {deadLine ? <>
-                        <DeadLine>{deadLine.toLocaleString()} 까지</DeadLine>
-                    </> : <DeadLine>기간설정안함</DeadLine>}
+                    {deadLine ?
+                        !isCompleted ? <DeadLine>{deadLine.toLocaleString()} 까지</DeadLine> :
+                            <CompletedDate>{completedDate.toLocaleString()} 완료</CompletedDate>
+                        : <DeadLine>기간설정안함</DeadLine>}
                     <Text>{text}</Text>
                     {deadLine && !isCompleted ? <>
-                        <LeftTimeCounter deadLine={deadLine} startDate={startDate} />
+                        <LeftTimeCounter deadLine={deadLine} startDate={startDate}/>
                     </> : ""}
                 </>
             }
