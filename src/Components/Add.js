@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {ADD} from "../reducer";
 import {useDispatch} from "../context";
 import styled from "@emotion/styled";
@@ -11,6 +11,9 @@ const Input = styled.input`
     padding: 0 5px;
     margin: auto;
     height: 30px;
+    outline: 0px;
+    border: ${props => props.error ? "1px solid red" : "1px solid black"};
+    border-radius: 5px;
 `;
 
 const Form = styled.form`
@@ -43,6 +46,10 @@ const Add = () => {
         toDoText: "",
         toDoDeadLine: "",
     });
+    const [inputError, setInputError] = useState(false);
+
+    const memoInput = useRef();
+
     const dispatch = useDispatch();
 
     const onSubmit = e => {
@@ -53,6 +60,9 @@ const Add = () => {
                 toDoText: "",
                 toDoDeadLine: "",
             });
+        } else {
+            memoInput.current.focus();
+            setInputError(true);
         }
     }
 
@@ -60,6 +70,9 @@ const Add = () => {
         setNewToDo({
             ...newToDo, [e.target.name]: e.target.value
         });
+        if (inputError) {
+            setInputError(false);
+        }
     }
 
     const onChangeDate = (date) => {
@@ -71,8 +84,9 @@ const Add = () => {
 
     return (
         <Form>
-            <Input name="toDoText" type="text" value={newToDo.toDoText} placeholder="To Memo Your Jobs Add To Dos"
-                   onChange={onChange}/>
+            <Input ref={memoInput} name="toDoText" type="text" value={newToDo.toDoText}
+                   placeholder="To Memo Your Jobs Add To Dos"
+                   onChange={onChange} error={inputError}/>
             <DatePickerContainer>
                 <Bold>Until When? ⏰</Bold>
                 <DatePicker
