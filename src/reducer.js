@@ -23,6 +23,7 @@ const reducer = (state, action) => {
                         text: action.payload.toDoText,
                         deadLine: action.payload.toDoDeadLine,
                         startDate: action.payload.startDate,
+                        completedDate: action.payload.completedDate,
                     }
                 ]
             };
@@ -35,13 +36,13 @@ const reducer = (state, action) => {
         case COMPLETE:
             return {
                 ...state,
-                completed: [...state.completed, state.toDos.find(toDo => toDo.id === action.payload)],
+                completed: [...state.completed, {...state.toDos.find(toDo => toDo.id === action.payload), completedDate: new Date()}],
                 toDos: state.toDos.filter(toDo => toDo.id !== action.payload)
             };
         case UNCOMPLETE:
             return {
                 ...state,
-                toDos: [...state.toDos, state.completed.find(toDo => toDo.id === action.payload)],
+                toDos: [...state.toDos, {...state.completed.find(toDo => toDo.id === action.payload), completedDate: ""}],
                 completed: state.completed.filter(toDo => toDo.id !== action.payload)
             };
         case EDIT:

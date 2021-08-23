@@ -44,7 +44,7 @@ function App() {
                 <List name={completed.length > 0 ? "Completed" : ""}>
                     {completed.map((toDo) => (
                         <ToDo key={toDo.id} id={toDo.id} text={toDo.text} deadLine={toDo.deadLine}
-                              startDate={toDo.startDate} isCompleted/>
+                              startDate={toDo.startDate} completedDate={toDo.completedDate} isCompleted/>
                     ))}
                 </List>
             </Container>
