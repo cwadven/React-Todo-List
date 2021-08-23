@@ -17,8 +17,8 @@ const List = ({name, itemSet, isCompleted}) => {
     const interval = useRef();
 
     useEffect(() => {
-        if (name === "To Dos") {
-            if (itemSet.length > 0 && itemSet.some((item) => {
+        if (itemSet.length > 0 && name === "To Dos") {
+            if (itemSet.some((item) => {
                 return item.deadLine > new Date()
             })) {
                 interval.current = setInterval(() => setNow(new Date()), 1000);
@@ -28,17 +28,17 @@ const List = ({name, itemSet, isCompleted}) => {
         return () => {
             clearInterval(interval.current);
         };
-    }, [itemSet]);
+    }, [itemSet, name, now]);
 
     useEffect(() => {
-        if (name === "To Dos") {
-            if (itemSet.length > 0 && itemSet.every((item) => {
+        if (itemSet.length > 0 && name === "To Dos") {
+            if (itemSet.every((item) => {
                 return item.deadLine < new Date();
             })) {
                 clearInterval(interval.current);
             }
         }
-    }, [now])
+    }, [itemSet, name, now])
 
     return (
         <Container>
