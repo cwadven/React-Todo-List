@@ -63,14 +63,18 @@ const Add = () => {
     }
 
     const onChangeDate = (date) => {
-        if (date > new Date()) {
-            setNewToDo(prevState => ({
-                ...prevState,
-                toDoDeadLine: date
-            }))
-        } else {
-            alert("Date Cannot Be Less Than Now!");
-        }
+        setNewToDo(prevState => ({
+            ...prevState,
+            toDoDeadLine: date
+        }))
+        // if (date > new Date()) {
+        //     setNewToDo(prevState => ({
+        //         ...prevState,
+        //         toDoDeadLine: date
+        //     }))
+        // } else {
+        //     alert("Date Cannot Be Less Than Now!");
+        // }
     }
 
     return (

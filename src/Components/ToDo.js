@@ -85,11 +85,12 @@ const ToDo = ({text, deadLine, startDate, completedDate, id, isCompleted}) => {
     }
 
     const onEditDeadLineChange = (date) => {
-        if (date > new Date()) {
-            setEditDeadLine(date)
-        } else {
-            alert("Date Cannot Be Less Than Now!");
-        }
+        setEditDeadLine(date)
+        // if (date > new Date()) {
+        //     setEditDeadLine(date)
+        // } else {
+        //     alert("Date Cannot Be Less Than Now!");
+        // }
     }
 
     const onDeleteDoDo = () => {
@@ -129,8 +130,10 @@ const ToDo = ({text, deadLine, startDate, completedDate, id, isCompleted}) => {
                     {deadLine ?
                         !isCompleted ? <DeadLine>{deadLine.toLocaleString()} 까지</DeadLine> :
                             <CompletedDate>{completedDate.toLocaleString()} 완료</CompletedDate>
-                        : <DeadLine>기간설정안함</DeadLine>}
+                        : !isCompleted ? <DeadLine>기간설정안함</DeadLine> :
+                            <CompletedDate>{completedDate.toLocaleString()} 완료</CompletedDate>}
                     <Text>{text}</Text>
+
                     {deadLine && !isCompleted ? <>
                         <LeftTimeCounter deadLine={deadLine} startDate={startDate}/>
                     </> : ""}
