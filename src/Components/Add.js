@@ -67,14 +67,6 @@ const Add = () => {
             ...prevState,
             toDoDeadLine: date
         }))
-        // if (date > new Date()) {
-        //     setNewToDo(prevState => ({
-        //         ...prevState,
-        //         toDoDeadLine: date
-        //     }))
-        // } else {
-        //     alert("Date Cannot Be Less Than Now!");
-        // }
     }
 
     return (
@@ -82,7 +74,7 @@ const Add = () => {
             <Input name="toDoText" type="text" value={newToDo.toDoText} placeholder="To Memo Your Jobs Add To Dos"
                    onChange={onChange}/>
             <DatePickerContainer>
-                <Bold>Until When?</Bold>
+                <Bold>Until When? ⏰</Bold>
                 <DatePicker
                     name="toDoDeadLine"
                     selected={newToDo.toDoDeadLine}
@@ -92,6 +84,7 @@ const Add = () => {
                     popperPlacement="auto"
                     minDate={new Date()}
                     showTimeInput
+                    relativeSize
                 />
             </DatePickerContainer>
             <div>
