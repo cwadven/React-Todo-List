@@ -48,7 +48,7 @@ const Add = () => {
     const onSubmit = e => {
         e.preventDefault();
         if (newToDo.toDoText) {
-            dispatch({type: ADD, payload: {...newToDo, startDate: new Date()}});
+            dispatch({type: ADD, payload: {...newToDo, startDate: new Date(), completedDate: ""}});
             setNewToDo({
                 toDoText: "",
                 toDoDeadLine: "",
@@ -62,6 +62,17 @@ const Add = () => {
         });
     }
 
+    const onChangeDate = (date) => {
+        if (date > new Date()) {
+            setNewToDo(prevState => ({
+                ...prevState,
+                toDoDeadLine: date
+            }))
+        } else {
+            alert("Date Cannot Be Less Than Now!");
+        }
+    }
+
     return (
         <Form>
             <Input name="toDoText" type="text" value={newToDo.toDoText} placeholder="To Memo Your Jobs Add To Dos"
@@ -71,13 +82,11 @@ const Add = () => {
                 <DatePicker
                     name="toDoDeadLine"
                     selected={newToDo.toDoDeadLine}
-                    onChange={(date) => setNewToDo(prevState => ({
-                        ...prevState,
-                        toDoDeadLine: date
-                    }))}
+                    onChange={onChangeDate}
                     timeInputLabel="Time:"
                     dateFormat="yyyy/MM/dd h:mm aa"
                     popperPlacement="auto"
+                    minDate={new Date()}
                     showTimeInput
                 />
             </DatePickerContainer>
