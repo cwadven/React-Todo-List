@@ -1,6 +1,5 @@
 import React from 'react';
 import Add from "./Components/Add";
-import ToDo from "./Components/ToDo";
 import List from "./Components/List";
 import {useCompleted, useToDos} from "./context";
 import styled from "@emotion/styled";
@@ -34,19 +33,9 @@ function App() {
             {toDos.length > 0 ? <LeftCounter toDosCount={toDos.length} completedCount={completed.length}/> : ""}
             {toDos.length === 0 && completed.length > 0 ? <Congratulate/> : ""}
             <Container>
-                <List name="To Dos">
-                    {toDos.map((toDo) => (
-                        <ToDo key={toDo.id} id={toDo.id} text={toDo.text} deadLine={toDo.deadLine}
-                              startDate={toDo.startDate}/>
-                    ))}
-                </List>
+                <List name="To Dos" itemSet={toDos} isCompleted={false} />
 
-                <List name={completed.length > 0 ? "Completed" : ""}>
-                    {completed.map((toDo) => (
-                        <ToDo key={toDo.id} id={toDo.id} text={toDo.text} deadLine={toDo.deadLine}
-                              startDate={toDo.startDate} completedDate={toDo.completedDate} isCompleted/>
-                    ))}
-                </List>
+                <List name={completed.length > 0 ? "Completed" : ""} itemSet={completed} isCompleted={true} />
             </Container>
         </>
     );
