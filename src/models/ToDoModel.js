@@ -27,9 +27,8 @@ const ToDoModel = {
         });
     },
     putToDoDetail: data => {
-        return api.put(`todo/${data.id}`, {
+        return api.put(`todo/${data.id}`, data, {
             headers: { Authorization: getToken() },
-            data,
         });
     },
     deleteToDoDetail: id => {

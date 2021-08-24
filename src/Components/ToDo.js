@@ -97,6 +97,33 @@ const ToDo = ({
         setEditDeadLine(date);
     };
 
+    const editToDo = async data => {
+        try {
+            const {
+                data: { message },
+            } = await ToDoModel.putToDoDetail(data);
+            return message;
+        } catch (e) {
+            console.log(e);
+            errorResponse(e.response.data);
+        }
+    };
+
+    const onEditSubmit = async () => {
+        const message = await editToDo({
+            id: id,
+            text: edit,
+            deadLine: editDeadLine,
+        });
+        if (message === 'success') {
+            setIsEditable(false);
+            dispatch({
+                type: EDIT,
+                payload: { id, edit, editDeadLine },
+            });
+        }
+    };
+
     const deleteToDo = async _id => {
         try {
             const {
@@ -190,15 +217,7 @@ const ToDo = ({
                     </Button>
                 )}
                 {isEditable ? (
-                    <Button
-                        onClick={() => {
-                            setIsEditable(false);
-                            dispatch({
-                                type: EDIT,
-                                payload: { id, edit, editDeadLine },
-                            });
-                        }}
-                    >
+                    <Button onClick={onEditSubmit}>
                         <AiOutlineCheckCircle />
                     </Button>
                 ) : (
