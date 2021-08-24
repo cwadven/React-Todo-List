@@ -40,13 +40,8 @@ const ToDoModel = {
         api.get('todo/completed', {
             headers: { Authorization: getToken() },
         }),
-    putCompletedDetail: data =>
-        api.get(`todo/completed/${data.id}`, {
-            headers: { Authorization: getToken() },
-            data,
-        }),
-    deleteCompletedDetail: id =>
-        api.delete(`todo/completed/${id}`, {
+    changeCompletedStatus: data =>
+        api.get(`todo/completed/${data.id}`, data, {
             headers: { Authorization: getToken() },
         }),
 };
