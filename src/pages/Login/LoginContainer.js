@@ -44,6 +44,7 @@ const LoginContainer = props => {
         if (getToken()) {
             goToDoPage();
         }
+        // eslint-disable-next-line
     }, []);
 
     return (

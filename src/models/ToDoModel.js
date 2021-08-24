@@ -15,7 +15,6 @@ const api = axios.create({
 // 이런 이벤트가 하나라도 발생하면 전부 getToDo, getCompleted 다시??
 const ToDoModel = {
     getToDoList: () => {
-        console.log(getToken());
         return api.get('todo', {
             headers: { Authorization: getToken() },
         });
