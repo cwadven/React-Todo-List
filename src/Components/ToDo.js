@@ -110,17 +110,22 @@ const ToDo = ({
     };
 
     const onEditSubmit = async () => {
-        const message = await editToDo({
-            id: id,
-            text: edit,
-            deadLine: editDeadLine,
-        });
-        if (message === 'success') {
-            setIsEditable(false);
-            dispatch({
-                type: EDIT,
-                payload: { id, edit, editDeadLine },
+        if (edit) {
+            const message = await editToDo({
+                id: id,
+                text: edit,
+                deadLine: editDeadLine,
             });
+            if (message === 'success') {
+                setIsEditable(false);
+                dispatch({
+                    type: EDIT,
+                    payload: { id, edit, editDeadLine },
+                });
+            }
+        } else {
+            alert('Write To Do');
+            inputRef.current.focus();
         }
     };
 
