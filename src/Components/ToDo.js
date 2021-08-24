@@ -1,28 +1,30 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {COMPLETE, DELETE, EDIT, UNCOMPLETE} from "../reducer";
-import {useDispatch} from "../context";
-import styled from "@emotion/styled";
+import React, { useEffect, useRef, useState } from 'react';
+import { COMPLETE, DELETE, EDIT, UNCOMPLETE } from '../reducer';
+import { useDispatch } from '../context';
+import styled from '@emotion/styled';
 import {
     AiFillDelete,
     AiOutlineCheckCircle,
     AiOutlineEdit,
     AiOutlineFileDone,
     AiOutlineFileSync,
-    AiOutlineRollback
-} from "react-icons/ai";
-import DatePicker from "react-datepicker";
-import LeftTimeCounter from "./LeftTimeCounter";
+    AiOutlineRollback,
+} from 'react-icons/ai';
+import DatePicker from 'react-datepicker';
+import LeftTimeCounter from './LeftTimeCounter';
+import ToDoModel from '../models/ToDoModel';
+import { errorResponse } from '../models/AccountModel';
 
 const Container = styled.article`
-    background: #EABF9F;
+    background: #eabf9f;
     margin: 10px;
     padding: 10px;
     border-radius: 15px;
-    border: 1px solid #1E212D;
+    border: 1px solid #1e212d;
 `;
 
 const Text = styled.div`
-    color: #1E212D;
+    color: #1e212d;
     font-weight: bold;
     font-size: 15px;
 `;
@@ -45,9 +47,9 @@ const Button = styled.button`
     background: transparent;
     border: transparent;
     transition: 0.1s linear;
-    
+
     &:hover {
-        color: #FAF3E0;
+        color: #faf3e0;
     }
 `;
 
@@ -66,7 +68,14 @@ const DatePickerContainer = styled.div`
     margin-bottom: 5px;
 `;
 
-const ToDo = ({text, deadLine, startDate, completedDate, id, isCompleted}) => {
+const ToDo = ({
+    text,
+    deadLine,
+    startDate,
+    completedDate,
+    id,
+    isCompleted,
+}) => {
     const dispatch = useDispatch();
     const [isEditable, setIsEditable] = useState(false);
     const [edit, setEdit] = useState(text);
@@ -75,93 +84,151 @@ const ToDo = ({text, deadLine, startDate, completedDate, id, isCompleted}) => {
     const inputRef = useRef(null);
 
     const editExit = async () => {
-        await setIsEditable(prevState => (!prevState));
+        await setIsEditable(prevState => !prevState);
         setEdit(text);
         setEditDeadLine(deadLine);
-    }
+    };
 
-    const onEditChange = (e) => {
+    const onEditChange = e => {
         setEdit(e.target.value);
-    }
+    };
 
-    const onEditDeadLineChange = (date) => {
-        setEditDeadLine(date)
-    }
+    const onEditDeadLineChange = date => {
+        setEditDeadLine(date);
+    };
 
-    const onDeleteDoDo = () => {
-        if (window.confirm("Are u sure you want to delete?")) {
-            dispatch({type: DELETE, payload: id});
+    const deleteToDo = async _id => {
+        try {
+            const {
+                data: { message },
+            } = await ToDoModel.deleteToDoDetail(_id);
+            return message;
+        } catch (e) {
+            console.log(e);
+            errorResponse(e.response.data);
         }
-    }
+    };
+
+    const onDeleteDoDo = async () => {
+        if (window.confirm('Are u sure you want to delete?')) {
+            const message = await deleteToDo(id);
+            if (message === 'success') {
+                dispatch({ type: DELETE, payload: id });
+            }
+        }
+    };
 
     useEffect(() => {
         if (isEditable) {
             inputRef.current.focus();
         }
-    }, [isEditable])
+    }, [isEditable]);
 
     return (
         <Container>
             {isEditable ? (
-                    <>
-                        <DatePickerContainer>
-                            <DatePicker
-                                name="toDoDeadLine"
-                                selected={editDeadLine}
-                                onChange={onEditDeadLineChange}
-                                timeInputLabel="Time:"
-                                dateFormat="yyyy/MM/dd h:mm aa"
-                                popperPlacement="auto"
-                                minDate={new Date()}
-                                showTimeInput
-                                relativeSize
-                            />
-                        </DatePickerContainer>
-                        <Input type="text" ref={inputRef} value={edit} placeholder="To Memo Your Jobs"
-                               onChange={onEditChange}/>
-                    </>
-                ) :
                 <>
-                    {deadLine ?
-                        !isCompleted ? <DeadLine>{deadLine.toLocaleString()} 까지</DeadLine> :
-                            <CompletedDate>{completedDate.toLocaleString()} 완료</CompletedDate>
-                        : !isCompleted ? <DeadLine>기간설정안함</DeadLine> :
-                            <CompletedDate>{completedDate.toLocaleString()} 완료</CompletedDate>}
+                    <DatePickerContainer>
+                        <DatePicker
+                            name="toDoDeadLine"
+                            selected={editDeadLine}
+                            onChange={onEditDeadLineChange}
+                            timeInputLabel="Time:"
+                            dateFormat="yyyy/MM/dd h:mm aa"
+                            popperPlacement="auto"
+                            minDate={new Date()}
+                            showTimeInput
+                            relativeSize
+                        />
+                    </DatePickerContainer>
+                    <Input
+                        type="text"
+                        ref={inputRef}
+                        value={edit}
+                        placeholder="To Memo Your Jobs"
+                        onChange={onEditChange}
+                    />
+                </>
+            ) : (
+                <>
+                    {deadLine ? (
+                        !isCompleted ? (
+                            <DeadLine>
+                                {deadLine.toLocaleString()} 까지
+                            </DeadLine>
+                        ) : (
+                            <CompletedDate>
+                                {completedDate.toLocaleString()} 완료
+                            </CompletedDate>
+                        )
+                    ) : !isCompleted ? (
+                        <DeadLine>기간설정안함</DeadLine>
+                    ) : (
+                        <CompletedDate>
+                            {completedDate.toLocaleString()} 완료
+                        </CompletedDate>
+                    )}
                     <Text>{text}</Text>
 
-                    {deadLine && !isCompleted ? <>
-                        <LeftTimeCounter deadLine={deadLine} startDate={startDate}/>
-                    </> : ""}
+                    {deadLine && !isCompleted ? (
+                        <>
+                            <LeftTimeCounter
+                                deadLine={deadLine}
+                                startDate={startDate}
+                            />
+                        </>
+                    ) : (
+                        ''
+                    )}
                 </>
-            }
+            )}
 
             <ButtonContainer>
-                {!isCompleted &&
-                <Button onClick={editExit}>
-                    {isEditable ? <AiOutlineRollback/> : <AiOutlineEdit/>}
-                </Button>
-                }
+                {!isCompleted && (
+                    <Button onClick={editExit}>
+                        {isEditable ? <AiOutlineRollback /> : <AiOutlineEdit />}
+                    </Button>
+                )}
                 {isEditable ? (
-                        <Button onClick={() => {
+                    <Button
+                        onClick={() => {
                             setIsEditable(false);
-                            dispatch({type: EDIT, payload: {id, edit, editDeadLine}});
-                        }}>
-                            <AiOutlineCheckCircle/>
-                        </Button>) :
+                            dispatch({
+                                type: EDIT,
+                                payload: { id, edit, editDeadLine },
+                            });
+                        }}
+                    >
+                        <AiOutlineCheckCircle />
+                    </Button>
+                ) : (
                     <>
-                        <Button onClick={() => {
-                            dispatch({type: isCompleted ? UNCOMPLETE : COMPLETE, payload: id})
-                        }}>{isCompleted ? <AiOutlineFileSync/> : <AiOutlineFileDone/>}
+                        <Button
+                            onClick={() => {
+                                dispatch({
+                                    type: isCompleted ? UNCOMPLETE : COMPLETE,
+                                    payload: id,
+                                });
+                            }}
+                        >
+                            {isCompleted ? (
+                                <AiOutlineFileSync />
+                            ) : (
+                                <AiOutlineFileDone />
+                            )}
                         </Button>
-                        <Button onClick={() => {
-                            onDeleteDoDo();
-                        }}><AiFillDelete/>
+                        <Button
+                            onClick={() => {
+                                onDeleteDoDo();
+                            }}
+                        >
+                            <AiFillDelete />
                         </Button>
                     </>
-                }
+                )}
             </ButtonContainer>
         </Container>
-    )
-}
+    );
+};
 
 export default ToDo;
