@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {getAccesesToken} from "../models/AccountModel";
+import { getToken } from '../models/AccountModel';
 
 const api = axios.create({
     baseURL: 'http://127.0.0.1:8000/',
@@ -14,16 +14,16 @@ const api = axios.create({
 
 // 이런 이벤트가 하나라도 발생하면 전부 getToDo, getCompleted 다시??
 const ToDoModel = {
-    // completed 가 "" 인 것들 다 가져오기
     getToDoList: () => {
+        console.log(getToken());
         return api.get('todo', {
-            headers: {Authorization: getAccesesToken()},
+            headers: { Authorization: getToken() },
         });
     },
-    // 당일 기준
-    getCompletedList: () => api.get('todo/completed', {
-        headers: {Authorization: getAccesesToken()},
-    }),
-}
+    getCompletedList: () =>
+        api.get('todo/completed', {
+            headers: { Authorization: getToken() },
+        }),
+};
 
 export default ToDoModel;
