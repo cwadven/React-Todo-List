@@ -19,8 +19,35 @@ const ToDoModel = {
             headers: { Authorization: getToken() },
         });
     },
+    postToDo: data => {
+        return api.post('todo', data, {
+            headers: {
+                Authorization: getToken(),
+            },
+        });
+    },
+    putToDoDetail: data => {
+        return api.put(`todo/${data.id}`, {
+            headers: { Authorization: getToken() },
+            data,
+        });
+    },
+    deleteToDoDetail: id => {
+        return api.delete(`todo/${id}`, {
+            headers: { Authorization: getToken() },
+        });
+    },
     getCompletedList: () =>
         api.get('todo/completed', {
+            headers: { Authorization: getToken() },
+        }),
+    putCompletedDetail: data =>
+        api.get(`todo/completed/${data.id}`, {
+            headers: { Authorization: getToken() },
+            data,
+        }),
+    deleteCompletedDetail: id =>
+        api.delete(`todo/completed/${id}`, {
             headers: { Authorization: getToken() },
         }),
 };
