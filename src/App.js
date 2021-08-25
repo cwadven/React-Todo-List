@@ -24,11 +24,11 @@ function App() {
                     <Route path={'/signup'} component={Signup} />
                     <ToDosProvider>
                         <Route path={'/todo'} component={ToDo} />
+                        <Footer />
                     </ToDosProvider>
                     <Redirect from={'*'} to={'/'} />
                 </Switch>
             </BrowserRouter>
-            <Footer />
         </Container>
     );
 }
