@@ -52,6 +52,7 @@ const Message = styled.div`
     font-weight: bold;
     font-size: 15px;
     margin: 10px 0;
+    text-align: center;
 `;
 
 const LoginButton = styled.button`
