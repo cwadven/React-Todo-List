@@ -106,8 +106,23 @@ Project Root
 ├── 📂 src
 │    ├── 📂 assets                                       # Image & etc
 │    ├── 📂 Components                                   # Common Components
-│    │    └── 📑 Component.js                            # Common Component
+│    │    ├── 📑 Component.js                            # Common Component
 │    │    └── 📑 Component.js
+│    │
+│    ├── 📂 models            
+│    │    ├── 📑 XXXXModel.js 
+│    │    └── 📑 XXXXModel.js
+│    │
+│    ├── 📂 pages             
+│    │    ├── 📂 Page
+│    │    │    ├── index.js                             # To export as Folder name
+│    │    │    ├── PageContainer.js                     # Present Conponents
+│    │    │    └── PagePresenter.js                     # Control Conponents
+│    │    │
+│    │    └── 📂 Page
+│    │         ├── index.js                             # To export as Folder name
+│    │         ├── PageContainer.js                     # Control Conponents
+│    │         └── PagePresenter.js                     # Present Conponents
 │    │
 │    ├── 📑 reducer.js                                  # use Reducer
 │    ├── 📑 context.js                                  # use Context
