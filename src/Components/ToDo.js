@@ -129,6 +129,29 @@ const ToDo = ({
         }
     };
 
+    const completedStatusTodo = async () => {
+        try {
+            const {
+                data: { message },
+            } = await ToDoModel.changeCompletedStatus({
+                id,
+                isCompleted,
+            });
+            return message;
+        } catch (e) {
+            console.log(e);
+            errorResponse(e.response.data);
+        }
+    };
+
+    const onCompletedStatusChange = async () => {
+        await completedStatusTodo();
+        dispatch({
+            type: isCompleted ? UNCOMPLETE : COMPLETE,
+            payload: id,
+        });
+    };
+
     const deleteToDo = async _id => {
         try {
             const {
@@ -227,25 +250,14 @@ const ToDo = ({
                     </Button>
                 ) : (
                     <>
-                        <Button
-                            onClick={() => {
-                                dispatch({
-                                    type: isCompleted ? UNCOMPLETE : COMPLETE,
-                                    payload: id,
-                                });
-                            }}
-                        >
+                        <Button onClick={onCompletedStatusChange}>
                             {isCompleted ? (
                                 <AiOutlineFileSync />
                             ) : (
                                 <AiOutlineFileDone />
                             )}
                         </Button>
-                        <Button
-                            onClick={() => {
-                                onDeleteDoDo();
-                            }}
-                        >
+                        <Button onClick={onDeleteDoDo}>
                             <AiFillDelete />
                         </Button>
                     </>
