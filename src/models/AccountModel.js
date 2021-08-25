@@ -17,6 +17,7 @@ export const errorResponse = errResponseData => {
 
 const AccountModel = {
     login: data => api.post('accounts/login', data),
+    signUp: data => api.post('accounts/registration', data),
 };
 
 export default AccountModel;
