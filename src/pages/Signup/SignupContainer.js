@@ -21,7 +21,7 @@ const SignupContainer = props => {
     };
 
     const goToDoPage = () => {
-        props.history.replace('/todo');
+        props.history.push('/todo');
     };
 
     const onDataChange = e => {
