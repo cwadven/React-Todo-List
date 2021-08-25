@@ -62,10 +62,20 @@ const LoginButton = styled.button`
     border-radius: 5px;
     transition: 0.3s linear;
 
-    &:hover {
-        width: 120px;
-        padding: 5px 12px;
+    &:active {
+        background-color: #e0c4b6;
     }
+`;
+
+const SignUpButton = styled.button`
+    color: #f9f9f9;
+    margin-top: 5px;
+    width: 100px;
+    padding: 5px 10px;
+    background-color: #1e212d;
+    border: 1px solid;
+    border-radius: 5px;
+    transition: 0.3s linear;
 
     &:active {
         background-color: #e0c4b6;
@@ -101,6 +111,7 @@ const LoginPresenter = ({
                 />
                 {!loading ? <LoginButton>LOGIN</LoginButton> : <Loader />}
             </Form>
+            <SignUpButton>SIGNUP</SignUpButton>
             <Message>{error}</Message>
         </Container>
     );
