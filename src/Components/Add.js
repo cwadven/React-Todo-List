@@ -62,7 +62,7 @@ const Add = () => {
             return message;
         } catch (e) {
             console.log(e);
-            errorResponse(e.response.data);
+            errorResponse(e.response);
         }
     };
 

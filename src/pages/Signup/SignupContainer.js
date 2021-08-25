@@ -38,8 +38,12 @@ const SignupContainer = props => {
             await onSignup();
             goToDoPage();
         } catch (e) {
-            setError(Object.values(e.response.data));
             setLoading(false);
+            if (e.response) {
+                setError(Object.values(e.response.data));
+            } else {
+                setError('something went wrong...');
+            }
         }
     };
 

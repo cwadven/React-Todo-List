@@ -17,7 +17,7 @@ const ToDosProvider = ({ children }) => {
             return todo_set;
         } catch (e) {
             console.log(e);
-            errorResponse(e.response.data);
+            errorResponse(e.response);
         }
     };
 

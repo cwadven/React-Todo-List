@@ -105,7 +105,7 @@ const ToDo = ({
             return message;
         } catch (e) {
             console.log(e);
-            errorResponse(e.response.data);
+            errorResponse(e.response);
         }
     };
 
@@ -140,7 +140,7 @@ const ToDo = ({
             return message;
         } catch (e) {
             console.log(e);
-            errorResponse(e.response.data);
+            errorResponse(e.response);
         }
     };
 
@@ -160,7 +160,7 @@ const ToDo = ({
             return message;
         } catch (e) {
             console.log(e);
-            errorResponse(e.response.data);
+            errorResponse(e.response);
         }
     };
 

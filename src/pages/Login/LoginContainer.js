@@ -37,8 +37,12 @@ const LoginContainer = props => {
             await onLogin();
             goToDoPage('/todo');
         } catch (e) {
-            setError(Object.values(e.response.data));
             setLoading(false);
+            if (e.response) {
+                setError(Object.values(e.response.data));
+            } else {
+                setError('something went wrong...');
+            }
         }
     };
 
