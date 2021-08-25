@@ -89,6 +89,7 @@ const SignupPresenter = ({
                     placeholder={'id'}
                     value={signUpData.username}
                     onChange={onDataChange}
+                    required
                 />
                 <Input
                     name="password1"
@@ -96,6 +97,7 @@ const SignupPresenter = ({
                     placeholder={'password'}
                     value={signUpData.password1}
                     onChange={onDataChange}
+                    required
                 />
                 <Input
                     name="password2"
@@ -103,6 +105,7 @@ const SignupPresenter = ({
                     placeholder={'password check'}
                     value={signUpData.password2}
                     onChange={onDataChange}
+                    required
                 />
                 {!loading ? <SignUpButton>SignUp</SignUpButton> : <Loader />}
             </Form>

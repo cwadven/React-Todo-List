@@ -13,10 +13,10 @@ const SignupContainer = props => {
     const [loading, setLoading] = useState(false);
     const idRef = useRef();
 
-    const onLogin = async () => {
+    const onSignup = async () => {
         const {
             data: { token },
-        } = await AccountModel.login(signUpData);
+        } = await AccountModel.signUp(signUpData);
         await setToken(token);
     };
 
@@ -35,7 +35,7 @@ const SignupContainer = props => {
         e.preventDefault();
         try {
             setLoading(true);
-            await onLogin();
+            await onSignup();
             goToDoPage();
         } catch (e) {
             setError(Object.values(e.response.data));
