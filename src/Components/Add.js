@@ -57,9 +57,9 @@ const Add = () => {
         const { toDoText: text, toDoDeadLine: deadLine } = _newToDo;
         try {
             const {
-                data: { message },
+                data: { message, id },
             } = await ToDoModel.postToDo({ text, deadLine });
-            return message;
+            return { message, id };
         } catch (e) {
             console.log(e);
             errorResponse(e.response);
@@ -69,12 +69,13 @@ const Add = () => {
     const onSubmit = async e => {
         e.preventDefault();
         if (newToDo.toDoText) {
-            const message = await postToDo(newToDo);
+            const { message, id } = await postToDo(newToDo);
             if (message === 'success') {
                 dispatch({
                     type: ADD,
                     payload: {
                         ...newToDo,
+                        id: id,
                         startDate: new Date(),
                         completedDate: '',
                     },
