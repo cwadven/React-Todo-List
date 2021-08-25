@@ -89,6 +89,7 @@ const LoginPresenter = ({
     error,
     onSubmit,
     onDataChange,
+    goToSignUp,
     idRef,
     loading,
 }) => {
@@ -113,7 +114,7 @@ const LoginPresenter = ({
                 />
                 {!loading ? <LoginButton>LOGIN</LoginButton> : <Loader />}
             </Form>
-            <SignUpButton>SIGNUP</SignUpButton>
+            <SignUpButton onClick={goToSignUp}>SIGNUP</SignUpButton>
             <Message>{error}</Message>
         </Container>
     );

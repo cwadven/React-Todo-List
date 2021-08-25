@@ -19,8 +19,8 @@ const LoginContainer = props => {
         await setToken(token);
     };
 
-    const goToDoPage = () => {
-        props.history.replace('/todo');
+    const goToDoPage = url => {
+        props.history.push(url);
     };
 
     const onDataChange = e => {
@@ -35,7 +35,7 @@ const LoginContainer = props => {
         try {
             setLoading(true);
             await onLogin();
-            goToDoPage();
+            goToDoPage('/todo');
         } catch (e) {
             setError(Object.values(e.response.data));
             setLoading(false);
@@ -45,7 +45,7 @@ const LoginContainer = props => {
     useEffect(() => {
         idRef.current.focus();
         if (getToken()) {
-            goToDoPage();
+            goToDoPage('/todo');
         }
         // eslint-disable-next-line
     }, []);
@@ -53,6 +53,9 @@ const LoginContainer = props => {
     return (
         <LoginPresenter
             onSubmit={onSubmit}
+            goToSignUp={() => {
+                goToDoPage('/signup');
+            }}
             onDataChange={onDataChange}
             loginData={loginData}
             error={error}
