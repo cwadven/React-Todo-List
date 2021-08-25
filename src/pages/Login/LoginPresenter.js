@@ -49,6 +49,7 @@ const Input = styled.input`
 `;
 
 const Message = styled.div`
+    font-weight: bold;
     font-size: 15px;
     margin: 10px 0;
 `;
