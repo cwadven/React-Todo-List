@@ -2,30 +2,75 @@
 
 ## Purpose Of Project
 
+edit . 2021-08-25
+
+---
+
 - Due to Study `React` about `reducer` `context` ... etc
+- Also To Deploy & use this project myself
 
 ## Project Introduce
 
+edit . 2021-08-25
+
+---
+
 - To remind me what to do & how much time I got
-- Later if project connects with Backend. To show history about what I have done. 
+- To show history about what I have done. 
 
 ## Service Address
-#### URL :
+
+edit . 2021-08-25
+
+---
+
+### Front End
+
 https://adoring-sammet-a0d202.netlify.app
 
+### Back End
+
+https://cwadven4.pythonanywhere.com
+
 ## Project Duration
+
+edit . 2021-08-25
+
+---
 
 2021-08-21 ~
 
 ## Technologies Used
 
+edit . 2021-08-25
+
+---
+
 #### Frontend Stack
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 
 #### Backend Stack
-NOT YET => Going To Use Django...
+![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white) ![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
+
+## Deploy
+
+edit . 2021-08-25
+
+---
+
+#### Frontend
+
+![Netlify](https://img.shields.io/badge/netlify-%23000000.svg?style=for-the-badge&logo=netlify&logoColor=#00C7B7)
+
+#### Backend
+
+Pythonanywhere
 
 ## Developer Information
+
+edit . 2021-08-25
+
+---
 
 #### Frontend Developer
 
@@ -33,13 +78,18 @@ NOT YET => Going To Use Django...
 
 - Github : https://github.com/cwadven
 
-#### Backend Developer (GOING TO USE `Django` Later)
+#### Backend Developer
 
 ##### 👨‍🦱 이창우 (Lee Chang Woo)
 
 - Github : https://github.com/cwadven
 
+
 ## Project Structure
+
+edit . 2021-08-25
+
+---
 
 #### Frontend
 
@@ -71,3 +121,7 @@ Project Root
 ```
 
 ---
+
+## Backend Info Link
+
+https://github.com/cwadven/React-ToDo-List-Backend
