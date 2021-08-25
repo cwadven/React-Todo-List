@@ -9,6 +9,7 @@ const LoginContainer = props => {
         password: '',
     });
     const [error, setError] = useState('🎈 Hello & 😀 Happy');
+    const [loading, setLoading] = useState(false);
     const idRef = useRef();
 
     const onLogin = async () => {
@@ -32,10 +33,12 @@ const LoginContainer = props => {
     const onSubmit = async e => {
         e.preventDefault();
         try {
+            setLoading(true);
             await onLogin();
             goToDoPage();
         } catch (e) {
             setError(Object.values(e.response.data));
+            setLoading(false);
         }
     };
 
@@ -53,6 +56,7 @@ const LoginContainer = props => {
             onDataChange={onDataChange}
             loginData={loginData}
             error={error}
+            loading={loading}
             idRef={idRef}
         />
     );

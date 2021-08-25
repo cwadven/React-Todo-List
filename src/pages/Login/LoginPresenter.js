@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import Loader from '../../Components/Loader';
 
 const Container = styled.div`
     display: flex;
@@ -77,6 +78,7 @@ const LoginPresenter = ({
     onSubmit,
     onDataChange,
     idRef,
+    loading,
 }) => {
     return (
         <Container>
@@ -97,7 +99,7 @@ const LoginPresenter = ({
                     value={loginData.password}
                     onChange={onDataChange}
                 />
-                <LoginButton>LOGIN</LoginButton>
+                {!loading ? <LoginButton>LOGIN</LoginButton> : <Loader />}
             </Form>
             <Message>{error}</Message>
         </Container>
