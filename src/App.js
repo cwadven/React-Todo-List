@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import Footer from './Components/Footer';
 import ToDo from './pages/ToDo';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 import ToDosProvider from './context';
 
 const Container = styled.div`
@@ -20,6 +21,7 @@ function App() {
                 <Switch>
                     <Route path={'/'} exact component={Login} />
                     <Route path={'/login'} component={Login} />
+                    <Route path={'/signup'} component={Signup} />
                     <ToDosProvider>
                         <Route path={'/todo'} component={ToDo} />
                     </ToDosProvider>
