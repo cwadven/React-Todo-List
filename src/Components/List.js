@@ -1,16 +1,37 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import ToDo from '../Components/ToDo';
+import { AiOutlineSchedule } from 'react-icons/all';
 
 const Container = styled.section`
     width: 100%;
 `;
 
 const SubTitle = styled.div`
+    position: relative;
     text-align: center;
     font-size: 27px;
     font-weight: bold;
     color: #1e212d;
+`;
+
+const CompletedModalButton = styled.button`
+    position: absolute;
+    right: 10px;
+    width: 60px;
+    height: 100%;
+
+    margin: 0 3px;
+    display: inline-flex;
+    background: transparent;
+    border: transparent;
+    transition: 0.1s linear;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        color: #eabf9f;
+    }
 `;
 
 const List = ({ name, itemSet, isCompleted }) => {
@@ -47,7 +68,15 @@ const List = ({ name, itemSet, isCompleted }) => {
 
     return (
         <Container>
-            <SubTitle>{name}</SubTitle>
+            <SubTitle>
+                {name}
+                {name === 'Completed' && (
+                    <CompletedModalButton>
+                        <AiOutlineSchedule size={30} />
+                    </CompletedModalButton>
+                )}
+            </SubTitle>
+
             <div>
                 {itemSet.map(toDo => (
                     <ToDo
