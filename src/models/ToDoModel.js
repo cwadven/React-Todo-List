@@ -33,6 +33,10 @@ const ToDoModel = {
         api.get('todo/completed', {
             headers: { Authorization: getToken() },
         }),
+    getCompletedTodayList: () =>
+        api.get('todo/completed/today', {
+            headers: { Authorization: getToken() },
+        }),
     changeCompletedStatus: data =>
         api.put(`todo/completed/${data.id}`, data, {
             headers: { Authorization: getToken() },
