@@ -94,9 +94,18 @@ const CompletedModal = ({ onModalOpenClick }) => {
 
     const requestCompletedSet = async () => {
         try {
-            const {
+            let {
                 data: { completed_set },
             } = await ToDoModel.getCompletedList();
+            completed_set = completed_set.sort((a, b) => {
+                if (new Date(a.completedDate) > new Date(b.completedDate)) {
+                    return 1;
+                }
+                if (new Date(a.completedDate) < new Date(b.completedDate)) {
+                    return -1;
+                }
+                return 0;
+            });
             return completed_set;
         } catch (e) {
             console.log(e);
@@ -104,17 +113,10 @@ const CompletedModal = ({ onModalOpenClick }) => {
         }
     };
 
+    // eslint-disable-next-line
     useEffect(async () => {
         let completed_set = await requestCompletedSet();
-        completed_set = await completed_set.sort((a, b) => {
-            if (new Date(a.completedDate) > new Date(b.completedDate)) {
-                return 1;
-            }
-            if (new Date(a.completedDate) < new Date(b.completedDate)) {
-                return -1;
-            }
-            return 0;
-        });
+
         await setCompletedSet(completed_set);
         setIsLoading(false);
     }, []);
