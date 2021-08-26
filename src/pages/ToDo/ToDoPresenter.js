@@ -48,11 +48,7 @@ const ToDoPresenter = ({ toDos, completed }) => {
             {toDos.length === 0 && completed.length > 0 ? <Congratulate /> : ''}
             <Grid>
                 <List name="To Dos" itemSet={toDos} isCompleted={false} />
-                <List
-                    name={completed.length > 0 ? 'Completed' : ''}
-                    itemSet={completed}
-                    isCompleted={true}
-                />
+                <List name="Completed" itemSet={completed} isCompleted={true} />
             </Grid>
         </>
     );
