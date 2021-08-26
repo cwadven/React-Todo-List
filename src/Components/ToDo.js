@@ -241,24 +241,28 @@ const ToDo = ({
             <ButtonContainer>
                 {!isCompleted && (
                     <Button onClick={editExit}>
-                        {isEditable ? <AiOutlineRollback /> : <AiOutlineEdit />}
+                        {isEditable ? (
+                            <AiOutlineRollback size={30} />
+                        ) : (
+                            <AiOutlineEdit size={30} />
+                        )}
                     </Button>
                 )}
                 {isEditable ? (
                     <Button onClick={onEditSubmit}>
-                        <AiOutlineCheckCircle />
+                        <AiOutlineCheckCircle size={30} />
                     </Button>
                 ) : (
                     <>
                         <Button onClick={onCompletedStatusChange}>
                             {isCompleted ? (
-                                <AiOutlineFileSync />
+                                <AiOutlineFileSync size={30} />
                             ) : (
-                                <AiOutlineFileDone />
+                                <AiOutlineFileDone size={30} />
                             )}
                         </Button>
                         <Button onClick={onDeleteDoDo}>
-                            <AiFillDelete />
+                            <AiFillDelete size={30} />
                         </Button>
                     </>
                 )}
