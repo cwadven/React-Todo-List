@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import ToDoModel from '../models/ToDoModel';
 import { errorResponse } from '../models/AccountModel';
 import Loader from '../Components/Loader';
+import { arrayInObjectSort } from '../common.js';
 
 const ModalDeactivateButton = styled.button`
     position: absolute;
@@ -97,15 +98,12 @@ const CompletedModal = ({ onModalOpenClick }) => {
             let {
                 data: { completed_set },
             } = await ToDoModel.getCompletedList();
-            completed_set = completed_set.sort((a, b) => {
-                if (new Date(a.completedDate) > new Date(b.completedDate)) {
-                    return 1;
-                }
-                if (new Date(a.completedDate) < new Date(b.completedDate)) {
-                    return -1;
-                }
-                return 0;
-            });
+            completed_set = arrayInObjectSort(
+                completed_set,
+                'completedDate',
+                'asc',
+                'date',
+            );
             return completed_set;
         } catch (e) {
             console.log(e);
