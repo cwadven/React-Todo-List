@@ -21,11 +21,11 @@ const ToDosProvider = ({ children }) => {
         }
     };
 
-    const getCompletedList = async () => {
+    const getCompletedTodayList = async () => {
         try {
             const {
                 data: { completed_set },
-            } = await ToDoModel.getCompletedList();
+            } = await ToDoModel.getCompletedTodayList();
             return completed_set;
         } catch (e) {
             console.log(e);
@@ -35,7 +35,7 @@ const ToDosProvider = ({ children }) => {
     // eslint-disable-next-line
     useEffect(async () => {
         const todoSet = await getToDoList();
-        const completedSet = await getCompletedList();
+        const completedSet = await getCompletedTodayList();
         dispatch({ type: SET_TODO, payload: todoSet });
         dispatch({ type: SET_COMPLETED, payload: completedSet });
     }, []);
