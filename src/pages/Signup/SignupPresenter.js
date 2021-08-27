@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Loader from '../../Components/Loader';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
     display: flex;
@@ -24,13 +25,13 @@ const Container = styled.div`
     right: 0;
     margin: auto;
 
-    border: 1px solid #1e212d;
     border-radius: 10px;
 `;
 
 const Title = styled.b`
+    color: #000000d4;
     font-size: 30px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 `;
 
 const Form = styled.form`
@@ -46,28 +47,42 @@ const Input = styled.input`
     border: 0px solid;
     border-radius: 3px;
     outline: 0px;
+
+    &::placeholder {
+        color: #00000024;
+    }
 `;
 
-const Message = styled.div`
+const ErrorMessageContainer = styled.div`
+    margin-top: 20px;
+`;
+
+const ErrorMessage = styled.div`
+    color: #d90000;
     font-weight: bold;
     font-size: 15px;
-    margin: 10px 0;
+    margin: 5px 0;
+    padding: 0 50px;
     text-align: center;
 `;
 
 const SignUpButton = styled.button`
     color: #f9f9f9;
-    margin-top: 5px;
-    width: 100px;
+    margin-top: 50px;
+    width: 90%;
+    height: 50px;
     padding: 5px 10px;
     background-color: #1e212d;
-    border: 1px solid;
+    border: 0px solid;
     border-radius: 5px;
-    transition: 0.3s linear;
+`;
 
-    &:active {
-        background-color: #e0c4b6;
-    }
+const Back = styled(Link)`
+    color: #faf3e0;
+    cursor: pointer;
+    margin-top: 5px;
+    font-size: 17px;
+    transition: 0.2s linear;
 `;
 
 const SignupPresenter = ({
@@ -80,7 +95,7 @@ const SignupPresenter = ({
 }) => {
     return (
         <Container>
-            <Title>Sign Up</Title>
+            <Title>SIGN UP</Title>
             <Form onSubmit={onSubmit}>
                 <Input
                     ref={idRef}
@@ -107,9 +122,16 @@ const SignupPresenter = ({
                     onChange={onDataChange}
                     required
                 />
-                {!loading ? <SignUpButton>SignUp</SignUpButton> : <Loader />}
+                {!loading ? <SignUpButton>Sign up</SignUpButton> : <Loader />}
             </Form>
-            <Message>{error}</Message>
+            <Back to={'/'}>Back</Back>
+            <ErrorMessageContainer>
+                {error.map(e => {
+                    return e.map(_e => {
+                        return <ErrorMessage>{_e}</ErrorMessage>;
+                    });
+                })}
+            </ErrorMessageContainer>
         </Container>
     );
 };

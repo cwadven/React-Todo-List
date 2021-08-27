@@ -9,7 +9,7 @@ const SignupContainer = props => {
         password1: '',
         password2: '',
     });
-    const [error, setError] = useState('🎈 Hello & 😀 Happy');
+    const [error, setError] = useState([]);
     const [loading, setLoading] = useState(false);
     const idRef = useRef();
 

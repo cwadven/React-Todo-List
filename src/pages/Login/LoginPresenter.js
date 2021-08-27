@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Loader from '../../Components/Loader';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
     display: flex;
@@ -53,10 +54,15 @@ const Input = styled.input`
     }
 `;
 
-const Message = styled.div`
+const ErrorMessageContainer = styled.div`
+    margin-top: 20px;
+`;
+
+const ErrorMessage = styled.div`
+    color: #d90000;
     font-weight: bold;
     font-size: 15px;
-    margin: 10px 0;
+    margin: 5px 0;
     text-align: center;
 `;
 
@@ -76,7 +82,7 @@ const LoginButton = styled.button`
     }
 `;
 
-const SignUp = styled.a`
+const SignUp = styled(Link)`
     color: #faf3e0;
     cursor: pointer;
     margin-top: 5px;
@@ -89,7 +95,6 @@ const LoginPresenter = ({
     error,
     onSubmit,
     onDataChange,
-    goToSignUp,
     idRef,
     loading,
 }) => {
@@ -104,6 +109,7 @@ const LoginPresenter = ({
                     placeholder={'id'}
                     value={loginData.username}
                     onChange={onDataChange}
+                    required
                 />
                 <Input
                     name="password"
@@ -111,11 +117,19 @@ const LoginPresenter = ({
                     placeholder={'password'}
                     value={loginData.password}
                     onChange={onDataChange}
+                    required
                 />
                 {!loading ? <LoginButton>LOGIN</LoginButton> : <Loader />}
             </Form>
-            <SignUp onClick={goToSignUp}>SIGN UP</SignUp>
-            <Message>{error}</Message>
+            <span style={{ color: '#faf3e0', fontWeight: '100' }}>or</span>
+            <SignUp to={'/signup'}> SIGN UP</SignUp>
+            <ErrorMessageContainer>
+                {error.map(e => {
+                    return e.map(_e => {
+                        return <ErrorMessage>{_e}</ErrorMessage>;
+                    });
+                })}
+            </ErrorMessageContainer>
         </Container>
     );
 };

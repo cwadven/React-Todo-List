@@ -8,7 +8,7 @@ const LoginContainer = props => {
         username: '',
         password: '',
     });
-    const [error, setError] = useState('');
+    const [error, setError] = useState([]);
     const [loading, setLoading] = useState(false);
     const idRef = useRef();
 
@@ -21,11 +21,6 @@ const LoginContainer = props => {
 
     const goToDoPage = url => {
         props.history.push(url);
-    };
-
-    const goToSignUp = e => {
-        e.preventDefault();
-        goToDoPage('/signup');
     };
 
     const onDataChange = e => {
@@ -62,7 +57,6 @@ const LoginContainer = props => {
     return (
         <LoginPresenter
             onSubmit={onSubmit}
-            goToSignUp={goToSignUp}
             onDataChange={onDataChange}
             loginData={loginData}
             error={error}
