@@ -9,6 +9,7 @@ const Container = styled.div`
 `;
 
 const Ring = styled.div`
+  margin-top: 50px;
   box-sizing: border-box;
   display: block;
   position: absolute;

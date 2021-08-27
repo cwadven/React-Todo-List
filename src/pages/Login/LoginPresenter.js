@@ -24,13 +24,14 @@ const Container = styled.div`
     right: 0;
     margin: auto;
 
-    border: 1px solid #1e212d;
+    // border: 1px solid #1e212d;
     border-radius: 10px;
 `;
 
 const Title = styled.b`
+    color: #000000d4;
     font-size: 30px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 `;
 
 const Form = styled.form`
@@ -46,6 +47,10 @@ const Input = styled.input`
     border: 0px solid;
     border-radius: 3px;
     outline: 0px;
+
+    &::placeholder {
+        color: #00000024;
+    }
 `;
 
 const Message = styled.div`
@@ -56,32 +61,27 @@ const Message = styled.div`
 `;
 
 const LoginButton = styled.button`
-    margin-top: 5px;
-    width: 100px;
+    color: #000000e3;
+    cursor: pointer;
+    margin-top: 50px;
+    width: 90%;
+    height: 50px;
     padding: 5px 10px;
     background-color: #faf3e0;
-    border: 1px solid;
+    border: 0px solid;
     border-radius: 5px;
-    transition: 0.3s linear;
 
     &:active {
         background-color: #e0c4b6;
     }
 `;
 
-const SignUpButton = styled.button`
-    color: #f9f9f9;
+const SignUp = styled.a`
+    color: #faf3e0;
+    cursor: pointer;
     margin-top: 5px;
-    width: 100px;
-    padding: 5px 10px;
-    background-color: #1e212d;
-    border: 1px solid;
-    border-radius: 5px;
-    transition: 0.3s linear;
-
-    &:active {
-        background-color: #e0c4b6;
-    }
+    font-size: 17px;
+    transition: 0.2s linear;
 `;
 
 const LoginPresenter = ({
@@ -95,7 +95,7 @@ const LoginPresenter = ({
 }) => {
     return (
         <Container>
-            <Title>ToDo List</Title>
+            <Title>TODO LIST</Title>
             <Form onSubmit={onSubmit}>
                 <Input
                     ref={idRef}
@@ -114,7 +114,7 @@ const LoginPresenter = ({
                 />
                 {!loading ? <LoginButton>LOGIN</LoginButton> : <Loader />}
             </Form>
-            <SignUpButton onClick={goToSignUp}>SIGNUP</SignUpButton>
+            <SignUp onClick={goToSignUp}>SIGN UP</SignUp>
             <Message>{error}</Message>
         </Container>
     );
