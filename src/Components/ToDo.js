@@ -42,18 +42,6 @@ const ButtonContainer = styled.div`
     margin-top: 10px;
 `;
 
-const Button = styled.button`
-    margin: 0 3px;
-    display: inline-flex;
-    background: transparent;
-    border: transparent;
-    transition: 0.1s linear;
-
-    &:hover {
-        color: #faf3e0;
-    }
-`;
-
 const DeadLine = styled.div`
     text-align: right;
     font-size: 15px;
@@ -67,6 +55,49 @@ const CompletedDate = styled.div`
 const DatePickerContainer = styled.div`
     text-align: right;
     margin-bottom: 5px;
+`;
+
+const StyledAiOutlineRollback = styled(AiOutlineRollback)`
+    cursor: pointer;
+
+    &:hover {
+        color: #faf3e0;
+    }
+`;
+const StyledAiOutlineEdit = styled(AiOutlineEdit)`
+    cursor: pointer;
+
+    &:hover {
+        color: #faf3e0;
+    }
+`;
+const StyledAiOutlineCheckCircle = styled(AiOutlineCheckCircle)`
+    cursor: pointer;
+
+    &:hover {
+        color: #faf3e0;
+    }
+`;
+const StyledAiOutlineFileSync = styled(AiOutlineFileSync)`
+    cursor: pointer;
+
+    &:hover {
+        color: #faf3e0;
+    }
+`;
+const StyledAiOutlineFileDone = styled(AiOutlineFileDone)`
+    cursor: pointer;
+
+    &:hover {
+        color: #faf3e0;
+    }
+`;
+const StyledAiFillDelete = styled(AiFillDelete)`
+    cursor: pointer;
+
+    &:hover {
+        color: #faf3e0;
+    }
 `;
 
 const ToDo = ({
@@ -249,41 +280,56 @@ const ToDo = ({
             )}
 
             <ButtonContainer>
-                {!isCompleted && (
-                    <Button onClick={editExit}>
-                        {isEditable ? (
-                            <AiOutlineRollback size={30} />
-                        ) : (
-                            <AiOutlineEdit size={30} />
-                        )}
-                    </Button>
-                )}
+                {!isCompleted &&
+                    (isEditable ? (
+                        <StyledAiOutlineRollback onClick={editExit} size={30} />
+                    ) : (
+                        <StyledAiOutlineEdit onClick={editExit} size={30} />
+                    ))}
                 {isEditable ? (
-                    <Button onClick={onEditSubmit}>
-                        {isLoading ? (
+                    isLoading ? (
+                        <div style={{ display: 'inline-block' }}>
                             <Loader size={'20'} outerSize={'3'} margin={'0'} />
-                        ) : (
-                            <AiOutlineCheckCircle size={30} />
-                        )}
-                    </Button>
+                        </div>
+                    ) : (
+                        <StyledAiOutlineCheckCircle
+                            onClick={onEditSubmit}
+                            size={30}
+                        />
+                    )
                 ) : (
                     <>
-                        <Button onClick={onCompletedStatusChange}>
-                            {isCompleted ? (
-                                isLoading ? (
-                                    <Loader size={'20'} outerSize={'3'} />
-                                ) : (
-                                    <AiOutlineFileSync size={30} />
-                                )
-                            ) : isLoading ? (
-                                <Loader size={'20'} outerSize={'3'} />
+                        {isCompleted ? (
+                            isLoading ? (
+                                <div style={{ display: 'inline-block' }}>
+                                    <Loader
+                                        size={'20'}
+                                        outerSize={'3'}
+                                        margin={'0'}
+                                    />
+                                </div>
                             ) : (
-                                <AiOutlineFileDone size={30} />
-                            )}
-                        </Button>
-                        <Button onClick={onDeleteDoDo}>
-                            <AiFillDelete size={30} />
-                        </Button>
+                                <StyledAiOutlineFileSync
+                                    onClick={onCompletedStatusChange}
+                                    size={30}
+                                />
+                            )
+                        ) : isLoading ? (
+                            <div style={{ display: 'inline-block' }}>
+                                <Loader
+                                    size={'20'}
+                                    outerSize={'3'}
+                                    margin={'0'}
+                                />
+                            </div>
+                        ) : (
+                            <StyledAiOutlineFileDone
+                                onClick={onCompletedStatusChange}
+                                size={30}
+                            />
+                        )}
+
+                        <StyledAiFillDelete onClick={onDeleteDoDo} size={30} />
                     </>
                 )}
             </ButtonContainer>
