@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from "@emotion/styled";
-import pepe from "../assets/pepe.gif"
+import styled from '@emotion/styled';
+import pepe from '../assets/pepe.gif';
 
 const Container = styled.div`
     text-align: center;
@@ -9,26 +9,29 @@ const Container = styled.div`
 
 const Img = styled.img`
     border-radius: 10px;
+    margin-top: 10px;
 `;
 
-const Bold = styled.b`
-    
-`;
+const Bold = styled.b``;
 
-const LeftCounter = ({toDosCount, completedCount}) => {
+const LeftCounter = ({ toDosCount, completedCount }) => {
     return (
         <Container>
-            <Bold>
-                LEFT TO DOS : {toDosCount}
-            </Bold>
+            <Bold>LEFT TO DOS : {toDosCount}</Bold>
             <div>
                 🏃‍♂️
-                <progress id="file" max="100" value={Number(completedCount / (toDosCount + completedCount) * 100).toFixed(2)}/>
+                <progress
+                    id="file"
+                    max="100"
+                    value={Number(
+                        (completedCount / (toDosCount + completedCount)) * 100,
+                    ).toFixed(2)}
+                />
                 🏃‍♀️
             </div>
-            <Img src={pepe}/>
+            <Img src={pepe} />
         </Container>
-    )
-}
+    );
+};
 
 export default React.memo(LeftCounter);
