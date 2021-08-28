@@ -113,7 +113,6 @@ const LoginPresenter = ({
     idRef,
     loading,
 }) => {
-    console.log(loginData);
     return (
         <Container>
             <Title>TODO LIST</Title>
