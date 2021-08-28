@@ -135,7 +135,7 @@ const CompletedModal = ({ onModalOpenClick }) => {
                 </ModalDeactivateButton>
                 <hr />
                 {isLoading ? (
-                    <Loader />
+                    <Loader size={'64'} outerSize={'8'} />
                 ) : (
                     <CompletedContainer>
                         {completedSet.map(completed => {

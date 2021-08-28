@@ -132,7 +132,11 @@ const LoginPresenter = ({
                     onChange={onDataChange}
                     required
                 />
-                {!loading ? <LoginButton>LOGIN</LoginButton> : <Loader />}
+                {!loading ? (
+                    <LoginButton>LOGIN</LoginButton>
+                ) : (
+                    <Loader size={'64'} outerSize={'8'} />
+                )}
             </Form>
             <span style={{ color: '#faf3e0', fontWeight: '100' }}>or</span>
             <SignUp>SIGN UP</SignUp>

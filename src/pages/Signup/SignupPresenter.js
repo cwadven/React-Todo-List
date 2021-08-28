@@ -137,7 +137,11 @@ const SignupPresenter = ({
                     onChange={onDataChange}
                     required
                 />
-                {!loading ? <SignUpButton>Sign up</SignUpButton> : <Loader />}
+                {!loading ? (
+                    <SignUpButton>Sign up</SignUpButton>
+                ) : (
+                    <Loader size={'64'} outerSize={'8'} />
+                )}
             </Form>
             <Back to={'/'}>Back</Back>
             {error.map(e => {

@@ -13,10 +13,10 @@ const Ring = styled.div`
   box-sizing: border-box;
   display: block;
   position: absolute;
-  width: 64px;
-  height: 64px;
+  width: ${props => (props.size ? props.size : '64')}px;
+  height: ${props => (props.size ? props.size : '64')}px;
   margin: 8px;
-  border: 8px solid #faf3e0;
+  border: ${props => (props.outerSize ? props.outerSize : '8')}px solid #faf3e0;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   border-color: #faf3e0 transparent transparent transparent;
@@ -40,13 +40,13 @@ const Ring = styled.div`
   }
 `;
 
-const Loader = () => {
+const Loader = ({ size, outerSize }) => {
     return (
         <Container>
-            <Ring />
-            <Ring />
-            <Ring />
-            <Ring />
+            <Ring size={size} outerSize={outerSize} />
+            <Ring size={size} outerSize={outerSize} />
+            <Ring size={size} outerSize={outerSize} />
+            <Ring size={size} outerSize={outerSize} />
         </Container>
     );
 };
