@@ -14,6 +14,7 @@ import DatePicker from 'react-datepicker';
 import LeftTimeCounter from './LeftTimeCounter';
 import ToDoModel from '../models/ToDoModel';
 import { errorResponse } from '../models/AccountModel';
+import Loader from '../Components/Loader';
 
 const Container = styled.article`
     background: #eabf9f;
@@ -81,6 +82,8 @@ const ToDo = ({
     const [edit, setEdit] = useState(text);
     const [editDeadLine, setEditDeadLine] = useState(deadLine);
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const inputRef = useRef(null);
 
     const editExit = async () => {
@@ -98,6 +101,7 @@ const ToDo = ({
     };
 
     const editToDo = async data => {
+        await setIsLoading(true);
         try {
             const {
                 data: { message },
@@ -105,6 +109,7 @@ const ToDo = ({
             return message;
         } catch (e) {
             console.log(e);
+            await setIsLoading(false);
             errorResponse(e.response);
         }
     };
@@ -118,6 +123,7 @@ const ToDo = ({
             });
             if (message === 'success') {
                 setIsEditable(false);
+                await setIsLoading(false);
                 dispatch({
                     type: EDIT,
                     payload: { id, edit, editDeadLine },
@@ -125,11 +131,13 @@ const ToDo = ({
             }
         } else {
             alert('Write To Do');
+            await setIsLoading(false);
             inputRef.current.focus();
         }
     };
 
     const completedStatusTodo = async () => {
+        await setIsLoading(true);
         try {
             const {
                 data: { message },
@@ -140,12 +148,14 @@ const ToDo = ({
             return message;
         } catch (e) {
             console.log(e);
+            await setIsLoading(false);
             errorResponse(e.response);
         }
     };
 
     const onCompletedStatusChange = async () => {
         await completedStatusTodo();
+        await setIsLoading(false);
         dispatch({
             type: isCompleted ? UNCOMPLETE : COMPLETE,
             payload: id,
@@ -250,13 +260,23 @@ const ToDo = ({
                 )}
                 {isEditable ? (
                     <Button onClick={onEditSubmit}>
-                        <AiOutlineCheckCircle size={30} />
+                        {isLoading ? (
+                            <Loader size={'20'} outerSize={'3'} margin={'0'} />
+                        ) : (
+                            <AiOutlineCheckCircle size={30} />
+                        )}
                     </Button>
                 ) : (
                     <>
                         <Button onClick={onCompletedStatusChange}>
                             {isCompleted ? (
-                                <AiOutlineFileSync size={30} />
+                                isLoading ? (
+                                    <Loader size={'20'} outerSize={'3'} />
+                                ) : (
+                                    <AiOutlineFileSync size={30} />
+                                )
+                            ) : isLoading ? (
+                                <Loader size={'20'} outerSize={'3'} />
                             ) : (
                                 <AiOutlineFileDone size={30} />
                             )}

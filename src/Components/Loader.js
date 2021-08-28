@@ -3,9 +3,15 @@ import styled from '@emotion/styled';
 
 const Container = styled.div`
     position: relative;
-    width: 80px;
-    height: 80px;
-    margin: 10px auto;
+    width: ${props =>
+        props.size
+            ? String(Number(props.size) + Number(props.outerSize) * 2)
+            : '80'}px;
+    height: ${props =>
+        props.size
+            ? String(Number(props.size) + Number(props.outerSize) * 2)
+            : '80'}px;
+    margin: ${props => (props.margin ? props.margin : '10px')} auto;
 `;
 
 const Ring = styled.div`
@@ -15,7 +21,7 @@ const Ring = styled.div`
   position: absolute;
   width: ${props => (props.size ? props.size : '64')}px;
   height: ${props => (props.size ? props.size : '64')}px;
-  margin: 8px;
+  margin: ${props => (props.outerSize ? props.outerSize : '8')}px;
   border: ${props => (props.outerSize ? props.outerSize : '8')}px solid #faf3e0;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
@@ -40,9 +46,9 @@ const Ring = styled.div`
   }
 `;
 
-const Loader = ({ size, outerSize }) => {
+const Loader = ({ size, outerSize, margin }) => {
     return (
-        <Container>
+        <Container size={size} outerSize={outerSize} margin={margin}>
             <Ring size={size} outerSize={outerSize} />
             <Ring size={size} outerSize={outerSize} />
             <Ring size={size} outerSize={outerSize} />
