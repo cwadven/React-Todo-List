@@ -79,7 +79,7 @@ const CompletedContainer = styled.div`
 `;
 
 const CompletedItemContainer = styled.div`
-    &:not(:first-child) {
+    &:not(:first-of-type) {
         margin-top: 10px;
     }
 `;
@@ -138,9 +138,9 @@ const CompletedModal = ({ onModalOpenClick }) => {
                     <Loader size={'64'} outerSize={'8'} />
                 ) : (
                     <CompletedContainer>
-                        {completedSet.map(completed => {
+                        {completedSet.map((completed, index) => {
                             return (
-                                <CompletedItemContainer>
+                                <CompletedItemContainer key={index}>
                                     <CompletedDate>
                                         {new Date(
                                             completed.completedDate,
