@@ -107,6 +107,7 @@ const Add = () => {
                 setInputError(true);
             }
         },
+        // eslint-disable-next-line
         [newToDo],
     );
 
@@ -127,11 +128,13 @@ const Add = () => {
                 toDoDeadLine: date,
             }));
         },
+        // eslint-disable-next-line
         [newToDo.toDoDeadLine],
     );
 
     const minDate = useMemo(() => {
         return new Date();
+        // eslint-disable-next-line
     }, [newToDo.toDoDeadLine]);
 
     return (

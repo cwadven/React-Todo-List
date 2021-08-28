@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import LoginPresenter from './LoginPresenter';
 import AccountModel, { getToken, setToken } from '../../models/AccountModel';
 import { withRouter } from 'react-router-dom';
@@ -45,6 +45,7 @@ const LoginContainer = props => {
                 }
             }
         },
+        // eslint-disable-next-line
         [loginData],
     );
 

@@ -47,6 +47,7 @@ const SignupContainer = props => {
                 }
             }
         },
+        // eslint-disable-next-line
         [signUpData],
     );
 
