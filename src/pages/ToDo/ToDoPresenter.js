@@ -7,7 +7,7 @@ import List from '../../Components/List';
 import LeftCounter from '../../Components/LeftCounter';
 import Congratulate from '../../Components/Congratulate';
 
-const Title = styled.header`
+const StyledTitle = styled.header`
     color: #b68973;
     font-size: 40px;
     font-style: italic;
@@ -16,6 +16,10 @@ const Title = styled.header`
     text-align: center;
     margin: 10px 0;
 `;
+
+const Title = React.memo(({ children }) => {
+    return <StyledTitle>{children}</StyledTitle>;
+});
 
 const Grid = styled.div`
     display: grid;

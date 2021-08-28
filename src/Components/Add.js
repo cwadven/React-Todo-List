@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { ADD } from '../reducer';
 import { useDispatch } from '../context';
 import styled from '@emotion/styled';
@@ -19,10 +19,14 @@ const Input = styled.input`
 `;
 
 const Form = styled.form`
+    display: flex;
+    flex-direction: column;
     text-align: center;
+    align-items: center;
 `;
 
-const Button = styled.button`
+const StyledButton = styled.button`
+    width: 100px;
     color: #f5f5f5;
     cursor: pointer;
     background-color: #1e212d;
@@ -36,11 +40,23 @@ const Button = styled.button`
     }
 `;
 
-const Bold = styled.b``;
+const Button = React.memo(props => {
+    return <StyledButton {...props}>{props.children}</StyledButton>;
+});
 
-const DatePickerContainer = styled.div`
+const StyledBold = styled.b``;
+
+const Bold = React.memo(({ children }) => {
+    return <StyledBold>{children}</StyledBold>;
+});
+
+const StyledDatePicker = styled(DatePicker)`
     margin-top: 5px;
 `;
+
+const MemoDatePicker = React.memo(props => {
+    return <StyledDatePicker {...props} />;
+});
 
 const Add = () => {
     const [newToDo, setNewToDo] = useState({
@@ -66,30 +82,33 @@ const Add = () => {
         }
     };
 
-    const onSubmit = async e => {
-        e.preventDefault();
-        if (newToDo.toDoText) {
-            const { message, id } = await postToDo(newToDo);
-            if (message === 'success') {
-                dispatch({
-                    type: ADD,
-                    payload: {
-                        ...newToDo,
-                        id: id,
-                        startDate: new Date(),
-                        completedDate: '',
-                    },
-                });
-                setNewToDo({
-                    toDoText: '',
-                    toDoDeadLine: '',
-                });
+    const onSubmit = useCallback(
+        async e => {
+            e.preventDefault();
+            if (newToDo.toDoText) {
+                const { message, id } = await postToDo(newToDo);
+                if (message === 'success') {
+                    dispatch({
+                        type: ADD,
+                        payload: {
+                            ...newToDo,
+                            id: id,
+                            startDate: new Date(),
+                            completedDate: '',
+                        },
+                    });
+                    setNewToDo({
+                        toDoText: '',
+                        toDoDeadLine: '',
+                    });
+                }
+            } else {
+                memoInput.current.focus();
+                setInputError(true);
             }
-        } else {
-            memoInput.current.focus();
-            setInputError(true);
-        }
-    };
+        },
+        [newToDo],
+    );
 
     const onChange = e => {
         setNewToDo({
@@ -101,15 +120,22 @@ const Add = () => {
         }
     };
 
-    const onChangeDate = date => {
-        setNewToDo(prevState => ({
-            ...prevState,
-            toDoDeadLine: date,
-        }));
-    };
+    const onChangeDate = useCallback(
+        date => {
+            setNewToDo(prevState => ({
+                ...prevState,
+                toDoDeadLine: date,
+            }));
+        },
+        [newToDo.toDoDeadLine],
+    );
+
+    const minDate = useMemo(() => {
+        return new Date();
+    }, [newToDo.toDoDeadLine]);
 
     return (
-        <Form>
+        <Form onSubmit={onSubmit}>
             <Input
                 ref={memoInput}
                 name="toDoText"
@@ -119,23 +145,19 @@ const Add = () => {
                 onChange={onChange}
                 error={inputError}
             />
-            <DatePickerContainer>
-                <Bold>Until When? ⏰</Bold>
-                <DatePicker
-                    name="toDoDeadLine"
-                    selected={newToDo.toDoDeadLine}
-                    onChange={onChangeDate}
-                    timeInputLabel="Time:"
-                    dateFormat="yyyy/MM/dd h:mm aa"
-                    popperPlacement="auto"
-                    minDate={new Date()}
-                    showTimeInput
-                    relativeSize
-                />
-            </DatePickerContainer>
-            <div>
-                <Button onClick={onSubmit}>ADD</Button>
-            </div>
+            <Bold>Until When? ⏰</Bold>
+            <MemoDatePicker
+                name="toDoDeadLine"
+                selected={newToDo.toDoDeadLine}
+                onChange={onChangeDate}
+                timeInputLabel="Time:"
+                dateFormat="yyyy/MM/dd h:mm aa"
+                popperPlacement="auto"
+                minDate={minDate}
+                showTimeInput
+                relativeSize
+            />
+            <Button>ADD</Button>
         </Form>
     );
 };
