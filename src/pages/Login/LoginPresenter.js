@@ -61,16 +61,6 @@ const Input = React.memo(props => {
     return <StyledInput {...props}>{props.children}</StyledInput>;
 });
 
-const StyledErrorMessageContainer = styled.div`
-    margin-top: 20px;
-`;
-
-const ErrorMessageContainer = React.memo(({ children }) => {
-    return (
-        <StyledErrorMessageContainer>{children}</StyledErrorMessageContainer>
-    );
-});
-
 const StyledErrorMessage = styled.div`
     color: #d90000;
     font-weight: bold;
