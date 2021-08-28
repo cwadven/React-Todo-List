@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from '@emotion/styled';
 import Loader from '../../Components/Loader';
 import { Link } from 'react-router-dom';
@@ -25,15 +25,18 @@ const Container = styled.div`
     right: 0;
     margin: auto;
 
-    // border: 1px solid #1e212d;
     border-radius: 10px;
 `;
 
-const Title = styled.b`
+const StyledTitle = styled.b`
     color: #000000d4;
     font-size: 30px;
     margin-bottom: 20px;
 `;
+
+const Title = React.memo(({ children }) => {
+    return <StyledTitle>{children}</StyledTitle>;
+});
 
 const Form = styled.form`
     display: flex;
@@ -41,7 +44,7 @@ const Form = styled.form`
     align-items: center;
 `;
 
-const Input = styled.input`
+const StyledInput = styled.input`
     width: 90%;
     padding: 5px 10px;
     margin: 3px;
@@ -54,11 +57,21 @@ const Input = styled.input`
     }
 `;
 
-const ErrorMessageContainer = styled.div`
+const Input = React.memo(({ children }) => {
+    return <StyledInput>{children}</StyledInput>;
+});
+
+const StyledErrorMessageContainer = styled.div`
     margin-top: 20px;
 `;
 
-const ErrorMessage = styled.div`
+const ErrorMessageContainer = React.memo(({ children }) => {
+    return (
+        <StyledErrorMessageContainer>{children}</StyledErrorMessageContainer>
+    );
+});
+
+const StyledErrorMessage = styled.div`
     color: #d90000;
     font-weight: bold;
     font-size: 15px;
@@ -66,7 +79,11 @@ const ErrorMessage = styled.div`
     text-align: center;
 `;
 
-const LoginButton = styled.button`
+const ErrorMessage = React.memo(({ children }) => {
+    return <StyledErrorMessage>{children}</StyledErrorMessage>;
+});
+
+const StyledLoginButton = styled.button`
     color: #000000e3;
     cursor: pointer;
     margin-top: 50px;
@@ -82,13 +99,21 @@ const LoginButton = styled.button`
     }
 `;
 
-const SignUp = styled(Link)`
+const LoginButton = React.memo(({ children }) => {
+    return <StyledLoginButton to={'/signup'}>{children}</StyledLoginButton>;
+});
+
+const StyledSignUp = styled(Link)`
     color: #faf3e0;
     cursor: pointer;
     margin-top: 5px;
     font-size: 17px;
     transition: 0.2s linear;
 `;
+
+const SignUp = React.memo(({ children }) => {
+    return <StyledSignUp to={'/signup'}>{children}</StyledSignUp>;
+});
 
 const LoginPresenter = ({
     loginData,
@@ -122,13 +147,14 @@ const LoginPresenter = ({
                 {!loading ? <LoginButton>LOGIN</LoginButton> : <Loader />}
             </Form>
             <span style={{ color: '#faf3e0', fontWeight: '100' }}>or</span>
-            <SignUp to={'/signup'}> SIGN UP</SignUp>
+            <SignUp>SIGN UP</SignUp>
             <ErrorMessageContainer>
-                {error.map(e => {
-                    return e.map(_e => {
-                        return <ErrorMessage>{_e}</ErrorMessage>;
-                    });
-                })}
+                {error.length > 0 &&
+                    error.map(e => {
+                        return e.map(_e => {
+                            return <ErrorMessage>{_e}</ErrorMessage>;
+                        });
+                    })}
             </ErrorMessageContainer>
         </Container>
     );

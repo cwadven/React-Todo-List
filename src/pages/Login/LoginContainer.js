@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import LoginPresenter from './LoginPresenter';
 import AccountModel, { getToken, setToken } from '../../models/AccountModel';
 import { withRouter } from 'react-router-dom';
@@ -23,14 +23,14 @@ const LoginContainer = props => {
         props.history.push(url);
     };
 
-    const onDataChange = e => {
+    const onDataChange = useCallback(e => {
         setLoginData(prevState => ({
             ...prevState,
             [e.target.name]: e.target.value,
         }));
-    };
+    }, []);
 
-    const onSubmit = async e => {
+    const onSubmit = useCallback(async e => {
         e.preventDefault();
         try {
             setLoading(true);
@@ -44,10 +44,10 @@ const LoginContainer = props => {
                 setError('something went wrong...');
             }
         }
-    };
+    }, []);
 
     useEffect(() => {
-        idRef.current.focus();
+        // idRef.current.focus();
         if (getToken()) {
             goToDoPage('/todo');
         }
