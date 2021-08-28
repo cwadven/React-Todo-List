@@ -28,11 +28,15 @@ const Container = styled.div`
     border-radius: 10px;
 `;
 
-const Title = styled.b`
+const StyledTitle = styled.b`
     color: #000000d4;
     font-size: 30px;
     margin-bottom: 20px;
 `;
+
+const Title = React.memo(({ children }) => {
+    return <StyledTitle>{children}</StyledTitle>;
+});
 
 const Form = styled.form`
     display: flex;
@@ -40,7 +44,7 @@ const Form = styled.form`
     align-items: center;
 `;
 
-const Input = styled.input`
+const StyledInput = styled.input`
     width: 90%;
     padding: 5px 10px;
     margin: 3px;
@@ -53,20 +57,24 @@ const Input = styled.input`
     }
 `;
 
-const ErrorMessageContainer = styled.div`
-    margin-top: 20px;
-`;
+const Input = React.memo(props => {
+    return <StyledInput {...props}>{props.children}</StyledInput>;
+});
 
-const ErrorMessage = styled.div`
+const StyledErrorMessage = styled.div`
     color: #d90000;
     font-weight: bold;
     font-size: 15px;
     margin: 5px 0;
-    padding: 0 50px;
     text-align: center;
 `;
 
-const SignUpButton = styled.button`
+const ErrorMessage = React.memo(({ children }) => {
+    return <StyledErrorMessage>{children}</StyledErrorMessage>;
+});
+
+const StyledSignUpButton = styled.button`
+    cursor: pointer;
     color: #f9f9f9;
     margin-top: 50px;
     width: 90%;
@@ -77,13 +85,21 @@ const SignUpButton = styled.button`
     border-radius: 5px;
 `;
 
-const Back = styled(Link)`
+const SignUpButton = React.memo(({ children }) => {
+    return <StyledSignUpButton to={'/signup'}>{children}</StyledSignUpButton>;
+});
+
+const StyledBack = styled(Link)`
     color: #faf3e0;
     cursor: pointer;
     margin-top: 5px;
     font-size: 17px;
     transition: 0.2s linear;
 `;
+
+const Back = React.memo(({ children }) => {
+    return <StyledBack to={'/login'}>{children}</StyledBack>;
+});
 
 const SignupPresenter = ({
     signUpData,
@@ -98,7 +114,6 @@ const SignupPresenter = ({
             <Title>SIGN UP</Title>
             <Form onSubmit={onSubmit}>
                 <Input
-                    ref={idRef}
                     name="username"
                     type="text"
                     placeholder={'id'}
@@ -125,13 +140,11 @@ const SignupPresenter = ({
                 {!loading ? <SignUpButton>Sign up</SignUpButton> : <Loader />}
             </Form>
             <Back to={'/'}>Back</Back>
-            <ErrorMessageContainer>
-                {error.map(e => {
-                    return e.map(_e => {
-                        return <ErrorMessage>{_e}</ErrorMessage>;
-                    });
-                })}
-            </ErrorMessageContainer>
+            {error.map(e => {
+                return e.map(_e => {
+                    return <ErrorMessage>{_e}</ErrorMessage>;
+                });
+            })}
         </Container>
     );
 };

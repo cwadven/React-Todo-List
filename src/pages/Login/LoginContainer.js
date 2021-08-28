@@ -1,10 +1,4 @@
-import React, {
-    useCallback,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import LoginPresenter from './LoginPresenter';
 import AccountModel, { getToken, setToken } from '../../models/AccountModel';
 import { withRouter } from 'react-router-dom';
@@ -16,7 +10,6 @@ const LoginContainer = props => {
     });
     const [error, setError] = useState([]);
     const [loading, setLoading] = useState(false);
-    const idRef = useRef();
 
     const onLogin = async () => {
         const {
@@ -56,7 +49,6 @@ const LoginContainer = props => {
     );
 
     useEffect(() => {
-        // idRef.current.focus();
         if (getToken()) {
             goToDoPage('/todo');
         }
@@ -70,7 +62,6 @@ const LoginContainer = props => {
             loginData={loginData}
             error={error}
             loading={loading}
-            idRef={idRef}
         />
     );
 };

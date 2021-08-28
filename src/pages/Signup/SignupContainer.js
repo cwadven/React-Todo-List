@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import AccountModel, { getToken, setToken } from '../../models/AccountModel';
 import { withRouter } from 'react-router-dom';
 import SignupPresenter from './SignupPresenter';
@@ -24,31 +24,33 @@ const SignupContainer = props => {
         props.history.push('/todo');
     };
 
-    const onDataChange = e => {
+    const onDataChange = useCallback(e => {
         setSignUpData(prevState => ({
             ...prevState,
             [e.target.name]: e.target.value,
         }));
-    };
+    }, []);
 
-    const onSubmit = async e => {
-        e.preventDefault();
-        try {
-            setLoading(true);
-            await onSignup();
-            goToDoPage();
-        } catch (e) {
-            setLoading(false);
-            if (e.response) {
-                setError(Object.values(e.response.data));
-            } else {
-                setError('something went wrong...');
+    const onSubmit = useCallback(
+        async e => {
+            e.preventDefault();
+            try {
+                setLoading(true);
+                await onSignup();
+                goToDoPage();
+            } catch (e) {
+                setLoading(false);
+                if (e.response) {
+                    setError(Object.values(e.response.data));
+                } else {
+                    setError('something went wrong...');
+                }
             }
-        }
-    };
+        },
+        [signUpData],
+    );
 
     useEffect(() => {
-        idRef.current.focus();
         if (getToken()) {
             goToDoPage();
         }

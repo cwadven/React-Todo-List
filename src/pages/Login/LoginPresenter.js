@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import Loader from '../../Components/Loader';
 import { Link } from 'react-router-dom';
@@ -110,7 +110,6 @@ const LoginPresenter = ({
     error,
     onSubmit,
     onDataChange,
-    idRef,
     loading,
 }) => {
     return (
@@ -118,7 +117,6 @@ const LoginPresenter = ({
             <Title>TODO LIST</Title>
             <Form onSubmit={onSubmit}>
                 <Input
-                    ref={idRef}
                     name="username"
                     type="text"
                     placeholder={'id'}
