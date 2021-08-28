@@ -93,30 +93,37 @@ const CompletedModal = ({ onModalOpenClick }) => {
     const [completedSet, setCompletedSet] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    const requestCompletedSet = async () => {
-        try {
-            let {
-                data: { completed_set },
-            } = await ToDoModel.getCompletedList();
-            completed_set = arrayInObjectSort(
-                completed_set,
-                'completedDate',
-                'asc',
-                'date',
-            );
-            return completed_set;
-        } catch (e) {
-            console.log(e);
-            errorResponse(e.response);
-        }
-    };
+    useEffect(() => {
+        const requestCompletedSet = async () => {
+            try {
+                let {
+                    data: { completed_set },
+                } = await ToDoModel.getCompletedList();
+                completed_set = arrayInObjectSort(
+                    completed_set,
+                    'completedDate',
+                    'asc',
+                    'date',
+                );
+                return completed_set;
+            } catch (e) {
+                console.log(e);
+                errorResponse(e.response);
+            }
+        };
 
-    // eslint-disable-next-line
-    useEffect(async () => {
-        let completed_set = await requestCompletedSet();
+        const requestThenSetCompletedSet = async () => {
+            let completed_set = await requestCompletedSet();
+            await setCompletedSet(completed_set);
+            setIsLoading(false);
+        };
 
-        await setCompletedSet(completed_set);
-        setIsLoading(false);
+        document.body.style.overflow = 'hidden';
+        requestThenSetCompletedSet();
+
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
     }, []);
 
     return (
