@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react';
 import LoginPresenter from './LoginPresenter';
 import AccountModel, { getToken, setToken } from '../../models/AccountModel';
 import { withRouter } from 'react-router-dom';
@@ -30,21 +36,24 @@ const LoginContainer = props => {
         }));
     }, []);
 
-    const onSubmit = useCallback(async e => {
-        e.preventDefault();
-        try {
-            setLoading(true);
-            await onLogin();
-            goToDoPage('/todo');
-        } catch (e) {
-            setLoading(false);
-            if (e.response) {
-                setError(Object.values(e.response.data));
-            } else {
-                setError('something went wrong...');
+    const onSubmit = useCallback(
+        async e => {
+            e.preventDefault();
+            try {
+                setLoading(true);
+                await onLogin();
+                goToDoPage('/todo');
+            } catch (e) {
+                setLoading(false);
+                if (e.response) {
+                    setError(Object.values(e.response.data));
+                } else {
+                    setError('something went wrong...');
+                }
             }
-        }
-    }, []);
+        },
+        [loginData],
+    );
 
     useEffect(() => {
         // idRef.current.focus();

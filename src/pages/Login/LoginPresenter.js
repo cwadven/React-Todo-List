@@ -57,8 +57,8 @@ const StyledInput = styled.input`
     }
 `;
 
-const Input = React.memo(({ children }) => {
-    return <StyledInput>{children}</StyledInput>;
+const Input = React.memo(props => {
+    return <StyledInput {...props}>{props.children}</StyledInput>;
 });
 
 const StyledErrorMessageContainer = styled.div`
@@ -123,6 +123,7 @@ const LoginPresenter = ({
     idRef,
     loading,
 }) => {
+    console.log(loginData);
     return (
         <Container>
             <Title>TODO LIST</Title>
@@ -148,14 +149,12 @@ const LoginPresenter = ({
             </Form>
             <span style={{ color: '#faf3e0', fontWeight: '100' }}>or</span>
             <SignUp>SIGN UP</SignUp>
-            <ErrorMessageContainer>
-                {error.length > 0 &&
-                    error.map(e => {
-                        return e.map(_e => {
-                            return <ErrorMessage>{_e}</ErrorMessage>;
-                        });
-                    })}
-            </ErrorMessageContainer>
+            {error.length > 0 &&
+                error.map(e => {
+                    return e.map(_e => {
+                        return <ErrorMessage>{_e}</ErrorMessage>;
+                    });
+                })}
         </Container>
     );
 };
