@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import pepe from '../assets/pepe.gif';
+import PropTypes from 'prop-types';
 
 const Container = styled.div`
     text-align: center;
@@ -32,6 +33,11 @@ const LeftCounter = ({ toDosCount, completedCount }) => {
             <Img src={pepe} />
         </Container>
     );
+};
+
+LeftCounter.propTypes = {
+    toDosCount: PropTypes.number,
+    completedCount: PropTypes.number,
 };
 
 export default React.memo(LeftCounter);

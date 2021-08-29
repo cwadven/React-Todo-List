@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import AccountModel, { getToken, setToken } from '../../models/AccountModel';
 import { withRouter } from 'react-router-dom';
 import SignupPresenter from './SignupPresenter';
+import ReactRouterPropTypes from 'react-router-prop-types';
 
-const SignupContainer = props => {
+const SignupContainer = ({ history }) => {
     const [signUpData, setSignUpData] = useState({
         username: '',
         password1: '',
@@ -21,7 +22,7 @@ const SignupContainer = props => {
     };
 
     const goToDoPage = () => {
-        props.history.push('/todo');
+        history.push('/todo');
     };
 
     const onDataChange = useCallback(e => {
@@ -68,6 +69,10 @@ const SignupContainer = props => {
             idRef={idRef}
         />
     );
+};
+
+SignupContainer.propTypes = {
+    history: ReactRouterPropTypes.history,
 };
 
 export default withRouter(SignupContainer);

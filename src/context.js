@@ -3,6 +3,7 @@ import reducer, { SET_COMPLETED, SET_TODO, initialState } from './reducer';
 import ToDoModel from './models/ToDoModel';
 import { withRouter } from 'react-router-dom';
 import { errorResponse } from './models/AccountModel';
+import PropTypes from 'prop-types';
 
 const ToDosContext = createContext();
 
@@ -67,6 +68,10 @@ export const useCompleted = () => {
         state: { completed },
     } = useContext(ToDosContext);
     return completed;
+};
+
+ToDosProvider.propTypes = {
+    children: PropTypes.node.isRequired,
 };
 
 export default withRouter(ToDosProvider);

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Loader from '../../Components/Loader';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const Container = styled.div`
     display: flex;
@@ -38,6 +39,10 @@ const Title = React.memo(({ children }) => {
     return <StyledTitle>{children}</StyledTitle>;
 });
 
+Title.propTypes = {
+    children: PropTypes.node.isRequired,
+};
+
 const Form = styled.form`
     display: flex;
     flex-direction: column;
@@ -57,9 +62,29 @@ const StyledInput = styled.input`
     }
 `;
 
-const Input = React.memo(props => {
-    return <StyledInput {...props}>{props.children}</StyledInput>;
-});
+const Input = React.memo(
+    ({ name, type, placeholder, value, onChange, required }) => {
+        return (
+            <StyledInput
+                name={name}
+                type={type}
+                placeholder={placeholder}
+                value={value}
+                onChange={onChange}
+                required={required}
+            />
+        );
+    },
+);
+
+Input.propTypes = {
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    value: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    required: PropTypes.bool.isRequired,
+};
 
 const StyledErrorMessage = styled.div`
     color: #d90000;
@@ -72,6 +97,10 @@ const StyledErrorMessage = styled.div`
 const ErrorMessage = React.memo(({ children }) => {
     return <StyledErrorMessage>{children}</StyledErrorMessage>;
 });
+
+ErrorMessage.propTypes = {
+    children: PropTypes.node.isRequired,
+};
 
 const StyledLoginButton = styled.button`
     color: #000000e3;
@@ -93,6 +122,10 @@ const LoginButton = React.memo(({ children }) => {
     return <StyledLoginButton to={'/signup'}>{children}</StyledLoginButton>;
 });
 
+LoginButton.propTypes = {
+    children: PropTypes.node.isRequired,
+};
+
 const StyledSignUp = styled(Link)`
     color: #faf3e0;
     cursor: pointer;
@@ -104,6 +137,10 @@ const StyledSignUp = styled(Link)`
 const SignUp = React.memo(({ children }) => {
     return <StyledSignUp to={'/signup'}>{children}</StyledSignUp>;
 });
+
+SignUp.propTypes = {
+    children: PropTypes.node.isRequired,
+};
 
 const LoginPresenter = ({
     loginData,
@@ -142,12 +179,20 @@ const LoginPresenter = ({
             <SignUp>SIGN UP</SignUp>
             {error.length > 0 &&
                 error.map(e => {
-                    return e.map(_e => {
-                        return <ErrorMessage>{_e}</ErrorMessage>;
+                    return e.map((_e, index) => {
+                        return <ErrorMessage key={index}>{_e}</ErrorMessage>;
                     });
                 })}
         </Container>
     );
+};
+
+LoginPresenter.propTypes = {
+    loginData: PropTypes.object,
+    error: PropTypes.array,
+    onSubmit: PropTypes.func.isRequired,
+    onDataChange: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
 };
 
 export default LoginPresenter;

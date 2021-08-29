@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Loader from '../../Components/Loader';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const Container = styled.div`
     display: flex;
@@ -38,6 +39,10 @@ const Title = React.memo(({ children }) => {
     return <StyledTitle>{children}</StyledTitle>;
 });
 
+Title.propTypes = {
+    children: PropTypes.node,
+};
+
 const Form = styled.form`
     display: flex;
     flex-direction: column;
@@ -57,9 +62,29 @@ const StyledInput = styled.input`
     }
 `;
 
-const Input = React.memo(props => {
-    return <StyledInput {...props}>{props.children}</StyledInput>;
-});
+const Input = React.memo(
+    ({ name, type, placeholder, value, onChange, required }) => {
+        return (
+            <StyledInput
+                name={name}
+                type={type}
+                placeholder={placeholder}
+                value={value}
+                onChange={onChange}
+                required={required}
+            />
+        );
+    },
+);
+
+Input.propTypes = {
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    value: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    required: PropTypes.bool.isRequired,
+};
 
 const StyledErrorMessage = styled.div`
     color: #d90000;
@@ -72,6 +97,10 @@ const StyledErrorMessage = styled.div`
 const ErrorMessage = React.memo(({ children }) => {
     return <StyledErrorMessage>{children}</StyledErrorMessage>;
 });
+
+ErrorMessage.propTypes = {
+    children: PropTypes.node,
+};
 
 const StyledSignUpButton = styled.button`
     cursor: pointer;
@@ -89,6 +118,10 @@ const SignUpButton = React.memo(({ children }) => {
     return <StyledSignUpButton to={'/signup'}>{children}</StyledSignUpButton>;
 });
 
+SignUpButton.propTypes = {
+    children: PropTypes.node,
+};
+
 const StyledBack = styled(Link)`
     color: #faf3e0;
     cursor: pointer;
@@ -101,12 +134,15 @@ const Back = React.memo(({ children }) => {
     return <StyledBack to={'/login'}>{children}</StyledBack>;
 });
 
+Back.propTypes = {
+    children: PropTypes.node,
+};
+
 const SignupPresenter = ({
     signUpData,
     error,
     onSubmit,
     onDataChange,
-    idRef,
     loading,
 }) => {
     return (
@@ -145,12 +181,20 @@ const SignupPresenter = ({
             </Form>
             <Back to={'/'}>Back</Back>
             {error.map(e => {
-                return e.map(_e => {
-                    return <ErrorMessage>{_e}</ErrorMessage>;
+                return e.map((_e, index) => {
+                    return <ErrorMessage key={index}>{_e}</ErrorMessage>;
                 });
             })}
         </Container>
     );
+};
+
+SignupPresenter.propTypes = {
+    signUpData: PropTypes.object,
+    error: PropTypes.array,
+    onSubmit: PropTypes.func.isRequired,
+    onDataChange: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
 };
 
 export default SignupPresenter;

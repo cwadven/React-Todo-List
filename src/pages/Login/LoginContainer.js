@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import LoginPresenter from './LoginPresenter';
 import AccountModel, { getToken, setToken } from '../../models/AccountModel';
 import { withRouter } from 'react-router-dom';
+import ReactRouterPropTypes from 'react-router-prop-types';
 
-const LoginContainer = props => {
+const LoginContainer = ({ history }) => {
     const [loginData, setLoginData] = useState({
         username: '',
         password: '',
@@ -19,7 +20,7 @@ const LoginContainer = props => {
     };
 
     const goToDoPage = url => {
-        props.history.push(url);
+        history.push(url);
     };
 
     const onDataChange = useCallback(e => {
@@ -65,6 +66,10 @@ const LoginContainer = props => {
             loading={loading}
         />
     );
+};
+
+LoginContainer.propTypes = {
+    history: ReactRouterPropTypes.history,
 };
 
 export default withRouter(LoginContainer);

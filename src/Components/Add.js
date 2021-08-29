@@ -7,6 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import ToDoModel from '../models/ToDoModel';
 import { errorResponse } from '../models/AccountModel';
 import Loader from '../Components/Loader';
+import PropTypes from 'prop-types';
 
 const Input = styled.input`
     font-size: 15px;
@@ -41,15 +42,23 @@ const StyledButton = styled.button`
     }
 `;
 
-const Button = React.memo(props => {
-    return <StyledButton {...props}>{props.children}</StyledButton>;
+const Button = React.memo(({ children }) => {
+    return <StyledButton>{children}</StyledButton>;
 });
+
+Button.propTypes = {
+    children: PropTypes.node,
+};
 
 const StyledBold = styled.b``;
 
 const Bold = React.memo(({ children }) => {
     return <StyledBold>{children}</StyledBold>;
 });
+
+Bold.propTypes = {
+    children: PropTypes.node,
+};
 
 const StyledDatePicker = styled(DatePicker)`
     margin-top: 5px;

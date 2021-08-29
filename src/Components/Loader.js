@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
 
 const Container = styled.div`
     position: relative;
@@ -56,6 +57,13 @@ const Loader = ({
             <Ring size={size} outerSize={outerSize} color={color} />
         </Container>
     );
+};
+
+Loader.propTypes = {
+    size: PropTypes.string,
+    outerSize: PropTypes.string,
+    margin: PropTypes.string,
+    color: PropTypes.string,
 };
 
 export default Loader;

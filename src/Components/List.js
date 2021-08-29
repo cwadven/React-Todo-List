@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import ToDo from './ToDo';
 import CompletedModalButton from './CompletedModalButton';
+import PropTypes from 'prop-types';
 
 const Container = styled.section`
     width: 100%;
@@ -77,6 +78,12 @@ const List = ({ name, itemSet, isCompleted }) => {
             </div>
         </Container>
     );
+};
+
+List.propTypes = {
+    name: PropTypes.string,
+    itemSet: PropTypes.array,
+    isCompleted: PropTypes.bool,
 };
 
 export default List;

@@ -5,6 +5,7 @@ import ToDoModel from '../models/ToDoModel';
 import { errorResponse } from '../models/AccountModel';
 import Loader from '../Components/Loader';
 import { arrayInObjectSort } from '../common.js';
+import PropTypes from 'prop-types';
 
 const ModalDeactivateButton = styled.button`
     position: absolute;
@@ -155,6 +156,10 @@ const CompletedModal = ({ onModalOpenClick }) => {
             </Modal>
         </Container>
     );
+};
+
+CompletedModal.propTypes = {
+    onModalOpenClick: PropTypes.func,
 };
 
 export default CompletedModal;

@@ -6,6 +6,7 @@ import Add from '../../Components/Add';
 import List from '../../Components/List';
 import LeftCounter from '../../Components/LeftCounter';
 import Congratulate from '../../Components/Congratulate';
+import PropTypes from 'prop-types';
 
 const StyledTitle = styled.header`
     color: #b68973;
@@ -20,6 +21,10 @@ const StyledTitle = styled.header`
 const Title = React.memo(({ children }) => {
     return <StyledTitle>{children}</StyledTitle>;
 });
+
+Title.propTypes = {
+    children: PropTypes.node,
+};
 
 const Grid = styled.div`
     display: grid;
@@ -56,6 +61,11 @@ const ToDoPresenter = ({ toDos, completed }) => {
             </Grid>
         </>
     );
+};
+
+ToDoPresenter.propTypes = {
+    toDos: PropTypes.array,
+    completed: PropTypes.array,
 };
 
 export default ToDoPresenter;

@@ -69,6 +69,7 @@ const reducer = (state, action) => {
             };
         case EDIT:
             // 위치 찾기
+            // eslint-disable-next-line no-case-declarations
             const targetIndex = state.toDos.findIndex(
                 toDo => toDo.id === action.payload.id,
             );

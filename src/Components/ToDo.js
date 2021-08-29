@@ -15,6 +15,7 @@ import LeftTimeCounter from './LeftTimeCounter';
 import ToDoModel from '../models/ToDoModel';
 import { errorResponse } from '../models/AccountModel';
 import Loader from '../Components/Loader';
+import PropTypes from 'prop-types';
 
 const Container = styled.article`
     background: #eabf9f;
@@ -335,6 +336,15 @@ const ToDo = ({
             </ButtonContainer>
         </Container>
     );
+};
+
+ToDo.propTypes = {
+    text: PropTypes.string,
+    deadLine: PropTypes.dateFormat,
+    startDate: PropTypes.dateFormat,
+    completedDate: PropTypes.dateFormat,
+    id: PropTypes.number,
+    isCompleted: PropTypes.bool,
 };
 
 export default ToDo;
