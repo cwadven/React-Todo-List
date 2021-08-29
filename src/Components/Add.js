@@ -6,6 +6,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ToDoModel from '../models/ToDoModel';
 import { errorResponse } from '../models/AccountModel';
+import Loader from '../Components/Loader';
 
 const Input = styled.input`
     font-size: 15px;
@@ -64,6 +65,7 @@ const Add = () => {
         toDoDeadLine: '',
     });
     const [inputError, setInputError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const memoInput = useRef();
 
@@ -78,6 +80,7 @@ const Add = () => {
             return { message, id };
         } catch (e) {
             console.log(e);
+            setIsLoading(false);
             errorResponse(e.response);
         }
     };
@@ -86,6 +89,7 @@ const Add = () => {
         async e => {
             e.preventDefault();
             if (newToDo.toDoText) {
+                setIsLoading(true);
                 const { message, id } = await postToDo(newToDo);
                 if (message === 'success') {
                     dispatch({
@@ -106,6 +110,7 @@ const Add = () => {
                 memoInput.current.focus();
                 setInputError(true);
             }
+            setIsLoading(false);
         },
         // eslint-disable-next-line
         [newToDo],
@@ -160,7 +165,11 @@ const Add = () => {
                 showTimeInput
                 relativeSize
             />
-            <Button>ADD</Button>
+            {isLoading ? (
+                <Loader size={'40'} outerSize={'8'} color={'#b68973'} />
+            ) : (
+                <Button>ADD</Button>
+            )}
         </Form>
     );
 };
