@@ -4,14 +4,10 @@ import styled from '@emotion/styled';
 const Container = styled.div`
     position: relative;
     width: ${props =>
-        props.size
-            ? String(Number(props.size) + Number(props.outerSize) * 2)
-            : '80'}px;
+        String(Number(props.size) + Number(props.outerSize) * 2)}px;
     height: ${props =>
-        props.size
-            ? String(Number(props.size) + Number(props.outerSize) * 2)
-            : '80'}px;
-    margin: ${props => (props.margin ? props.margin : '10px')} auto;
+        String(Number(props.size) + Number(props.outerSize) * 2)}px;
+    margin: ${props => props.margin} auto;
 `;
 
 const Ring = styled.div`
@@ -19,13 +15,13 @@ const Ring = styled.div`
   box-sizing: border-box;
   display: block;
   position: absolute;
-  width: ${props => (props.size ? props.size : '64')}px;
-  height: ${props => (props.size ? props.size : '64')}px;
-  margin: ${props => (props.outerSize ? props.outerSize : '8')}px;
-  border: ${props => (props.outerSize ? props.outerSize : '8')}px solid #faf3e0;
+  width: ${props => props.size}px;
+  height: ${props => props.size}px;
+  margin: ${props => props.outerSize}px;
+  border: ${props => props.outerSize}px solid #faf3e0;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #faf3e0 transparent transparent transparent;
+  border-color: ${props => props.color} transparent transparent transparent;
 
   &:nth-of-type(1) {
     animation-delay: -0.45s;
@@ -46,13 +42,18 @@ const Ring = styled.div`
   }
 `;
 
-const Loader = ({ size, outerSize, margin }) => {
+const Loader = ({
+    size = '64',
+    outerSize = '8',
+    margin = '10',
+    color = '#faf3e0',
+}) => {
     return (
         <Container size={size} outerSize={outerSize} margin={margin}>
-            <Ring size={size} outerSize={outerSize} />
-            <Ring size={size} outerSize={outerSize} />
-            <Ring size={size} outerSize={outerSize} />
-            <Ring size={size} outerSize={outerSize} />
+            <Ring size={size} outerSize={outerSize} color={color} />
+            <Ring size={size} outerSize={outerSize} color={color} />
+            <Ring size={size} outerSize={outerSize} color={color} />
+            <Ring size={size} outerSize={outerSize} color={color} />
         </Container>
     );
 };
