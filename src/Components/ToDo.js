@@ -340,9 +340,9 @@ const ToDo = ({
 
 ToDo.propTypes = {
     text: PropTypes.string,
-    deadLine: PropTypes.dateFormat,
-    startDate: PropTypes.dateFormat,
-    completedDate: PropTypes.dateFormat,
+    deadLine: PropTypes.instanceOf(Date),
+    startDate: PropTypes.instanceOf(Date),
+    completedDate: PropTypes.instanceOf(Date),
     id: PropTypes.number,
     isCompleted: PropTypes.bool,
 };

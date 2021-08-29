@@ -90,8 +90,8 @@ const LeftTimeCounter = ({ deadLine, startDate }) => {
 };
 
 LeftTimeCounter.propTypes = {
-    deadLine: PropTypes.dateFormat,
-    startDate: PropTypes.dateFormat,
+    deadLine: PropTypes.instanceOf(Date),
+    startDate: PropTypes.instanceOf(Date),
 };
 
 export default LeftTimeCounter;
