@@ -45,7 +45,6 @@ const ToDoPresenter = ({ toDos, completed }) => {
     return (
         <>
             <Title>My To Do List</Title>
-            <Add />
             {toDos.length > 0 ? (
                 <LeftCounter
                     toDosCount={toDos.length}
@@ -55,6 +54,7 @@ const ToDoPresenter = ({ toDos, completed }) => {
                 ''
             )}
             {toDos.length === 0 && completed.length > 0 ? <Congratulate /> : ''}
+            <Add />
             <Grid>
                 <List name="To Dos" itemSet={toDos} isCompleted={false} />
                 <List name="Completed" itemSet={completed} isCompleted={true} />

@@ -25,6 +25,7 @@ const Form = styled.form`
     flex-direction: column;
     text-align: center;
     align-items: center;
+    margin-top: 20px;
 `;
 
 const StyledButton = styled.button`
