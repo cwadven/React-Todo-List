@@ -7,6 +7,32 @@ import List from '../../Components/List';
 import LeftCounter from '../../Components/LeftCounter';
 import Congratulate from '../../Components/Congratulate';
 import PropTypes from 'prop-types';
+import Loader from '../../Components/Loader';
+
+const Container = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    width: 80vw;
+    max-width: 400px;
+    height: 100vw;
+    max-height: 500px;
+    background: linear-gradient(
+        169deg,
+        rgba(224, 196, 182, 1) 0%,
+        rgba(182, 137, 115, 1) 100%
+    );
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    border-radius: 10px;
+`;
 
 const StyledTitle = styled.header`
     color: #b68973;
@@ -41,8 +67,15 @@ const Grid = styled.div`
     }
 `;
 
-const ToDoPresenter = ({ toDos, completed }) => {
-    return (
+const ToDoPresenter = ({ toDos, completed, isPending }) => {
+    return isPending ? (
+        <Container>
+            <Title>Loading</Title>
+            <Title>Your</Title>
+            <Title>To Dos</Title>
+            <Loader size={'40'} outerSize={'7'} color={'#eabf9f'} />
+        </Container>
+    ) : (
         <>
             <Title>My To Do List</Title>
             {toDos.length > 0 ? (
@@ -66,6 +99,7 @@ const ToDoPresenter = ({ toDos, completed }) => {
 ToDoPresenter.propTypes = {
     toDos: PropTypes.array,
     completed: PropTypes.array,
+    isPending: PropTypes.bool,
 };
 
 export default ToDoPresenter;

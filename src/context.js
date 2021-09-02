@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useReducer } from 'react';
+import React, {
+    createContext,
+    useContext,
+    useEffect,
+    useReducer,
+    useState,
+} from 'react';
 import reducer, { SET_COMPLETED, SET_TODO, initialState } from './reducer';
 import ToDoModel from './models/ToDoModel';
 import { withRouter } from 'react-router-dom';
@@ -9,6 +15,7 @@ const ToDosContext = createContext();
 
 const ToDosProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [isPending, setIsPending] = useState(false);
 
     const getToDoList = async () => {
         try {
@@ -35,14 +42,16 @@ const ToDosProvider = ({ children }) => {
 
     // eslint-disable-next-line
     useEffect(async () => {
+        setIsPending(prevState => !prevState);
         const todoSet = await getToDoList();
         const completedSet = await getCompletedTodayList();
         dispatch({ type: SET_TODO, payload: todoSet });
         dispatch({ type: SET_COMPLETED, payload: completedSet });
+        setIsPending(prevState => !prevState);
     }, []);
 
     return (
-        <ToDosContext.Provider value={{ state, dispatch }}>
+        <ToDosContext.Provider value={{ state, dispatch, isPending }}>
             {children}
         </ToDosContext.Provider>
     );
@@ -68,6 +77,11 @@ export const useCompleted = () => {
         state: { completed },
     } = useContext(ToDosContext);
     return completed;
+};
+
+export const getIsPending = () => {
+    const { isPending } = useContext(ToDosContext);
+    return isPending;
 };
 
 ToDosProvider.propTypes = {
