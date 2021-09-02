@@ -11,6 +11,7 @@ const ModalDeactivateButton = styled.button`
     position: absolute;
     right: 10px;
     top: 10px;
+    cursor: pointer;
 
     margin: 0 3px;
     display: inline-flex;
