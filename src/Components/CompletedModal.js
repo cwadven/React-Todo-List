@@ -70,7 +70,7 @@ const Modal = styled.div`
 
 const CompletedContainer = styled.div`
     width: 80vw;
-    max-width: 490px;
+    max-width: 480px;
     height: 100vw;
     max-height: 500px;
     margin: 50px 0px 5px 0px;
