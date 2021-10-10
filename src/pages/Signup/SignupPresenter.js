@@ -63,7 +63,7 @@ const StyledInput = styled.input`
 `;
 
 const Input = React.memo(
-    ({ name, type, placeholder, value, onChange, required }) => {
+    ({ name, type, placeholder, value, onChange, required, disabled }) => {
         return (
             <StyledInput
                 name={name}
@@ -71,6 +71,7 @@ const Input = React.memo(
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
+                disabled={disabled}
                 required={required}
             />
         );
@@ -84,6 +85,7 @@ Input.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func.isRequired,
     required: PropTypes.bool.isRequired,
+    disabled: PropTypes.bool.isRequired,
 };
 
 const StyledErrorMessage = styled.div`
@@ -155,6 +157,7 @@ const SignupPresenter = ({
                     placeholder={'id'}
                     value={signUpData.username}
                     onChange={onDataChange}
+                    disabled={loading}
                     required
                 />
                 <Input
@@ -163,6 +166,7 @@ const SignupPresenter = ({
                     placeholder={'password'}
                     value={signUpData.password1}
                     onChange={onDataChange}
+                    disabled={loading}
                     required
                 />
                 <Input
@@ -171,6 +175,7 @@ const SignupPresenter = ({
                     placeholder={'password check'}
                     value={signUpData.password2}
                     onChange={onDataChange}
+                    disabled={loading}
                     required
                 />
                 {!loading ? (
@@ -179,7 +184,7 @@ const SignupPresenter = ({
                     <Loader size={'64'} outerSize={'8'} />
                 )}
             </Form>
-            <Back to={'/'}>Back</Back>
+            {!loading && <Back to={'/'}>Back</Back>}
             {error.map(e => {
                 return e.map((_e, index) => {
                     return <ErrorMessage key={index}>{_e}</ErrorMessage>;

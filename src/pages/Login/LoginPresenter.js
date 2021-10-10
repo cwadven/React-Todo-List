@@ -63,7 +63,7 @@ const StyledInput = styled.input`
 `;
 
 const Input = React.memo(
-    ({ name, type, placeholder, value, onChange, required }) => {
+    ({ name, type, placeholder, value, onChange, required, disabled }) => {
         return (
             <StyledInput
                 name={name}
@@ -72,6 +72,7 @@ const Input = React.memo(
                 value={value}
                 onChange={onChange}
                 required={required}
+                disabled={disabled}
             />
         );
     },
@@ -84,6 +85,7 @@ Input.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func.isRequired,
     required: PropTypes.bool.isRequired,
+    disabled: PropTypes.bool.isRequired,
 };
 
 const StyledErrorMessage = styled.div`
@@ -159,6 +161,7 @@ const LoginPresenter = ({
                     placeholder={'id'}
                     value={loginData.username}
                     onChange={onDataChange}
+                    disabled={loading}
                     required
                 />
                 <Input
@@ -167,6 +170,7 @@ const LoginPresenter = ({
                     placeholder={'password'}
                     value={loginData.password}
                     onChange={onDataChange}
+                    disabled={loading}
                     required
                 />
                 {!loading ? (
