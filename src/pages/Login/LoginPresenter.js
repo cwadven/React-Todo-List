@@ -175,8 +175,14 @@ const LoginPresenter = ({
                     <Loader size={'64'} outerSize={'8'} />
                 )}
             </Form>
-            <span style={{ color: '#faf3e0', fontWeight: '100' }}>or</span>
-            <SignUp>SIGN UP</SignUp>
+            {!loading && (
+                <>
+                    <span style={{ color: '#faf3e0', fontWeight: '100' }}>
+                        or
+                    </span>
+                    <SignUp>SIGN UP</SignUp>
+                </>
+            )}
             {error.length > 0 &&
                 error.map(e => {
                     return e.map((_e, index) => {
