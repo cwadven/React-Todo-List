@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getToken } from '../models/AccountModel';
 
 const api = axios.create({
-    baseURL: 'https://cwadven4.pythonanywhere.com/',
+    baseURL: 'https://record-to-do-list.shop/',
     // baseURL: 'http://127.0.0.1:8000/',
 });
 
