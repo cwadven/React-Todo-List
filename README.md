@@ -54,7 +54,7 @@ edit . 2021-08-25
 
 ## Deploy
 
-edit . 2021-08-25
+edit . 2021-12-18
 
 ---
 
@@ -64,7 +64,7 @@ edit . 2021-08-25
 
 #### Backend
 
-Pythonanywhere
+![Oracle](https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white) ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
 
 ## Developer Information
 
