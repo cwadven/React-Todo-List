@@ -30,7 +30,7 @@ https://record-to-do-list.netlify.app/
 
 ### Back End
 
-https://cwadven4.pythonanywhere.com
+https://record-to-do-list.shop/
 
 ## Project Duration
 
