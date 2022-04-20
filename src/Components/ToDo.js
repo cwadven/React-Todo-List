@@ -102,13 +102,13 @@ const StyledAiFillDelete = styled(AiFillDelete)`
 `;
 
 const ToDo = ({
-    text,
-    deadLine,
-    startDate,
-    completedDate,
-    id,
-    isCompleted,
-}) => {
+                  text,
+                  deadLine,
+                  startDate,
+                  completedDate,
+                  id,
+                  isCompleted,
+              }) => {
     const dispatch = useDispatch();
     const [isEditable, setIsEditable] = useState(false);
     const [edit, setEdit] = useState(text);
@@ -167,6 +167,12 @@ const ToDo = ({
             inputRef.current.focus();
         }
     };
+
+    const onEnterPress = async (e) => {
+        if (e.code === "Enter" || e.code === "NumpadEnter") {
+            await onEditSubmit();
+        }
+    }
 
     const completedStatusTodo = async () => {
         await setIsLoading(true);
@@ -227,23 +233,24 @@ const ToDo = ({
                 <>
                     <DatePickerContainer>
                         <DatePicker
-                            name="toDoDeadLine"
+                            name='toDoDeadLine'
                             selected={editDeadLine}
                             onChange={onEditDeadLineChange}
-                            timeInputLabel="Time:"
-                            dateFormat="yyyy/MM/dd h:mm aa"
-                            popperPlacement="auto"
+                            timeInputLabel='Time:'
+                            dateFormat='yyyy/MM/dd h:mm aa'
+                            popperPlacement='auto'
                             minDate={new Date()}
                             showTimeInput
                             relativeSize
                         />
                     </DatePickerContainer>
                     <Input
-                        type="text"
+                        type='text'
                         ref={inputRef}
                         value={edit}
-                        placeholder="To Memo Your Jobs"
+                        placeholder='To Memo Your Jobs'
                         onChange={onEditChange}
+                        onKeyDown={onEnterPress}
                     />
                 </>
             ) : (
@@ -282,11 +289,11 @@ const ToDo = ({
 
             <ButtonContainer>
                 {!isCompleted &&
-                    (isEditable ? (
-                        <StyledAiOutlineRollback onClick={editExit} size={30} />
-                    ) : (
-                        <StyledAiOutlineEdit onClick={editExit} size={30} />
-                    ))}
+                (isEditable ? (
+                    <StyledAiOutlineRollback onClick={editExit} size={30} />
+                ) : (
+                    <StyledAiOutlineEdit onClick={editExit} size={30} />
+                ))}
                 {isEditable ? (
                     isLoading ? (
                         <div style={{ display: 'inline-block' }}>
