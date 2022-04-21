@@ -312,7 +312,7 @@ const ToDo = ({
                 </>
             ) : (
                 <>
-                    <OrderingContainer>
+                    {!isCompleted ? <OrderingContainer>
                         {idx !== 1 ? <StyledMdVerticalAlignTop
                             onClick={onOrderingChangeTop}
                             size={20}
@@ -321,7 +321,7 @@ const ToDo = ({
                             onClick={onOrderingChangeBottom}
                             size={20}
                         /> : <MdNotInterested size={20} />}
-                    </OrderingContainer>
+                    </OrderingContainer> : null}
                     {deadLine ? (
                         !isCompleted ? (
                             <DeadLine>
