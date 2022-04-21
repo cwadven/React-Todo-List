@@ -29,6 +29,11 @@ const ToDoModel = {
             headers: { Authorization: getToken() },
         });
     },
+    putToDoOrder: data => {
+        return api.put(`todo/change-order-number`, data, {
+            headers: { Authorization: getToken() },
+        });
+    },
     getCompletedList: () =>
         api.get('todo/completed', {
             headers: { Authorization: getToken() },

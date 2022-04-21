@@ -5,6 +5,7 @@ export const DELETE = 'delete';
 export const COMPLETE = 'complete';
 export const UNCOMPLETE = 'uncomplete';
 export const EDIT = 'edit';
+export const ORDERCHANGE = 'orderchange';
 
 export const initialState = {
     toDos: [],
@@ -78,6 +79,25 @@ const reducer = (state, action) => {
                 text: action.payload.edit,
                 deadLine: action.payload.editDeadLine,
             };
+            return {
+                ...state,
+                toDos: [...state.toDos],
+            };
+        case ORDERCHANGE:
+            // 위치 수정
+            // eslint-disable-next-line no-case-declarations
+            const orderingTargetIndex = state.toDos.findIndex(
+                toDo => toDo.id === action.payload.targetId,
+            );
+            // eslint-disable-next-line no-case-declarations
+            const orderingCurrentIndex = state.toDos.findIndex(
+                toDo => toDo.id === action.payload.currentId,
+            );
+            // eslint-disable-next-line no-case-declarations
+            const temp = state.toDos[orderingTargetIndex];
+            state.toDos[orderingTargetIndex] = state.toDos[orderingCurrentIndex];
+            state.toDos[orderingCurrentIndex] = temp;
+
             return {
                 ...state,
                 toDos: [...state.toDos],

@@ -56,10 +56,14 @@ const List = ({ name, itemSet, isCompleted }) => {
             </SubTitle>
 
             <div>
-                {itemSet.map(toDo => (
+                {itemSet.map((toDo, idx) => (
                     <ToDo
+                        total_length={itemSet.length}
+                        idx={idx + 1}
                         key={toDo.id}
                         id={toDo.id}
+                        nextId={idx === itemSet.length - 1 ? null : itemSet[idx+1].id}
+                        prevId={idx === 0 ? null : itemSet[idx-1].id}
                         text={toDo.text}
                         deadLine={
                             toDo.deadLine ? new Date(toDo.deadLine) : null

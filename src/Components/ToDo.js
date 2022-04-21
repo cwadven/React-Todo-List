@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { COMPLETE, DELETE, EDIT, UNCOMPLETE } from '../reducer';
+import { COMPLETE, DELETE, EDIT, ORDERCHANGE, UNCOMPLETE } from '../reducer';
 import { useDispatch } from '../context';
 import styled from '@emotion/styled';
 import {
@@ -16,6 +16,11 @@ import ToDoModel from '../models/ToDoModel';
 import { errorResponse } from '../models/AccountModel';
 import Loader from '../Components/Loader';
 import PropTypes from 'prop-types';
+import {
+    MdVerticalAlignBottom,
+    MdVerticalAlignTop,
+    MdNotInterested,
+} from 'react-icons/all';
 
 const Container = styled.article`
     background: #eabf9f;
@@ -100,8 +105,30 @@ const StyledAiFillDelete = styled(AiFillDelete)`
         color: #faf3e0;
     }
 `;
+const OrderingContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+`;
+const StyledMdVerticalAlignTop = styled(MdVerticalAlignTop)`
+    cursor: pointer;
+
+    &:hover {
+        color: #faf3e0;
+    }
+`;
+const StyledMdVerticalAlignBottom = styled(MdVerticalAlignBottom)`
+    cursor: pointer;
+
+    &:hover {
+        color: #faf3e0;
+    }
+`;
 
 const ToDo = ({
+                  idx,
+                  total_length,
+                  nextId,
+                  prevId,
                   text,
                   deadLine,
                   startDate,
@@ -169,10 +196,10 @@ const ToDo = ({
     };
 
     const onEnterPress = async (e) => {
-        if (e.code === "Enter" || e.code === "NumpadEnter") {
+        if (e.code === 'Enter' || e.code === 'NumpadEnter') {
             await onEditSubmit();
         }
-    }
+    };
 
     const completedStatusTodo = async () => {
         await setIsLoading(true);
@@ -221,6 +248,36 @@ const ToDo = ({
         }
     };
 
+    const orderingChangeToDo = async (currentId, targetId) => {
+        try {
+            const {
+                data: { message },
+            } = await ToDoModel.putToDoOrder({ currentId, targetId });
+            return message;
+        } catch (e) {
+            console.log(e);
+            errorResponse(e.response);
+        }
+    };
+
+    const onOrderingChangeTop = async () => {
+        await orderingChangeToDo(id, prevId);
+        await setIsLoading(false);
+        dispatch({
+            type: ORDERCHANGE,
+            payload: { currentId: id, targetId: prevId },
+        });
+    };
+
+    const onOrderingChangeBottom = async () => {
+        await orderingChangeToDo(id, nextId);
+        await setIsLoading(false);
+        dispatch({
+            type: ORDERCHANGE,
+            payload: { currentId: id, targetId: nextId },
+        });
+    };
+
     useEffect(() => {
         if (isEditable) {
             inputRef.current.focus();
@@ -255,6 +312,16 @@ const ToDo = ({
                 </>
             ) : (
                 <>
+                    <OrderingContainer>
+                        {idx !== 1 ? <StyledMdVerticalAlignTop
+                            onClick={onOrderingChangeTop}
+                            size={20}
+                        /> : <MdNotInterested size={20} />}
+                        {idx !== total_length ? <StyledMdVerticalAlignBottom
+                            onClick={onOrderingChangeBottom}
+                            size={20}
+                        /> : <MdNotInterested size={20} />}
+                    </OrderingContainer>
                     {deadLine ? (
                         !isCompleted ? (
                             <DeadLine>
@@ -352,6 +419,10 @@ ToDo.propTypes = {
     completedDate: PropTypes.instanceOf(Date),
     id: PropTypes.number,
     isCompleted: PropTypes.bool,
+    idx: PropTypes.number,
+    total_length: PropTypes.number,
+    nextId: PropTypes.number,
+    prevId: PropTypes.number,
 };
 
 export default ToDo;
