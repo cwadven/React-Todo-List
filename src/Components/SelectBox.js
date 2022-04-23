@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const SelectBox = ({ options, onChange, name }) => {
     return (
-        <select name={name} onChange={onChange}>
+        <select style={{ height: 'fitContent'}} name={name} onChange={onChange}>
             <option
                 key={0}
                 value={null}
