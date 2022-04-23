@@ -10,12 +10,17 @@ import Loader from '../Components/Loader';
 import PropTypes from 'prop-types';
 import SelectBox from '../Components/SelectBox';
 
-const Input = styled.input`
+const InputDiv = styled.div`
+    display: flex;
+    align-items: center;
+    width: 80%;
+`
+
+const TextArea = styled.textarea`
     font-size: 15px;
     width: 80%;
     padding: 0 5px;
     margin: auto;
-    height: 30px;
     outline: 0px;
     border: ${props => (props.error ? '1px solid red' : '1px solid black')};
     border-radius: 5px;
@@ -74,7 +79,7 @@ const Add = ({ categorySet }) => {
     const [newToDo, setNewToDo] = useState({
         toDoText: '',
         toDoDeadLine: '',
-        toDoCategory: null,
+        toDoCategory: '',
     });
     const [inputError, setInputError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -82,8 +87,6 @@ const Add = ({ categorySet }) => {
     const memoInput = useRef();
 
     const dispatch = useDispatch();
-
-    console.log(newToDo);
 
     const postToDo = async _newToDo => {
         const { toDoText: text, toDoDeadLine: deadLine } = _newToDo;
@@ -118,6 +121,7 @@ const Add = ({ categorySet }) => {
                     setNewToDo({
                         toDoText: '',
                         toDoDeadLine: '',
+                        toDoCategory: '',
                     });
                 }
             } else {
@@ -158,20 +162,23 @@ const Add = ({ categorySet }) => {
 
     return (
         <Form onSubmit={onSubmit}>
-            <SelectBox
-                name='toDoCategory'
-                onChange={onChange}
-                options={categorySet}
-            />
-            <Input
-                ref={memoInput}
-                name='toDoText'
-                type='text'
-                value={newToDo.toDoText}
-                placeholder='To Memo Your Jobs Add To Dos'
-                onChange={onChange}
-                error={inputError}
-            />
+            <InputDiv>
+                <SelectBox
+                    name='toDoCategory'
+                    onChange={onChange}
+                    options={categorySet}
+                />
+                <TextArea
+                    rows={5}
+                    ref={memoInput}
+                    name='toDoText'
+                    type='text'
+                    value={newToDo.toDoText}
+                    placeholder='To Memo Your Jobs Add To Dos'
+                    onChange={onChange}
+                    error={inputError}
+                />
+            </InputDiv>
             <Bold>Until When? ⏰</Bold>
             <MemoDatePicker
                 name='toDoDeadLine'
