@@ -37,6 +37,19 @@ const Text = styled.div`
     white-space: break-spaces;
 `;
 
+const CategoryText = styled.div`
+    border: 1px solid;
+    border-radius: 10px;
+    background: #ffffff;
+    padding: 5px 1px;
+    margin: 10px 5px;
+    text-align: center;
+    color: #1e212d;
+    font-weight: bold;
+    font-size: 15px;
+    white-space: break-spaces;
+`;
+
 const TextArea = styled.textarea`
     display: block;
     font-size: 15px;
@@ -131,6 +144,8 @@ const ToDo = ({
                   nextId,
                   prevId,
                   text,
+                  categoryName,
+                  categorySet,
                   deadLine,
                   startDate,
                   completedDate,
@@ -145,6 +160,8 @@ const ToDo = ({
     const [isLoading, setIsLoading] = useState(false);
 
     const inputRef = useRef(null);
+
+    console.log(categorySet);
 
     const editExit = async () => {
         await setIsEditable(prevState => !prevState);
@@ -314,6 +331,7 @@ const ToDo = ({
                 </>
             ) : (
                 <>
+                    {categoryName && <CategoryText>{categoryName}</CategoryText>}
                     {!isCompleted ? <OrderingContainer>
                         {idx !== 1 ? <StyledMdVerticalAlignTop
                             onClick={onOrderingChangeTop}
@@ -416,6 +434,8 @@ const ToDo = ({
 
 ToDo.propTypes = {
     text: PropTypes.string,
+    categoryName: PropTypes.string,
+    categorySet: PropTypes.array,
     deadLine: PropTypes.instanceOf(Date),
     startDate: PropTypes.instanceOf(Date),
     completedDate: PropTypes.instanceOf(Date),

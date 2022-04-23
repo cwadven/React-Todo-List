@@ -16,7 +16,7 @@ const SubTitle = styled.div`
     color: #1e212d;
 `;
 
-const List = ({ name, itemSet, isCompleted }) => {
+const List = ({ name, itemSet, isCompleted, categorySet }) => {
     const [now, setNow] = useState(new Date());
     const interval = useRef();
 
@@ -58,6 +58,8 @@ const List = ({ name, itemSet, isCompleted }) => {
             <div>
                 {itemSet.map((toDo, idx) => (
                     <ToDo
+                        categoryName={toDo['category__name']}
+                        categorySet={categorySet}
                         total_length={itemSet.length}
                         idx={idx + 1}
                         key={toDo.id}
@@ -88,6 +90,7 @@ List.propTypes = {
     name: PropTypes.string,
     itemSet: PropTypes.array,
     isCompleted: PropTypes.bool,
+    categorySet: PropTypes.array,
 };
 
 export default List;
