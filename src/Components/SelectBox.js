@@ -13,7 +13,7 @@ const SelectBox = ({ options, onChange, name }) => {
             {options.map((option) => (
                 <option
                     key={option.id}
-                    value={option.name}
+                    value={option.id}
                 >
                     {option.name}
                 </option>
