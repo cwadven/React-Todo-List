@@ -89,11 +89,11 @@ const Add = ({ categorySet }) => {
     const dispatch = useDispatch();
 
     const postToDo = async _newToDo => {
-        const { toDoText: text, toDoDeadLine: deadLine } = _newToDo;
+        const { toDoText: text, toDoDeadLine: deadLine, toDoCategory: categoryId } = _newToDo;
         try {
             const {
                 data: { message, id },
-            } = await ToDoModel.postToDo({ text, deadLine });
+            } = await ToDoModel.postToDo({ text, deadLine, categoryId });
             return { message, id };
         } catch (e) {
             console.log(e);
@@ -119,9 +119,9 @@ const Add = ({ categorySet }) => {
                         },
                     });
                     setNewToDo({
+                        ...newToDo,
                         toDoText: '',
                         toDoDeadLine: '',
-                        toDoCategory: '',
                     });
                 }
             } else {
