@@ -1,5 +1,6 @@
 export const SET_TODO = 'getTodo';
 export const SET_COMPLETED = 'getCompleted';
+export const SET_CATEGORY = 'getCategory';
 export const ADD = 'add';
 export const DELETE = 'delete';
 export const COMPLETE = 'complete';
@@ -10,6 +11,7 @@ export const ORDERCHANGE = 'orderchange';
 export const initialState = {
     toDos: [],
     completed: [],
+    categorySet: [],
 };
 
 const reducer = (state, action) => {
@@ -18,6 +20,8 @@ const reducer = (state, action) => {
             return { ...state, toDos: action.payload };
         case SET_COMPLETED:
             return { ...state, completed: action.payload };
+        case SET_CATEGORY:
+            return { ...state, categorySet: action.payload };
         case ADD:
             return {
                 ...state,

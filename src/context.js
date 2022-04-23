@@ -5,7 +5,7 @@ import React, {
     useReducer,
     useState,
 } from 'react';
-import reducer, { SET_COMPLETED, SET_TODO, initialState } from './reducer';
+import reducer, { SET_COMPLETED, SET_TODO, initialState, SET_CATEGORY } from './reducer';
 import ToDoModel from './models/ToDoModel';
 import { withRouter } from 'react-router-dom';
 import { errorResponse } from './models/AccountModel';
@@ -40,13 +40,27 @@ const ToDosProvider = ({ children }) => {
         }
     };
 
+    const getCategorySet = async () => {
+        try {
+            const {
+                data: { category_set },
+            } = await ToDoModel.getCategorySet();
+            return category_set
+        } catch (e) {
+            console.log(e);
+            errorResponse(e.response);
+        }
+    };
+
     // eslint-disable-next-line
     useEffect(async () => {
         setIsPending(prevState => !prevState);
         const todoSet = await getToDoList();
         const completedSet = await getCompletedTodayList();
+        const categorySet = await getCategorySet();
         dispatch({ type: SET_TODO, payload: todoSet });
         dispatch({ type: SET_COMPLETED, payload: completedSet });
+        dispatch({ type: SET_CATEGORY, payload: categorySet });
         setIsPending(prevState => !prevState);
     }, []);
 
@@ -77,6 +91,14 @@ export const useCompleted = () => {
         state: { completed },
     } = useContext(ToDosContext);
     return completed;
+};
+
+// reducer 로 받은 state 중 category 만 사용하기
+export const useCategory = () => {
+    const {
+        state: { categorySet },
+    } = useContext(ToDosContext);
+    return categorySet;
 };
 
 export const getIsPending = () => {

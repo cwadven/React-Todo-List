@@ -67,7 +67,7 @@ const Grid = styled.div`
     }
 `;
 
-const ToDoPresenter = ({ toDos, completed, isPending }) => {
+const ToDoPresenter = ({ toDos, completed, categorySet, isPending }) => {
     return isPending ? (
         <Container>
             <Title>Loading</Title>
@@ -87,7 +87,7 @@ const ToDoPresenter = ({ toDos, completed, isPending }) => {
                 ''
             )}
             {toDos.length === 0 && completed.length > 0 ? <Congratulate /> : ''}
-            <Add />
+            <Add categorySet={categorySet}/>
             <Grid>
                 <List name="To Dos" itemSet={toDos} isCompleted={false} />
                 <List name="Completed" itemSet={completed} isCompleted={true} />
@@ -99,6 +99,7 @@ const ToDoPresenter = ({ toDos, completed, isPending }) => {
 ToDoPresenter.propTypes = {
     toDos: PropTypes.array,
     completed: PropTypes.array,
+    categorySet: PropTypes.array,
     isPending: PropTypes.bool,
 };
 
