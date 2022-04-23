@@ -34,9 +34,10 @@ const Text = styled.div`
     color: #1e212d;
     font-weight: bold;
     font-size: 15px;
+    white-space: break-spaces;
 `;
 
-const Input = styled.input`
+const TextArea = styled.textarea`
     display: block;
     font-size: 15px;
     margin: 0px;
@@ -301,7 +302,8 @@ const ToDo = ({
                             relativeSize
                         />
                     </DatePickerContainer>
-                    <Input
+                    <TextArea
+                        rows={5}
                         type='text'
                         ref={inputRef}
                         value={edit}
