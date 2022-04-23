@@ -8,6 +8,7 @@ import ToDoModel from '../models/ToDoModel';
 import { errorResponse } from '../models/AccountModel';
 import Loader from '../Components/Loader';
 import PropTypes from 'prop-types';
+import SelectBox from '../Components/SelectBox';
 
 const Input = styled.input`
     font-size: 15px;
@@ -69,10 +70,11 @@ const MemoDatePicker = React.memo(props => {
     return <StyledDatePicker {...props} />;
 });
 
-const Add = () => {
+const Add = ({ categorySet }) => {
     const [newToDo, setNewToDo] = useState({
         toDoText: '',
         toDoDeadLine: '',
+        toDoCategory: null,
     });
     const [inputError, setInputError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -80,6 +82,8 @@ const Add = () => {
     const memoInput = useRef();
 
     const dispatch = useDispatch();
+
+    console.log(newToDo);
 
     const postToDo = async _newToDo => {
         const { toDoText: text, toDoDeadLine: deadLine } = _newToDo;
@@ -154,23 +158,28 @@ const Add = () => {
 
     return (
         <Form onSubmit={onSubmit}>
+            <SelectBox
+                name='toDoCategory'
+                onChange={onChange}
+                options={categorySet}
+            />
             <Input
                 ref={memoInput}
-                name="toDoText"
-                type="text"
+                name='toDoText'
+                type='text'
                 value={newToDo.toDoText}
-                placeholder="To Memo Your Jobs Add To Dos"
+                placeholder='To Memo Your Jobs Add To Dos'
                 onChange={onChange}
                 error={inputError}
             />
             <Bold>Until When? ⏰</Bold>
             <MemoDatePicker
-                name="toDoDeadLine"
+                name='toDoDeadLine'
                 selected={newToDo.toDoDeadLine}
                 onChange={onChangeDate}
-                timeInputLabel="Time:"
-                dateFormat="yyyy/MM/dd h:mm aa"
-                popperPlacement="auto"
+                timeInputLabel='Time:'
+                dateFormat='yyyy/MM/dd h:mm aa'
+                popperPlacement='auto'
                 minDate={minDate}
                 showTimeInput
                 relativeSize
@@ -183,4 +192,9 @@ const Add = () => {
         </Form>
     );
 };
+
+Add.propTypes = {
+    categorySet: PropTypes.array,
+};
+
 export default Add;
