@@ -4,7 +4,6 @@ import { MdNoteAdd } from 'react-icons/all';
 import CategoryCreateModal from '../Components/CategoryCreateModal';
 
 const ModalActiveButton = styled.div`
-    height: 100%;
     font-size: 13px;
     cursor: pointer;
 
