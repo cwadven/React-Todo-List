@@ -9,7 +9,7 @@ import { errorResponse } from '../models/AccountModel';
 import Loader from '../Components/Loader';
 import PropTypes from 'prop-types';
 import SelectBox from '../Components/SelectBox';
-import { MdNoteAdd } from 'react-icons/all';
+import CategoryCreateModalButton from '../Components/CategoryCreateModalButton';
 
 const InputDiv = styled.div`
     display: flex;
@@ -174,8 +174,7 @@ const Add = ({ categorySet }) => {
             <InputDiv>
                 <div>
                     <CategoryAddArea>
-                        <MdNoteAdd />
-                        Click to Add
+                        <CategoryCreateModalButton />
                     </CategoryAddArea>
                     <SelectBox
                         name='toDoCategory'
