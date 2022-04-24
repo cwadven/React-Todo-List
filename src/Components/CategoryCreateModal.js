@@ -5,7 +5,7 @@ import ToDoModel from '../models/ToDoModel';
 import Loader from '../Components/Loader';
 import PropTypes from 'prop-types';
 import { errorResponse } from '../models/AccountModel';
-import { ADD_CATEGORY } from '../reducer';
+import { SET_CATEGORY } from '../reducer';
 import { useDispatch } from '../context';
 
 const ModalDeactivateButton = styled.button`
@@ -114,6 +114,18 @@ const CategoryCreateModal = ({ onModalOpenClick }) => {
         });
     };
 
+    const getCategorySet = async () => {
+        try {
+            const {
+                data: { category_set },
+            } = await ToDoModel.getCategorySet();
+            return category_set
+        } catch (e) {
+            console.log(e);
+            errorResponse(e.response);
+        }
+    };
+
     useEffect(() => {
         document.body.style.overflow = 'hidden';
         categoryNameRef.current.focus();
@@ -137,16 +149,9 @@ const CategoryCreateModal = ({ onModalOpenClick }) => {
         }
 
         try {
-            let {
-                data: { id },
-            } = await ToDoModel.addCategory(categoryInfo);
-            dispatch({
-                type: ADD_CATEGORY,
-                payload: {
-                    id: id,
-                    ...categoryInfo,
-                },
-            });
+            await ToDoModel.addCategory(categoryInfo);
+            const categorySet = await getCategorySet();
+            dispatch({ type: SET_CATEGORY, payload: categorySet });
             onModalOpenClick();
         } catch (e) {
             console.log(e);
