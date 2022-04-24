@@ -15,7 +15,7 @@ const SelectBox = ({ options, onChange, name }) => {
                     key={option.id}
                     value={option.id}
                 >
-                    {option.name}
+                    {option.name} ({option.orderNumber})
                 </option>
             ))}
         </select>
