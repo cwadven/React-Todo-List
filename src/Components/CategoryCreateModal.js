@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/all';
 import styled from '@emotion/styled';
 import ToDoModel from '../models/ToDoModel';
-import { errorResponse } from '../models/AccountModel';
 import Loader from '../Components/Loader';
-import { arrayInObjectSort } from '../common.js';
 import PropTypes from 'prop-types';
+import { errorResponse } from '../models/AccountModel';
+import { ADD_CATEGORY } from '../reducer';
+import { useDispatch } from '../context';
 
 const ModalDeactivateButton = styled.button`
     position: absolute;
@@ -51,7 +52,7 @@ const Modal = styled.div`
     width: 80vw;
     max-width: 500px;
     height: 100vw;
-    max-height: 500px;
+    max-height: 200px;
     background: linear-gradient(
         169deg,
         rgba(224, 196, 182, 1) 0%,
@@ -72,66 +73,96 @@ const CompletedContainer = styled.div`
     width: 80vw;
     max-width: 480px;
     height: 100vw;
-    max-height: 500px;
+    max-height: 200px;
     margin: 50px 0px 5px 0px;
     padding: 0 10px;
     overflow: auto;
     overflow-wrap: break-word;
-    text-align: justify;
+    text-align: center;
 `;
 
-const CompletedItemContainer = styled.div`
-    &:not(:first-of-type) {
-        margin-top: 10px;
+const StyledCategoryButton = styled.button`
+    width: 100px;
+    color: #f5f5f5;
+    cursor: pointer;
+    background-color: #1e212d;
+    padding: 4px 5px;
+    border-radius: 5px;
+    margin: 5px;
+    transition: 0.2s linear;
+
+    &:hover {
+        background-color: #6e707b;
     }
 `;
 
-const CompletedDate = styled.div`
-    text-align: left;
-    font-size: 15px;
-`;
-
 const CategoryCreateModal = ({ onModalOpenClick }) => {
-    const [completedSet, setCompletedSet] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [categoryInfo, setCategoryInfo] = useState({
+        name: '',
+        orderNumber: '',
+    });
+    const [isLoading, setIsLoading] = useState(false);
+    const categoryNameRef = useRef();
+    const categoryOrderNumberRef = useRef();
+
+    const dispatch = useDispatch();
+
+    const onChange = e => {
+        setCategoryInfo({
+            ...categoryInfo,
+            [e.target.name]: e.target.value,
+        });
+    };
 
     useEffect(() => {
-        const requestCompletedSet = async () => {
-            try {
-                let {
-                    data: { completed_set },
-                } = await ToDoModel.getCompletedList();
-                completed_set = arrayInObjectSort(
-                    completed_set,
-                    'completedDate',
-                    'asc',
-                    'date',
-                );
-                return completed_set;
-            } catch (e) {
-                console.log(e);
-                errorResponse(e.response);
-            }
-        };
-
-        const requestThenSetCompletedSet = async () => {
-            let completed_set = await requestCompletedSet();
-            await setCompletedSet(completed_set);
-            setIsLoading(false);
-        };
-
         document.body.style.overflow = 'hidden';
-        requestThenSetCompletedSet();
+        categoryNameRef.current.focus();
 
         return () => {
             document.body.style.overflow = 'unset';
         };
     }, []);
 
+    const onSubmit = async () => {
+        setIsLoading(prevState => !prevState);
+        if (!categoryInfo.name) {
+            categoryNameRef.current.focus();
+            setIsLoading(prevState => !prevState);
+            return
+        }
+        if (!categoryInfo.orderNumber) {
+            categoryOrderNumberRef.current.focus();
+            setIsLoading(prevState => !prevState);
+            return
+        }
+
+        try {
+            let {
+                data: { id },
+            } = await ToDoModel.addCategory(categoryInfo);
+            dispatch({
+                type: ADD_CATEGORY,
+                payload: {
+                    id: id,
+                    ...categoryInfo,
+                },
+            });
+            onModalOpenClick();
+        } catch (e) {
+            console.log(e);
+            errorResponse(e.response);
+        }
+        setIsLoading(prevState => !prevState);
+        setCategoryInfo({
+            name: '',
+            orderNumber: '',
+        });
+    };
+
     return (
         <Container>
             <Modal>
-                <ModalTitle>All Completed ToDos</ModalTitle>
+                <ModalTitle>Category Add</ModalTitle>
                 <ModalDeactivateButton onClick={onModalOpenClick}>
                     <AiOutlineClose size={30} />
                 </ModalDeactivateButton>
@@ -140,18 +171,30 @@ const CategoryCreateModal = ({ onModalOpenClick }) => {
                     <Loader size={'64'} outerSize={'8'} />
                 ) : (
                     <CompletedContainer>
-                        {completedSet.map((completed, index) => {
-                            return (
-                                <CompletedItemContainer key={index}>
-                                    <CompletedDate>
-                                        {new Date(
-                                            completed.completedDate,
-                                        ).toLocaleDateString()}
-                                    </CompletedDate>
-                                    <div>{completed.text}</div>
-                                </CompletedItemContainer>
-                            );
-                        })}
+                        <div style={{ textAlign: 'center' }}>
+                            <input
+                                ref={categoryNameRef}
+                                name={'name'}
+                                onChange={onChange}
+                                value={categoryInfo.name}
+                                placeholder={'Category Name'}
+                                required
+                            />
+                            <input
+                                ref={categoryOrderNumberRef}
+                                name={'orderNumber'}
+                                onChange={(e) => {
+                                    const regexp = /^[1-9\b]*$/;
+                                    if (regexp.test(e.target.value)) {
+                                        onChange(e);
+                                    }
+                                }}
+                                value={categoryInfo.orderNumber}
+                                placeholder={'orderNumber'}
+                                required
+                            />
+                        </div>
+                        <StyledCategoryButton onClick={onSubmit}>ADD</StyledCategoryButton>
                     </CompletedContainer>
                 )}
             </Modal>

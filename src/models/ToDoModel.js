@@ -17,6 +17,11 @@ const ToDoModel = {
             headers: { Authorization: getToken() },
         });
     },
+    addCategory: data => {
+        return api.post('todo/category', data, {
+            headers: { Authorization: getToken() },
+        });
+    },
     postToDo: data => {
         return api.post('todo', data, {
             headers: {

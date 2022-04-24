@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { MdNoteAdd } from 'react-icons/all';
-import CompletedModal from './CompletedModal';
+import CategoryCreateModal from '../Components/CategoryCreateModal';
 
 const ModalActiveButton = styled.div`
     height: 100%;
@@ -35,7 +35,7 @@ const CategoryCreateModalButton = () => {
                 Click to Add
             </ModalActiveButton>
             {isModalOpen && (
-                <CompletedModal onModalOpenClick={onModalOpenClick} />
+                <CategoryCreateModal onModalOpenClick={onModalOpenClick} />
             )}
         </>
     );

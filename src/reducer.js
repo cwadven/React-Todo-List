@@ -1,6 +1,7 @@
 export const SET_TODO = 'getTodo';
 export const SET_COMPLETED = 'getCompleted';
 export const SET_CATEGORY = 'getCategory';
+export const ADD_CATEGORY = 'addCategory';
 export const ADD = 'add';
 export const DELETE = 'delete';
 export const COMPLETE = 'complete';
@@ -22,6 +23,18 @@ const reducer = (state, action) => {
             return { ...state, completed: action.payload };
         case SET_CATEGORY:
             return { ...state, categorySet: action.payload };
+        case ADD_CATEGORY:
+            return {
+                ...state,
+                categorySet: [
+                    ...state.categorySet,
+                    {
+                        id: action.payload.id,
+                        name: action.payload.name,
+                        orderNumber: action.payload.orderNumber,
+                    },
+                ],
+            };
         case ADD:
             return {
                 ...state,
