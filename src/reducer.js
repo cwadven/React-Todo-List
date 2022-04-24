@@ -44,6 +44,8 @@ const reducer = (state, action) => {
                         id: action.payload.id,
                         text: action.payload.toDoText,
                         deadLine: action.payload.toDoDeadLine,
+                        category__id: action.payload.toDoCategory,
+                        category__name: action.payload.categoryName,
                         startDate: action.payload.startDate,
                         completedDate: action.payload.completedDate,
                     },

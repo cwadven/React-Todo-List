@@ -145,7 +145,7 @@ const ToDo = ({
                   prevId,
                   text,
                   categoryName,
-                  categorySet,
+                  // categorySet,
                   deadLine,
                   startDate,
                   completedDate,
@@ -160,8 +160,6 @@ const ToDo = ({
     const [isLoading, setIsLoading] = useState(false);
 
     const inputRef = useRef(null);
-
-    console.log(categorySet);
 
     const editExit = async () => {
         await setIsEditable(prevState => !prevState);
@@ -435,7 +433,7 @@ const ToDo = ({
 ToDo.propTypes = {
     text: PropTypes.string,
     categoryName: PropTypes.string,
-    categorySet: PropTypes.array,
+    // categorySet: PropTypes.array,
     deadLine: PropTypes.instanceOf(Date),
     startDate: PropTypes.instanceOf(Date),
     completedDate: PropTypes.instanceOf(Date),

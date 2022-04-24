@@ -123,6 +123,9 @@ const Add = ({ categorySet }) => {
                         payload: {
                             ...newToDo,
                             id: id,
+                            categoryName: categorySet[categorySet.findIndex(
+                                category => category.id === Number(newToDo.toDoCategory),
+                            )].name,
                             startDate: new Date(),
                             completedDate: '',
                         },
