@@ -9,7 +9,6 @@ import { errorResponse } from '../models/AccountModel';
 import Loader from '../Components/Loader';
 import PropTypes from 'prop-types';
 import SelectBox from '../Components/SelectBox';
-import CategoryCreateModalButton from '../Components/CategoryCreateModalButton';
 
 const InputDiv = styled.div`
     display: flex;
@@ -75,14 +74,6 @@ const StyledDatePicker = styled(DatePicker)`
 const MemoDatePicker = React.memo(props => {
     return <StyledDatePicker {...props} />;
 });
-
-const CategoryAddArea = styled.div`
-    display: flex;
-    font-size: 15px;
-    align-items: center;
-    
-    cursor: pointer;
-`
 
 const Add = ({ categorySet }) => {
     const [newToDo, setNewToDo] = useState({
@@ -176,9 +167,6 @@ const Add = ({ categorySet }) => {
         <Form onSubmit={onSubmit}>
             <InputDiv>
                 <div>
-                    <CategoryAddArea>
-                        <CategoryCreateModalButton />
-                    </CategoryAddArea>
                     <SelectBox
                         name='toDoCategory'
                         onChange={onChange}

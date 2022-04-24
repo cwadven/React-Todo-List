@@ -69,7 +69,7 @@ const Modal = styled.div`
     border-radius: 10px;
 `;
 
-const CompletedContainer = styled.div`
+const CategoryContainer = styled.div`
     width: 80vw;
     max-width: 480px;
     height: 100vw;
@@ -175,7 +175,7 @@ const CategoryCreateModal = ({ onModalOpenClick }) => {
                 {isLoading ? (
                     <Loader size={'64'} outerSize={'8'} />
                 ) : (
-                    <CompletedContainer>
+                    <CategoryContainer>
                         <div style={{ textAlign: 'center' }}>
                             <input
                                 ref={categoryNameRef}
@@ -200,7 +200,7 @@ const CategoryCreateModal = ({ onModalOpenClick }) => {
                             />
                         </div>
                         <StyledCategoryButton onClick={onSubmit}>ADD</StyledCategoryButton>
-                    </CompletedContainer>
+                    </CategoryContainer>
                 )}
             </Modal>
         </Container>

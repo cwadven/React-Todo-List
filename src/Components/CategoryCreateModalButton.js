@@ -32,7 +32,7 @@ const CategoryCreateModalButton = () => {
         <>
             <ModalActiveButton onClick={onModalOpenClick}>
                 <MdNoteAdd size={20} />
-                Click to Add
+                Click to Add Category
             </ModalActiveButton>
             {isModalOpen && (
                 <CategoryCreateModal onModalOpenClick={onModalOpenClick} />

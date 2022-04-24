@@ -8,6 +8,7 @@ import LeftCounter from '../../Components/LeftCounter';
 import Congratulate from '../../Components/Congratulate';
 import PropTypes from 'prop-types';
 import Loader from '../../Components/Loader';
+import CategoryCreateModalButton from '../../Components/CategoryCreateModalButton';
 
 const Container = styled.div`
     display: flex;
@@ -88,6 +89,8 @@ const ToDoPresenter = ({ toDos, completed, categorySet, isPending }) => {
             )}
             {toDos.length === 0 && completed.length > 0 ? <Congratulate /> : ''}
             <Add categorySet={categorySet}/>
+
+            <CategoryCreateModalButton />
             <Grid>
                 <List categorySet={categorySet} name="To Dos" itemSet={toDos} isCompleted={false} />
                 <List categorySet={categorySet} name="Completed" itemSet={completed} isCompleted={true} />
