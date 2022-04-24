@@ -9,12 +9,13 @@ import { errorResponse } from '../models/AccountModel';
 import Loader from '../Components/Loader';
 import PropTypes from 'prop-types';
 import SelectBox from '../Components/SelectBox';
+import { MdNoteAdd } from 'react-icons/all';
 
 const InputDiv = styled.div`
     display: flex;
     align-items: center;
     width: 80%;
-`
+`;
 
 const TextArea = styled.textarea`
     font-size: 15px;
@@ -74,6 +75,14 @@ const StyledDatePicker = styled(DatePicker)`
 const MemoDatePicker = React.memo(props => {
     return <StyledDatePicker {...props} />;
 });
+
+const CategoryAddArea = styled.div`
+    display: flex;
+    font-size: 15px;
+    align-items: center;
+    
+    cursor: pointer;
+`
 
 const Add = ({ categorySet }) => {
     const [newToDo, setNewToDo] = useState({
@@ -163,11 +172,17 @@ const Add = ({ categorySet }) => {
     return (
         <Form onSubmit={onSubmit}>
             <InputDiv>
-                <SelectBox
-                    name='toDoCategory'
-                    onChange={onChange}
-                    options={categorySet}
-                />
+                <div>
+                    <CategoryAddArea>
+                        <MdNoteAdd />
+                        Click to Add
+                    </CategoryAddArea>
+                    <SelectBox
+                        name='toDoCategory'
+                        onChange={onChange}
+                        options={categorySet}
+                    />
+                </div>
                 <TextArea
                     rows={5}
                     ref={memoInput}
