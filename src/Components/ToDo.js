@@ -212,7 +212,7 @@ const ToDo = ({
     };
 
     const onEnterPress = async (e) => {
-        if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+        if ((e.code === 'Enter' || e.code === 'NumpadEnter') && !e.shiftKey) {
             await onEditSubmit();
         }
     };
