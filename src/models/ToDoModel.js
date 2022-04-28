@@ -22,6 +22,12 @@ const ToDoModel = {
             headers: { Authorization: getToken() },
         });
     },
+    editCategory: data => {
+        const { categoryId, name, orderNumber } = data;
+        return api.put(`todo/category/${categoryId}`, { name, orderNumber }, {
+            headers: { Authorization: getToken() },
+        });
+    },
     postToDo: data => {
         return api.post('todo', data, {
             headers: {
