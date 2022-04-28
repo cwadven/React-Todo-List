@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { MdNoteAdd } from 'react-icons/all';
-import CategoryCreateModal from '../Components/CategoryCreateModal';
+import PropTypes from 'prop-types';
 
 const ModalActiveButton = styled.div`
     font-size: 13px;
@@ -20,7 +19,7 @@ const ModalActiveButton = styled.div`
     }
 `;
 
-const CategoryCreateModalButton = () => {
+const CategoryShowModalButton = ({Icon, ModalComponent}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const onModalOpenClick = () => {
@@ -30,14 +29,19 @@ const CategoryCreateModalButton = () => {
     return (
         <>
             <ModalActiveButton onClick={onModalOpenClick}>
-                <MdNoteAdd size={20} />
+                <Icon size={20} />
                 Click to Add Category
             </ModalActiveButton>
             {isModalOpen && (
-                <CategoryCreateModal onModalOpenClick={onModalOpenClick} />
+                <ModalComponent onModalOpenClick={onModalOpenClick} />
             )}
         </>
     );
 };
 
-export default CategoryCreateModalButton;
+CategoryShowModalButton.propTypes = {
+    Icon: PropTypes.any,
+    ModalComponent: PropTypes.any,
+};
+
+export default CategoryShowModalButton;
