@@ -92,6 +92,8 @@ const ToDoPresenter = ({ toDos, completed, categorySet, isPending }) => {
             {toDos.length === 0 && completed.length > 0 ? <Congratulate /> : ''}
             <Add categorySet={categorySet} />
             <div style={{ textAlign: 'center' }}>
+                <CategoryShowModalButton Icon={MdNoteAdd} desc={"Click to Add Category"} ModalComponent={CategoryCreateModal}/>
+                <CategoryShowModalButton Icon={MdNoteAdd} ModalComponent={CategoryCreateModal}/>
                 <CategoryShowModalButton Icon={MdNoteAdd} ModalComponent={CategoryCreateModal}/>
             </div>
             <Grid>

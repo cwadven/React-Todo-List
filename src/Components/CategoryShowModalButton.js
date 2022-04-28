@@ -19,7 +19,7 @@ const ModalActiveButton = styled.div`
     }
 `;
 
-const CategoryShowModalButton = ({Icon, ModalComponent}) => {
+const CategoryShowModalButton = ({Icon, desc, ModalComponent}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const onModalOpenClick = () => {
@@ -30,7 +30,7 @@ const CategoryShowModalButton = ({Icon, ModalComponent}) => {
         <>
             <ModalActiveButton onClick={onModalOpenClick}>
                 <Icon size={20} />
-                Click to Add Category
+                {desc}
             </ModalActiveButton>
             {isModalOpen && (
                 <ModalComponent onModalOpenClick={onModalOpenClick} />
@@ -42,6 +42,7 @@ const CategoryShowModalButton = ({Icon, ModalComponent}) => {
 CategoryShowModalButton.propTypes = {
     Icon: PropTypes.any,
     ModalComponent: PropTypes.any,
+    desc: PropTypes.string,
 };
 
 export default CategoryShowModalButton;
