@@ -5,7 +5,7 @@ import ToDoModel from '../models/ToDoModel';
 import Loader from '../Components/Loader';
 import PropTypes from 'prop-types';
 import { errorResponse } from '../models/AccountModel';
-import { SET_CATEGORY } from '../reducer';
+import { SET_CATEGORY, SET_TODO_WITH_NEW_CATEGORY_NAME } from '../reducer';
 import { useDispatch } from '../context';
 import SelectBox from '../Components/SelectBox';
 import { isNumeric } from '../common';
@@ -176,6 +176,10 @@ const CategoryEditModal = ({ onModalOpenClick, categorySet }) => {
             await ToDoModel.editCategory(categoryInfo);
             const categorySet = await getCategorySet();
             dispatch({ type: SET_CATEGORY, payload: categorySet });
+            dispatch({
+                type: SET_TODO_WITH_NEW_CATEGORY_NAME,
+                payload: { categoryName: categoryInfo.name, categoryId: categoryInfo.categoryId },
+            });
             onModalOpenClick();
         } catch (e) {
             console.log(e);

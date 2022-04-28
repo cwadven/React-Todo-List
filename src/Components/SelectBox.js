@@ -6,7 +6,7 @@ const SelectBox = ({ options, onChange, name, defaultValue=undefined }) => {
         <select style={{ height: 'fitContent'}} name={name} onChange={onChange} value={defaultValue}>
             <option
                 key={0}
-                value={null}
+                value={undefined}
             >
                 {'카테고리 선택'}
             </option>

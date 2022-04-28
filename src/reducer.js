@@ -1,6 +1,8 @@
 export const SET_TODO = 'getTodo';
 export const SET_COMPLETED = 'getCompleted';
 export const SET_CATEGORY = 'getCategory';
+export const SET_TODO_WITH_NEW_CATEGORY_NAME = 'setTodoWithNewCategoryName';
+export const SET_TODO_WITH_DELETED_CATEGORY_NAME = 'setTodoWithDeletedCategoryName';
 export const ADD_CATEGORY = 'addCategory';
 export const ADD = 'add';
 export const DELETE = 'delete';
@@ -23,6 +25,42 @@ const reducer = (state, action) => {
             return { ...state, completed: action.payload };
         case SET_CATEGORY:
             return { ...state, categorySet: action.payload };
+        case SET_TODO_WITH_NEW_CATEGORY_NAME:
+            return {
+                ...state,
+                completed: state.completed.map(_completed => {
+                    if (_completed.category__id === action.payload.categoryId) {
+                        return { ..._completed, category__name: action.payload.categoryName };
+                    } else {
+                        return _completed;
+                    }
+                }),
+                toDos: state.toDos.map(toDo => {
+                    if (toDo.category__id === action.payload.categoryId) {
+                        return { ...toDo, category__name: action.payload.categoryName };
+                    } else {
+                        return toDo;
+                    }
+                }),
+            };
+        case SET_TODO_WITH_DELETED_CATEGORY_NAME:
+            return {
+                ...state,
+                completed: state.completed.map(_completed => {
+                    if (_completed.category__id === action.payload.categoryId) {
+                        return { ..._completed, category__name: null };
+                    } else {
+                        return _completed;
+                    }
+                }),
+                toDos: state.toDos.map(toDo => {
+                    if (toDo.category__id === action.payload.categoryId) {
+                        return { ...toDo, category__name: null };
+                    } else {
+                        return toDo;
+                    }
+                }),
+            };
         case ADD_CATEGORY:
             return {
                 ...state,

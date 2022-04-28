@@ -157,7 +157,7 @@ const ToDo = ({
     const dispatch = useDispatch();
     const [isEditable, setIsEditable] = useState(false);
     const [edit, setEdit] = useState(text);
-    const [editCategoryId, setEditCategoryId] = useState(categoryId);
+    const [editCategoryId, setEditCategoryId] = useState(categoryId ? categoryId : undefined);
     const [editCategoryName, setEditCategoryName] = useState(categoryName);
     const [editDeadLine, setEditDeadLine] = useState(deadLine);
 
