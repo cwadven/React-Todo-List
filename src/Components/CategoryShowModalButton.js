@@ -19,7 +19,7 @@ const ModalActiveButton = styled.div`
     }
 `;
 
-const CategoryShowModalButton = ({Icon, desc, ModalComponent}) => {
+const CategoryShowModalButton = ({Icon, desc, CategoryModalComponent, categorySet=[]}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const onModalOpenClick = () => {
@@ -33,7 +33,7 @@ const CategoryShowModalButton = ({Icon, desc, ModalComponent}) => {
                 {desc}
             </ModalActiveButton>
             {isModalOpen && (
-                <ModalComponent onModalOpenClick={onModalOpenClick} />
+                <CategoryModalComponent onModalOpenClick={onModalOpenClick} categorySet={categorySet}/>
             )}
         </>
     );
@@ -41,8 +41,9 @@ const CategoryShowModalButton = ({Icon, desc, ModalComponent}) => {
 
 CategoryShowModalButton.propTypes = {
     Icon: PropTypes.any,
-    ModalComponent: PropTypes.any,
+    CategoryModalComponent: PropTypes.any,
     desc: PropTypes.string,
+    categorySet: PropTypes.array,
 };
 
 export default CategoryShowModalButton;
