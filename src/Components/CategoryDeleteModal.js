@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/all';
 import styled from '@emotion/styled';
 import ToDoModel from '../models/ToDoModel';
@@ -8,6 +8,7 @@ import { errorResponse } from '../models/AccountModel';
 import { SET_CATEGORY } from '../reducer';
 import { useDispatch } from '../context';
 import SelectBox from '../Components/SelectBox';
+import { isNumeric } from '../common';
 
 const ModalDeactivateButton = styled.button`
     position: absolute;
@@ -99,22 +100,17 @@ const StyledCategoryButton = styled.button`
 `;
 
 const CategoryDeleteModal = ({ onModalOpenClick, categorySet }) => {
-    const [categoryInfo, setCategoryInfo] = useState({
-        name: '',
-        orderNumber: '',
-        categoryId: '',
-    });
+    const [categoryId, setCategoryId] = useState(undefined);
     const [isLoading, setIsLoading] = useState(false);
-    const categoryNameRef = useRef();
-    const categoryOrderNumberRef = useRef();
 
     const dispatch = useDispatch();
 
     const onChange = e => {
-        setCategoryInfo({
-            ...categoryInfo,
-            [e.target.name]: e.target.value,
-        });
+        if (isNumeric(e.target.value)) {
+            setCategoryId(e.target.value);
+        } else {
+            setCategoryId(undefined);
+        }
     };
 
     const getCategorySet = async () => {
@@ -122,7 +118,7 @@ const CategoryDeleteModal = ({ onModalOpenClick, categorySet }) => {
             const {
                 data: { category_set },
             } = await ToDoModel.getCategorySet();
-            return category_set
+            return category_set;
         } catch (e) {
             console.log(e);
             errorResponse(e.response);
@@ -131,7 +127,6 @@ const CategoryDeleteModal = ({ onModalOpenClick, categorySet }) => {
 
     useEffect(() => {
         document.body.style.overflow = 'hidden';
-        categoryNameRef.current.focus();
 
         return () => {
             document.body.style.overflow = 'unset';
@@ -140,19 +135,9 @@ const CategoryDeleteModal = ({ onModalOpenClick, categorySet }) => {
 
     const onSubmit = async () => {
         setIsLoading(prevState => !prevState);
-        if (!categoryInfo.name) {
-            categoryNameRef.current.focus();
-            setIsLoading(prevState => !prevState);
-            return
-        }
-        if (!categoryInfo.orderNumber) {
-            categoryOrderNumberRef.current.focus();
-            setIsLoading(prevState => !prevState);
-            return
-        }
 
         try {
-            await ToDoModel.addCategory(categoryInfo);
+            await ToDoModel.deleteCategory(categoryId);
             const categorySet = await getCategorySet();
             dispatch({ type: SET_CATEGORY, payload: categorySet });
             onModalOpenClick();
@@ -161,10 +146,6 @@ const CategoryDeleteModal = ({ onModalOpenClick, categorySet }) => {
             errorResponse(e.response);
         }
         setIsLoading(prevState => !prevState);
-        setCategoryInfo({
-            name: '',
-            orderNumber: '',
-        });
     };
 
     return (
@@ -185,29 +166,8 @@ const CategoryDeleteModal = ({ onModalOpenClick, categorySet }) => {
                                 onChange={onChange}
                                 options={categorySet}
                             />
-                            <input
-                                ref={categoryNameRef}
-                                name={'name'}
-                                onChange={onChange}
-                                value={categoryInfo.name}
-                                placeholder={'Category Name'}
-                                required
-                            />
-                            <input
-                                ref={categoryOrderNumberRef}
-                                name={'orderNumber'}
-                                onChange={(e) => {
-                                    const regexp = /^[1-9\b]*$/;
-                                    if (regexp.test(e.target.value)) {
-                                        onChange(e);
-                                    }
-                                }}
-                                value={categoryInfo.orderNumber}
-                                placeholder={'orderNumber'}
-                                required
-                            />
                         </div>
-                        <StyledCategoryButton onClick={onSubmit}>DELETE</StyledCategoryButton>
+                        {categoryId ? <StyledCategoryButton onClick={onSubmit}>DELETE</StyledCategoryButton> : null}
                     </CategoryContainer>
                 )}
             </Modal>

@@ -28,6 +28,11 @@ const ToDoModel = {
             headers: { Authorization: getToken() },
         });
     },
+    deleteCategory: categoryId => {
+        return api.delete(`todo/category/${categoryId}`, {
+            headers: { Authorization: getToken() },
+        });
+    },
     postToDo: data => {
         return api.post('todo', data, {
             headers: {
