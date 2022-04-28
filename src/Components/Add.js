@@ -11,7 +11,6 @@ import PropTypes from 'prop-types';
 import SelectBox from '../Components/SelectBox';
 
 const InputDiv = styled.div`
-    display: flex;
     align-items: center;
     width: 80%;
 `;
@@ -166,7 +165,7 @@ const Add = ({ categorySet }) => {
     return (
         <Form onSubmit={onSubmit}>
             <InputDiv>
-                <div>
+                <div style={{marginBottom: "15px"}}>
                     <SelectBox
                         name='toDoCategory'
                         onChange={onChange}

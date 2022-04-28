@@ -8,7 +8,7 @@ const SelectBox = ({ options, onChange, name }) => {
                 key={0}
                 value={null}
             >
-                {null}
+                {'카테고리 선택'}
             </option>
             {options.map((option) => (
                 <option
