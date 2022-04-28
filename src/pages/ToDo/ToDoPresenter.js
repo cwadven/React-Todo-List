@@ -10,7 +10,8 @@ import PropTypes from 'prop-types';
 import Loader from '../../Components/Loader';
 import CategoryShowModalButton from '../../Components/CategoryShowModalButton';
 import CategoryCreateModal from '../../Components/CategoryCreateModal';
-import { MdNoteAdd } from 'react-icons/all';
+import { FiEdit, MdNoteAdd } from 'react-icons/all';
+import { AiFillDelete } from 'react-icons/ai';
 
 const Container = styled.div`
     display: flex;
@@ -90,12 +91,12 @@ const ToDoPresenter = ({ toDos, completed, categorySet, isPending }) => {
                 ''
             )}
             {toDos.length === 0 && completed.length > 0 ? <Congratulate /> : ''}
-            <Add categorySet={categorySet} />
             <div style={{ textAlign: 'center' }}>
                 <CategoryShowModalButton Icon={MdNoteAdd} desc={"Click to Add Category"} ModalComponent={CategoryCreateModal}/>
-                <CategoryShowModalButton Icon={MdNoteAdd} ModalComponent={CategoryCreateModal}/>
-                <CategoryShowModalButton Icon={MdNoteAdd} ModalComponent={CategoryCreateModal}/>
+                <CategoryShowModalButton Icon={FiEdit} desc={"Click to Edit Category"} ModalComponent={CategoryCreateModal}/>
+                <CategoryShowModalButton Icon={AiFillDelete} desc={"Click to Delete Category"} ModalComponent={CategoryCreateModal}/>
             </div>
+            <Add categorySet={categorySet} />
             <Grid>
                 <List categorySet={categorySet} name='To Dos' itemSet={toDos} isCompleted={false} />
                 <List categorySet={categorySet} name='Completed' itemSet={completed} isCompleted={true} />

@@ -6,8 +6,8 @@ const ModalActiveButton = styled.div`
     font-size: 13px;
     cursor: pointer;
 
-    margin: 0 3px;
-    display: inline-flex;
+    margin: 5px 3px;
+    display: flex;
     background: transparent;
     border: transparent;
     transition: 0.1s linear;
