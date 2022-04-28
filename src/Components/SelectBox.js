@@ -7,7 +7,6 @@ const SelectBox = ({ options, onChange, name, defaultValue=undefined }) => {
             <option
                 key={0}
                 value={null}
-                name={null}
             >
                 {'카테고리 선택'}
             </option>
@@ -15,7 +14,6 @@ const SelectBox = ({ options, onChange, name, defaultValue=undefined }) => {
                 <option
                     key={option.id}
                     value={option.id}
-                    name={option.name}
                 >
                     {option.name} ({option.orderNumber})
                 </option>
