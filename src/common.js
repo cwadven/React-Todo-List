@@ -37,3 +37,7 @@ export const arrayInObjectSort = (array, key, method = 'asc', type = 'int') => {
         }
     });
 };
+
+export const isNumeric = (data) =>{
+  return !isNaN(data);
+}
