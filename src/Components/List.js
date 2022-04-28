@@ -58,6 +58,7 @@ const List = ({ name, itemSet, isCompleted, categorySet }) => {
             <div>
                 {itemSet.map((toDo, idx) => (
                     <ToDo
+                        categoryId={toDo['category__id']}
                         categoryName={toDo['category__name']}
                         categorySet={categorySet}
                         total_length={itemSet.length}

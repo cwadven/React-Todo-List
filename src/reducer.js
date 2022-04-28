@@ -97,6 +97,8 @@ const reducer = (state, action) => {
                 ...state.toDos[targetIndex],
                 text: action.payload.edit,
                 deadLine: action.payload.editDeadLine,
+                category__id: action.payload.editCategory,
+                category__name: action.payload.editCategoryName,
             };
             return {
                 ...state,

@@ -21,6 +21,7 @@ import {
     MdVerticalAlignTop,
     MdNotInterested,
 } from 'react-icons/all';
+import SelectBox from '../Components/SelectBox';
 
 const Container = styled.article`
     background: #eabf9f;
@@ -144,8 +145,9 @@ const ToDo = ({
                   nextId,
                   prevId,
                   text,
+                  categoryId,
                   categoryName,
-                  // categorySet,
+                  categorySet,
                   deadLine,
                   startDate,
                   completedDate,
@@ -155,6 +157,8 @@ const ToDo = ({
     const dispatch = useDispatch();
     const [isEditable, setIsEditable] = useState(false);
     const [edit, setEdit] = useState(text);
+    const [editCategoryId, setEditCategoryId] = useState(categoryId);
+    const [editCategoryName, setEditCategoryName] = useState(categoryName);
     const [editDeadLine, setEditDeadLine] = useState(deadLine);
 
     const [isLoading, setIsLoading] = useState(false);
@@ -173,6 +177,14 @@ const ToDo = ({
 
     const onEditDeadLineChange = date => {
         setEditDeadLine(date);
+    };
+
+    const onEditCategoryChange = e => {
+        setEditCategoryId(Number(e.target.value));
+        const categoryName = categorySet.find((item)=>{
+            return item.id === Number(e.target.value);
+        }).name
+        setEditCategoryName(categoryName);
     };
 
     const editToDo = async data => {
@@ -195,13 +207,14 @@ const ToDo = ({
                 id: id,
                 text: edit,
                 deadLine: editDeadLine,
+                categoryId: editCategoryId,
             });
             if (message === 'success') {
                 setIsEditable(false);
                 await setIsLoading(false);
                 dispatch({
                     type: EDIT,
-                    payload: { id, edit, editDeadLine },
+                    payload: { id, edit, editDeadLine, editCategoryId, editCategoryName },
                 });
             }
         } else {
@@ -304,6 +317,14 @@ const ToDo = ({
         <Container>
             {isEditable ? (
                 <>
+                    <div style={{ textAlign: 'center' }}>
+                        <SelectBox
+                            name='toDoCategory'
+                            onChange={onEditCategoryChange}
+                            options={categorySet}
+                            defaultValue={editCategoryId}
+                        />
+                    </div>
                     <DatePickerContainer>
                         <DatePicker
                             name='toDoDeadLine'
@@ -432,8 +453,9 @@ const ToDo = ({
 
 ToDo.propTypes = {
     text: PropTypes.string,
+    categoryId: PropTypes.number,
     categoryName: PropTypes.string,
-    // categorySet: PropTypes.array,
+    categorySet: PropTypes.array,
     deadLine: PropTypes.instanceOf(Date),
     startDate: PropTypes.instanceOf(Date),
     completedDate: PropTypes.instanceOf(Date),
