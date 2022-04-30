@@ -120,7 +120,7 @@ const CategoryCreateModal = ({ onModalOpenClick }) => {
             const {
                 data: { category_set },
             } = await ToDoModel.getCategorySet();
-            return category_set
+            return category_set;
         } catch (e) {
             console.log(e);
             errorResponse(e.response);
@@ -141,12 +141,12 @@ const CategoryCreateModal = ({ onModalOpenClick }) => {
         if (!categoryInfo.name) {
             categoryNameRef.current.focus();
             setIsLoading(prevState => !prevState);
-            return
+            return;
         }
         if (!categoryInfo.orderNumber) {
             categoryOrderNumberRef.current.focus();
             setIsLoading(prevState => !prevState);
-            return
+            return;
         }
 
         try {
@@ -190,8 +190,12 @@ const CategoryCreateModal = ({ onModalOpenClick }) => {
                                 ref={categoryOrderNumberRef}
                                 name={'orderNumber'}
                                 onChange={(e) => {
-                                    const regexp = /^[1-9\b]*$/;
-                                    if (regexp.test(e.target.value)) {
+                                    const regexp = /^[0-9\b]*$/;
+                                    let number = e.target.value;
+                                    if (number === '0') {
+                                        return;
+                                    }
+                                    if (regexp.test(number)) {
                                         onChange(e);
                                     }
                                 }}

@@ -224,8 +224,12 @@ const CategoryEditModal = ({ onModalOpenClick, categorySet }) => {
                                         ref={categoryOrderNumberRef}
                                         name={'orderNumber'}
                                         onChange={(e) => {
-                                            const regexp = /^[1-9\b]*$/;
-                                            if (regexp.test(e.target.value)) {
+                                            const regexp = /^[0-9\b]*$/;
+                                            let number = e.target.value;
+                                            if (number === '0') {
+                                                return;
+                                            }
+                                            if (regexp.test(number)) {
                                                 onChange(e);
                                             }
                                         }}
