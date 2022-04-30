@@ -1,5 +1,6 @@
 export const SET_TODO = 'getTodo';
 export const SET_COMPLETED = 'getCompleted';
+export const SET_TODO_AND_COMPLETED = 'setTodoAndCompleted';
 export const SET_CATEGORY = 'getCategory';
 export const SET_TODO_WITH_NEW_CATEGORY_NAME = 'setTodoWithNewCategoryName';
 export const SET_TODO_WITH_DELETED_CATEGORY_NAME = 'setTodoWithDeletedCategoryName';

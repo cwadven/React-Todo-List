@@ -7,8 +7,18 @@ const api = axios.create({
 });
 
 const ToDoModel = {
-    getToDoList: () => {
-        return api.get('todo', {
+    getToDoList: (categoryId='') => {
+        let url;
+
+        if (categoryId === null) {
+            url = `todo?categoryId=null`;
+        } else if (categoryId === '') {
+            url = `todo`;
+        } else {
+            url = `todo?categoryId=${categoryId}`;
+        }
+
+        return api.get(url, {
             headers: { Authorization: getToken() },
         });
     },
@@ -55,14 +65,26 @@ const ToDoModel = {
             headers: { Authorization: getToken() },
         });
     },
-    getCompletedList: () =>
-        api.get('todo/completed', {
+    getCompletedList: () => {
+        return api.get('todo/completed', {
             headers: { Authorization: getToken() },
-        }),
-    getCompletedTodayList: () =>
-        api.get('todo/completed/today', {
+        });
+    },
+    getCompletedTodayList: (categoryId='') => {
+        let url;
+
+        if (categoryId === null) {
+            url = `todo/completed/today?categoryId=null`;
+        } else if (categoryId === '') {
+            url = `todo/completed/today`;
+        } else {
+            url = `todo/completed/today?categoryId=${categoryId}`;
+        }
+
+        return api.get(url, {
             headers: { Authorization: getToken() },
-        }),
+        });
+    },
     changeCompletedStatus: data =>
         api.put(`todo/completed/${data.id}`, data, {
             headers: { Authorization: getToken() },
