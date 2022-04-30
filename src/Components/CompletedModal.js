@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import ToDoModel from '../models/ToDoModel';
 import { errorResponse } from '../models/AccountModel';
 import Loader from '../Components/Loader';
-import { arrayInObjectSort } from '../common.js';
 import PropTypes from 'prop-types';
 
 const ModalDeactivateButton = styled.button`
@@ -101,12 +100,6 @@ const CompletedModal = ({ onModalOpenClick }) => {
                 let {
                     data: { completed_set },
                 } = await ToDoModel.getCompletedList();
-                completed_set = arrayInObjectSort(
-                    completed_set,
-                    'completedDate',
-                    'asc',
-                    'date',
-                );
                 return completed_set;
             } catch (e) {
                 console.log(e);
