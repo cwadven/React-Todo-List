@@ -18,6 +18,8 @@ import { useDispatch } from '../../context';
 import ToDoModel from '../../models/ToDoModel';
 import { errorResponse } from '../../models/AccountModel';
 import { SET_COMPLETED, SET_TODO } from '../../reducer';
+import { Link } from 'react-router-dom';
+import useQueryString from '../../hooks/useQueryString';
 
 const Container = styled.div`
     display: flex;
@@ -102,11 +104,12 @@ const CategoryContainer = styled.div`
     }
 `;
 
-const CategoryItem = styled.div`
+const CategoryItem = styled(Link)`
     padding: 5px 10px;
     white-space: nowrap;
     transition: 0.1s linear;
     cursor: pointer;
+    color: ${props => props.isactive};
     
     &:hover {
         color: #eabf9f;
@@ -114,7 +117,7 @@ const CategoryItem = styled.div`
 `;
 
 const ToDoPresenter = ({ toDos, completed, categorySet, isPending }) => {
-
+    const { categoryId } = useQueryString();
     const dispatch = useDispatch();
 
     const getCategoryFilteredToDoList = async (categoryId) => {
@@ -142,6 +145,7 @@ const ToDoPresenter = ({ toDos, completed, categorySet, isPending }) => {
     };
 
     const onCategoryFilteredClick = async (categoryId) => {
+
         const todoSet = await getCategoryFilteredToDoList(categoryId);
         const completedSet = await getCategoryFilteredCompletedTodayList(categoryId);
         dispatch({ type: SET_TODO, payload: todoSet });
@@ -180,10 +184,12 @@ const ToDoPresenter = ({ toDos, completed, categorySet, isPending }) => {
                 {[{ id: '', name: '전체' }, { id: null, name: '설정안함' }, ...categorySet].map((category) => {
                     return (
                         <CategoryItem
+                            to={`?categoryId=${category.id}`}
                             key={category.id}
                             onClick={async () => {
                                 await onCategoryFilteredClick(category.id);
                             }}
+                            isactive={Number(categoryId) === category.id || (categoryId === 'null' && category.id === null) || (categoryId === '' && category.id === '' || categoryId === undefined && category.id === '') ? '#eabf9f' : '#000000'}
                         >
                             {category.name}
                         </CategoryItem>
