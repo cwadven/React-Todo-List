@@ -36,6 +36,7 @@ const Text = styled.div`
     font-weight: bold;
     font-size: 15px;
     white-space: break-spaces;
+    word-break: break-word;
 `;
 
 const CategoryText = styled.div`
