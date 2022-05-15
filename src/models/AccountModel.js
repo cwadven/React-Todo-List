@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://record-to-do-list.shop/',
-    // baseURL: 'http://127.0.0.1:8000/',
+    // baseURL: 'https://record-to-do-list.shop/',
+    baseURL: 'http://127.0.0.1:8000/',
 });
 
 export const getToken = () => window.sessionStorage.getItem('__AUTH__');
@@ -23,6 +23,15 @@ export const errorResponse = errResponse => {
         if (
             Object.values(errorData).some(
                 msg => msg === 'Error decoding signature.',
+            )
+        ) {
+            alert('No Auth Login Please');
+            window.sessionStorage.clear();
+            window.location.replace('/');
+        }
+        if (
+            Object.values(errorData).some(
+                msg => msg === 'Authentication credentials were not provided.',
             )
         ) {
             alert('No Auth Login Please');
