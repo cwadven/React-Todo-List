@@ -40,7 +40,7 @@ const LoginContainer = ({ history }) => {
             } catch (e) {
                 setLoading(false);
                 if (e.response) {
-                    setError(Object.values(e.response.data));
+                    setError(e.response.data.message);
                 } else {
                     setError('something went wrong...');
                 }

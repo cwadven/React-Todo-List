@@ -187,12 +187,7 @@ const LoginPresenter = ({
                     <SignUp>SIGN UP</SignUp>
                 </>
             )}
-            {error.length > 0 &&
-                error.map(e => {
-                    return e.map((_e, index) => {
-                        return <ErrorMessage key={index}>{_e}</ErrorMessage>;
-                    });
-                })}
+            {error && <ErrorMessage>{error}</ErrorMessage>}
         </Container>
     );
 };
