@@ -162,6 +162,12 @@ const Add = ({ categorySet }) => {
         // eslint-disable-next-line
     }, [newToDo.toDoDeadLine]);
 
+    const onEnterPress = async (e) => {
+        if ((e.code === 'Enter' || e.code === 'NumpadEnter') && !e.shiftKey) {
+            await onSubmit(e);
+        }
+    };
+
     return (
         <Form onSubmit={onSubmit}>
             <InputDiv>
@@ -180,6 +186,7 @@ const Add = ({ categorySet }) => {
                     value={newToDo.toDoText}
                     placeholder='To Memo Your Jobs Add To Dos'
                     onChange={onChange}
+                    onKeyPress={onEnterPress}
                     error={inputError}
                 />
             </InputDiv>
