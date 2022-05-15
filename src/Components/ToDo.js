@@ -346,7 +346,7 @@ const ToDo = ({
                         value={edit}
                         placeholder='To Memo Your Jobs'
                         onChange={onEditChange}
-                        onKeyDown={onEnterPress}
+                        onKeyPress={onEnterPress}
                     />
                 </>
             ) : (
